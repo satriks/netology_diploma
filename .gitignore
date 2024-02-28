@@ -1,0 +1,4 @@
+prepare
+.idea
+backend/venv
+backend/.idea
