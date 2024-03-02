@@ -39,5 +39,14 @@
       border-radius: 50%;
       background-color: red;
     }
+    .page {
+      align-self: center;
+
+      select {
+        padding-left: 10px;
+        border-radius: 10px;
+        background-color: $secondFontColor;
+      }
+    }
   }
 }

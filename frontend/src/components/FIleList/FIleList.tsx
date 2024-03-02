@@ -7,10 +7,12 @@ type Props = {};
 export default function FileList({}: Props) {
   const list = [1, 2, 3, 4, 5];
   return (
-    <div className="file-list">
-      {list.map((el) => (
-        <FileItem />
-      ))}
+    <div className="container">
+      <div className="file-list">
+        {list.map((el) => (
+          <FileItem />
+        ))}
+      </div>
     </div>
   );
 }

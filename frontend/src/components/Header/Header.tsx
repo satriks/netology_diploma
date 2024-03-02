@@ -2,6 +2,7 @@ import React from "react";
 import "./Header.scss";
 import logo from "../../assets/logo.png";
 import cloudy from "../../assets/cloudy.png";
+import DropMenu from "./DropMenu/DropMenu";
 
 type Props = {};
 
@@ -16,7 +17,9 @@ export default function Header({}: Props) {
         <div>
           <img className="avatar" src="#"></img>
         </div>
-        <div>menu</div>
+        <div className="page">
+          <DropMenu />
+        </div>
       </div>
     </div>
   );

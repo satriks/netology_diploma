@@ -13,9 +13,7 @@ function App() {
   return (
     <>
       <Header />
-      <div className="body">
-        <FileList />
-      </div>
+      <FileList />
       <Footer />
     </>
   );
