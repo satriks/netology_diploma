@@ -1,0 +1,7 @@
+$mainColor: #8ebbe5;
+
+@mixin frame {
+  display: flex;
+  height: 100px;
+  background-color: $mainColor;
+}
