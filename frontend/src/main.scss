@@ -1,0 +1,21 @@
+@font-face {
+  font-family: "Czizh";
+  font-style: normal;
+  font-weight: 400;
+
+  /* Браузер сначала попробует найти шрифт локально */
+  src: url("/assets/fonts/Czizh.ttf") format("truetype"),
+    url("/assets/fonts/Czizh.woff") format("woff");
+}
+
+@import "./scss/base.scss";
+
+body {
+  font-family: "Czizh", "Arial", sans-serif;
+  color: $mainTextColor;
+}
+
+.body {
+  height: 800px;
+  background-color: $secondFontColor;
+}
