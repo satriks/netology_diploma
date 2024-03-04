@@ -1,4 +1,3 @@
-import React from "react";
 import FileItem from "../FileItem/FileItem";
 import "./FIleList.scss";
 
@@ -10,7 +9,7 @@ export default function FileList({}: Props) {
     <div className="container">
       <div className="file-list">
         {list.map((el) => (
-          <FileItem />
+          <FileItem key={el} />
         ))}
       </div>
     </div>

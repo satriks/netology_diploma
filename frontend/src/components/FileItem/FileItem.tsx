@@ -1,4 +1,3 @@
-import React from "react";
 import fileLogo from "../../assets/file.png";
 import "./FIleItem.scss";
 

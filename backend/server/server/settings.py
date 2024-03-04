@@ -1,3 +1,7 @@
+import  os
+from dotenv import load_dotenv
+
+load_dotenv()
 """
 Django settings for server project.
 
@@ -37,6 +41,8 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    "backend_api",
+    "rest_framework",
 ]
 
 MIDDLEWARE = [
@@ -73,12 +79,24 @@ WSGI_APPLICATION = 'server.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/5.0/ref/settings/#databases
 
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.sqlite3',
+#         'NAME': BASE_DIR / 'db.sqlite3',
+#     }
+# }
 DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
-    }
+    "default": {
+            "ENGINE": "django.db.backends.postgresql",
+            "NAME": "diplom",
+            "USER": os.getenv('USER'),
+            "PASSWORD": os.getenv('PASSWORD'),
+            "HOST": "127.0.0.1",
+            "PORT": "5432",
+        }
 }
+
+
 
 
 # Password validation
@@ -103,7 +121,7 @@ AUTH_PASSWORD_VALIDATORS = [
 # Internationalization
 # https://docs.djangoproject.com/en/5.0/topics/i18n/
 
-LANGUAGE_CODE = 'en-us'
+LANGUAGE_CODE = 'ru-ru'
 
 TIME_ZONE = 'UTC'
 
