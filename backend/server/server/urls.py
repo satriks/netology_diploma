@@ -18,13 +18,18 @@ from django.contrib import admin
 from django.urls import path, include
 from rest_framework import routers
 
-from backend_api.views import BackendAPIView
+from backend_api.views import BackendAPIView, UserViewSet, LogoutView
+from rest_framework.authtoken import views
 
 router = routers.SimpleRouter()
 router.register(r'files', BackendAPIView)
+router.register(r'users', UserViewSet)
 
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('api/', include(router.urls)),
+    path('api-auth/logout/', LogoutView.as_view(), name='logout'),
+    path('api-auth/', include('rest_framework.urls', namespace='rest_framework')),
+    path('api-token-auth/', views.obtain_auth_token)
 ]
