@@ -1,6 +1,6 @@
 import Header from "./components/Header/Header";
 import Footer from "./components/Footer/Footer";
-import FileList from "./components/FIleList/FIleList";
+import FileList from "./components/Files/FIleList/FIleList";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import Profile from "./components/Profile/Profile";
 import AuthorisationForm from "./components/LoginForm/AuthorisationForm";
@@ -17,7 +17,7 @@ function App() {
       <Routes>
         <Route path="/" element={<FileList />} />
         <Route path="/profile" element={<Profile />} />
-        <Route path="/admin" element={<FileList />} />
+        <Route path="/admin" element={<FileList />} />y
       </Routes>
       <Footer />
     </BrowserRouter>

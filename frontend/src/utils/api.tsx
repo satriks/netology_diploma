@@ -59,13 +59,39 @@ export const getFilesApi = (token: string) => {
     .then((response) => response.data);
 };
 //Get file
-
+// ?? Надо ли
 //Add file
+export const addFileApi = (
+  token: string,
+  body: FormData,
+  userId: string | number
+) => {
+  //Добавить к форм дате юзера
 
+  return connect
+    .post(`api/files/`, { headers: { Authorization: "token " + token }, body })
+    .then((response) => response.data);
+};
 //Delete file
-
+export const deleteFileApi = (token: string, fileId: string | number) => {
+  return connect.delete(`api/files/${fileId}/`, {
+    headers: { Authorization: "token " + token },
+  });
+  // .then((response) => response.data);
+};
 //Update file
-
+export const updateFileApi = (
+  token: string,
+  fileId: string | number,
+  body: { name: string }
+) => {
+  return connect
+    .patch(`api/files/${fileId}`, {
+      headers: { Authorization: "token " + token },
+      body,
+    })
+    .then((response) => response.data);
+};
 // ---------------------------------------------------------------
 
 // export const getTopSalesApi = () => {

@@ -1,0 +1,24 @@
+@import "../../../scss/base.scss";
+.drop-file-menu {
+  //   display: none;
+  ul {
+    position: absolute;
+    right: -110px;
+    top: 5px;
+    list-style-type: none;
+    border-radius: 10px;
+    // padding: 5px;
+    z-index: 3;
+
+    li {
+      background-color: $mainFontColor;
+      border: 1px solid;
+      border-radius: 0px;
+      padding: 2px;
+    }
+    li:hover {
+      background-color: rgb(222, 239, 245);
+      cursor: pointer;
+    }
+  }
+}

@@ -6,11 +6,11 @@ from django.db import models
 
 
 def get_upload_to(instance, filename):
-    return 'storage/' + f'{instance.user.id}/' + f'{filename}'
+    return f'{instance.user.id}/' + f'{filename}'
 # Create your models here.
 class Files(models.Model):
     name = models.CharField(max_length=256)
-    description = models.TextField()
+    description = models.TextField(blank=True, null=True)
     file = models.FileField(upload_to=get_upload_to)
     size = models.BigIntegerField( blank=True, null=True, editable=False)
     created_at = models.DateTimeField(auto_now_add=True)

@@ -1,8 +1,8 @@
 import { useEffect } from "react";
-import { useAppDispatch, useAppSelector } from "../../models/hooks";
+import { useAppDispatch, useAppSelector } from "../../../models/hooks";
 import FileItem from "../FileItem/FileItem";
 import "./FIleList.scss";
-import { get_files } from "../../redux/MainSlice";
+import { get_files } from "../../../redux/MainSlice";
 
 type Props = {};
 
@@ -21,8 +21,12 @@ export default function FileList({}: Props) {
     <div className="container">
       <div className="file-list">
         {files.map((el) => (
-          <FileItem key={el.id} />
+          <FileItem key={el.id} data={el} />
         ))}
+        <FileItem
+          key={"add"}
+          data={{ file: "add", name: "Добавить файл", id: 0 }}
+        />
       </div>
     </div>
   );
