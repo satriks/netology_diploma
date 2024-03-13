@@ -12,7 +12,7 @@ export default function DropFileMenu({ data }: Props) {
     <div className="drop-file-menu">
       <ul>
         <li>Переименовать</li>
-        <li>Поделиться</li>
+        <li onClick={updatelFile}>Поделиться</li>
         <li onClick={delFile}>Удалить файл</li>
         {/* <li>Добавить файл</li> */}
       </ul>
@@ -21,5 +21,9 @@ export default function DropFileMenu({ data }: Props) {
 
   function delFile() {
     dispatch(del_files(data.id));
+  }
+  function updatelFile() {
+    //TODO сделать появление меню редактирования , может POPUP ?
+    // dispatch(del_files(data.id));
   }
 }

@@ -6,10 +6,15 @@ from backend_api.models import Files
 
 
 class FilesSerializer(serializers.ModelSerializer):
+    user = serializers.PrimaryKeyRelatedField(read_only=True, default=serializers.CurrentUserDefault())
     class Meta:
         model = Files
         fields = ['id','name', 'description','file', 'size', 'created_at', 'user']
         read_only_fields = ['created_at', 'size']
+    def save(self, **kwargs):
+        kwargs["user"] = self.fields["user"].get_default()
+        return super().save(**kwargs)
+
 
 class UserSerializer(serializers.HyperlinkedModelSerializer):
     password = serializers.CharField(write_only=True)

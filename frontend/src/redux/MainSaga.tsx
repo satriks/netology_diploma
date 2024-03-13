@@ -5,13 +5,17 @@ import {
   GET_TOKEN,
   GET_USERS,
   REGISTRATION,
+  SEND_FILE,
+  UPDATE_FILE,
   getLoginLoading,
   getSuccessFiles,
   getSuccessToken,
+  setIsSendFile,
 } from "./MainSlice";
 import { call, put, select, takeEvery } from "redux-saga/effects";
 import { AxiosResponse } from "axios";
 import {
+  addFileApi,
   deleteFileApi,
   getFilesApi,
   getUsersApi,
@@ -108,6 +112,72 @@ export function* getFilesSaga() {
     }
   }
 }
+export function* sendFileSaga(action: PayloadAction) {
+  const token: string | null = yield select((store) => store.token);
+
+  console.log(action.payload, "from send saga");
+
+  if (token) {
+    // yield put(getLoginLoading());
+    try {
+      const response: AxiosResponse = yield addFileApi(token, action.payload);
+      console.log(response.status, "this ststus from send saga");
+
+      // yield call(getFilesSaga);
+
+      if (response.status === 201) {
+        yield call(getFilesSaga);
+        yield put(setIsSendFile());
+      }
+      console.log(response);
+      // console.log(token);
+      // if response.status{
+      //   localStorage.setItem('token', JSON.stringify(response.token))
+      // }
+      // if (response.status > 200 && response.status < 300) {
+      //   yield put(getOrderSuccess());
+      //   yield delay(10000);
+      //   yield put(clearOrderSuccess());
+      // }
+    } catch (error) {
+      // yield put(
+      //   getItemFailed({ message: (error as Error).message, errFunc: action })
+      // );
+    }
+  }
+}
+export function* updateFileSaga(action: PayloadAction) {
+  const token: string | null = yield select((store) => store.token);
+
+  console.log(action.payload, "from update saga");
+
+  if (token) {
+    // yield put(getLoginLoading());
+    try {
+      // const response: AxiosResponse = yield addFileApi(token, action.payload);
+      // console.log(response.status, "this ststus from update saga");
+      // yield call(getFilesSaga);
+      // if (response.status === 201) {
+      //   yield call(getFilesSaga);
+      //   yield put(setIsSendFile());
+      // }
+      // console.log(response);
+      // console.log(token);
+      // if response.status{
+      //   localStorage.setItem('token', JSON.stringify(response.token))
+      // }
+      // if (response.status > 200 && response.status < 300) {
+      //   yield put(getOrderSuccess());
+      //   yield delay(10000);
+      //   yield put(clearOrderSuccess());
+      // }
+    } catch (error) {
+      // yield put(
+      //   getItemFailed({ message: (error as Error).message, errFunc: action })
+      // );
+    }
+  }
+}
 export function* delFilesSaga(action: PayloadAction) {
   const token: string | null = yield select((store) => store.token);
 
@@ -178,5 +248,7 @@ export function* mainSaga() {
   yield takeEvery(GET_USERS, getUsersSaga);
   yield takeEvery(GET_FILES, getFilesSaga);
   yield takeEvery(DEL_FILES, delFilesSaga);
+  yield takeEvery(SEND_FILE, sendFileSaga);
+  yield takeEvery(UPDATE_FILE, updateFileSaga);
   // yield takeEvery(GET_CATEGORY, getCategorySaga);
 }

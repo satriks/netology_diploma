@@ -1,11 +1,11 @@
 import fileLogo from "../../../assets/file.png";
-import addFileLogo from "../../../assets/addFile.png";
+import addFileLogo from "../../../assets/addFile2.png";
 import "./FIleItem.scss";
 import File_data from "../../../models/models";
 import DropFileMenu from "../DropFileMenu/DropFileMenu";
 import { useState } from "react";
 import { useAppDispatch, useAppSelector } from "../../../models/hooks";
-import { setLastDropOn } from "../../../redux/MainSlice";
+import { setIsSendFile, setLastDropOn } from "../../../redux/MainSlice";
 
 type Props = {
   data: File_data | { file: "add"; name: "Добавить файл"; id: 0 };
@@ -16,7 +16,6 @@ export default function FileItem({ data }: Props) {
     ? data.file
     : fileLogo;
   if (data.file === "add") {
-    //TODO обрезать фон на картинке сделать png
     file_url = addFileLogo;
   }
 
@@ -33,7 +32,10 @@ export default function FileItem({ data }: Props) {
 
   function clickFile(e) {
     e.preventDefault();
+    e.stopPropagation();
+
     if (data.file === "add") {
+      dispatch(setIsSendFile());
       console.log(42);
     } else {
       lastDropOn == data.id

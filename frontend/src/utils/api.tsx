@@ -63,14 +63,20 @@ export const getFilesApi = (token: string) => {
 //Add file
 export const addFileApi = (
   token: string,
-  body: FormData,
-  userId: string | number
+  body: { name: string; description?: string; file: File }
 ) => {
-  //Добавить к форм дате юзера
+  const formData = new FormData();
+  formData.append("name", body.name);
+  body.description && formData.append("description", body.description);
+  formData.append("file", body.file);
 
-  return connect
-    .post(`api/files/`, { headers: { Authorization: "token " + token }, body })
-    .then((response) => response.data);
+  return connect.post(`api/files/`, formData, {
+    headers: {
+      Authorization: "token " + token,
+      "content-type": "multipart/form-data",
+    },
+  });
+  // .then((response) => response.data);
 };
 //Delete file
 export const deleteFileApi = (token: string, fileId: string | number) => {

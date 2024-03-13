@@ -31,6 +31,7 @@ router.register(r'users', UserViewSet)
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('api/', include(router.urls)),
+    # path('api/users/detail', UserDetailView.as_view({'head'})),
     path('api-auth/logout/', LogoutView.as_view(), name='logout'),
     path('api-auth/', include('rest_framework.urls', namespace='rest_framework')),
     path('api-token-auth/', views.obtain_auth_token)

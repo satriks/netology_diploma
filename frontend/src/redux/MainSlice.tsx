@@ -8,6 +8,7 @@ interface InitialStateType {
   token: string | null;
   files: File_data[];
   lastDropOn: number | null;
+  isSendFile: boolean;
 }
 
 const initialState: InitialStateType = {
@@ -17,6 +18,7 @@ const initialState: InitialStateType = {
   token: null,
   files: [],
   lastDropOn: null,
+  isSendFile: false,
 };
 
 const MainSlice = createSlice({
@@ -37,6 +39,9 @@ const MainSlice = createSlice({
     },
     setLastDropOn(state, action) {
       state.lastDropOn = action.payload;
+    },
+    setIsSendFile(state) {
+      state.isSendFile = !state.isSendFile;
     },
     // clearLastDRopOn(state) {
     //   const dropOn = state.lastDropOn;
@@ -60,6 +65,17 @@ export const GET_FILES = "main/getFiles";
 export const get_files = createAction(GET_FILES);
 export const DEL_FILES = "main/delFiles";
 export const del_files = createAction(DEL_FILES);
+export const SEND_FILE = "main/sendFile";
+export const send_file = createAction<{
+  name: string;
+  description: string;
+  file: File;
+}>(SEND_FILE);
+export const UPDATE_FILE = "main/updateFile";
+export const update_file = createAction<{
+  name: string;
+  description: string;
+}>(UPDATE_FILE);
 
 export const {
   getLoginLoading,
@@ -67,6 +83,7 @@ export const {
   getSuccessFiles,
   logout,
   setLastDropOn,
+  setIsSendFile,
   // clearLastDRopOn,
 } = MainSlice.actions;
 

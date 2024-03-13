@@ -20,7 +20,8 @@ class BackendAPIView(ModelViewSet):
     def get_queryset(self):
         user = self.request.user
         return Files.objects.filter(user=user)
-
+    # def perform_create(self, serializer):
+    #     serializer.save(user=self.request.user)
 
 class UserViewSet(ModelViewSet):
     queryset = User.objects.all()
@@ -32,6 +33,14 @@ class UserViewSet(ModelViewSet):
         if self.action == 'create':
             self.permission_classes = (AllowAny, )
         return super(UserViewSet, self).get_permissions()
+
+# class UserDetailView(ModelViewSet):
+#     queryset = User.objects.all()
+#     serializer_class = UserSerializer
+#
+#     def get_queryset(self):
+#         user = self.request.user
+#         return User.objects.filter(user=user)
 
 class LogoutView(APIView):
     """
