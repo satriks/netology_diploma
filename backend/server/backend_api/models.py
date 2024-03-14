@@ -8,6 +8,8 @@ from django.db import models
 def get_upload_to(instance, filename):
     return f'{instance.user.id}/' + f'{filename}'
 # Create your models here.
+
+#TODO add url : uuid field
 class Files(models.Model):
     name = models.CharField(max_length=256)
     description = models.TextField(blank=True, null=True)
