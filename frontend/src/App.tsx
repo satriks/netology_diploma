@@ -5,7 +5,7 @@ import { BrowserRouter, Route, Routes } from "react-router-dom";
 import Profile from "./components/Profile/Profile";
 import AuthorisationForm from "./components/LoginForm/AuthorisationForm";
 import { useAppSelector } from "./models/hooks";
-import AddNewFile from "./components/Files/AddNewFileForm/AddNewFile";
+import ChangeFileForm from "./components/Files/ChangeFileForm/ChangeFileForm";
 
 function App() {
   const isLogin = useAppSelector((state) => state.token);
@@ -15,6 +15,7 @@ function App() {
     <BrowserRouter>
       <Header />
       {!isLogin && <AuthorisationForm />}
+      {/* <ChangeFileForm /> */}
       {/* <AddNewFile /> */}
       <Routes>
         <Route path="/" element={<FileList />} />

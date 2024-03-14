@@ -9,6 +9,12 @@ interface InitialStateType {
   files: File_data[];
   lastDropOn: number | null;
   isSendFile: boolean;
+  isChangeFile: {
+    name?: string;
+    description?: string;
+    id?: string;
+    isActive: boolean;
+  };
 }
 
 const initialState: InitialStateType = {
@@ -19,6 +25,7 @@ const initialState: InitialStateType = {
   files: [],
   lastDropOn: null,
   isSendFile: false,
+  isChangeFile: { isActive: false },
 };
 
 const MainSlice = createSlice({
@@ -42,6 +49,21 @@ const MainSlice = createSlice({
     },
     setIsSendFile(state) {
       state.isSendFile = !state.isSendFile;
+    },
+    setIsChangeFile(
+      state,
+      action: PayloadAction<{
+        name?: string;
+        description?: string;
+        id?: string;
+      }>
+    ) {
+      state.isChangeFile.isActive = !state.isChangeFile.isActive;
+      if (action.payload) {
+        state.isChangeFile.name = action.payload.name;
+        state.isChangeFile.description = action.payload.description;
+        state.isChangeFile.id = action.payload.id;
+      }
     },
     // clearLastDRopOn(state) {
     //   const dropOn = state.lastDropOn;
@@ -84,6 +106,7 @@ export const {
   logout,
   setLastDropOn,
   setIsSendFile,
+  setIsChangeFile,
   // clearLastDRopOn,
 } = MainSlice.actions;
 

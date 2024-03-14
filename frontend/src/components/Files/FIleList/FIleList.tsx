@@ -8,6 +8,7 @@ import {
   setLastDropOn,
 } from "../../../redux/MainSlice";
 import AddNewFile from "../AddNewFileForm/AddNewFile";
+import ChangeFileForm from "../ChangeFileForm/ChangeFileForm";
 
 type Props = {};
 
@@ -15,6 +16,7 @@ export default function FileList({}: Props) {
   const isLogin = useAppSelector((state) => state.token);
   const files = useAppSelector((state) => state.files);
   const isSendFile = useAppSelector((state) => state.isSendFile);
+  const isChangeFile = useAppSelector((state) => state.isChangeFile);
   const [isDragging, setIsDragging] = useState(false);
   const [dragFile, setDragFIle] = useState<File | null>(null);
   const dispatch = useAppDispatch();
@@ -45,6 +47,12 @@ export default function FileList({}: Props) {
         />
       </div>
       {isSendFile && <AddNewFile file={dragFile} setDragFile={setDragFIle} />}
+      {isChangeFile.isActive && (
+        <ChangeFileForm
+          name={isChangeFile.name}
+          desc={isChangeFile.description}
+        />
+      )}
     </div>
   );
 

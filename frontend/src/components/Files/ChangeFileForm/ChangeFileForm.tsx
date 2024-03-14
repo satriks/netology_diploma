@@ -1,13 +1,19 @@
-import React, { ChangeEvent, FormEvent, useState } from "react";
-import { update_file } from "../../../redux/MainSlice";
+import React, { ChangeEvent, FormEvent, useEffect, useState } from "react";
+import { setIsChangeFile, update_file } from "../../../redux/MainSlice";
 import { useAppDispatch } from "../../../models/hooks";
+import "./ChangeFileForm.scss";
 
 type Props = {};
 
-export default function ChangeFileForm({}: Props) {
+export default function ChangeFileForm({ name, desc }: Props) {
   const [fileName, setFileName] = useState<string>("");
   const [fileDescription, setFileDescription] = useState<string>("");
   const dispatch = useAppDispatch();
+
+  useEffect(() => {
+    setFileName(name);
+    setFileDescription(desc);
+  }, []);
 
   return (
     <div className="change-form__wrapper">
@@ -55,8 +61,10 @@ export default function ChangeFileForm({}: Props) {
   function handleClose(e: React.MouseEvent<HTMLButtonElement, MouseEvent>) {
     console.log(e);
     const target = e.target as HTMLElement;
-    (target.parentNode as HTMLFormElement).remove();
+    (
+      (target.parentNode as HTMLFormElement).parentNode as HTMLFormElement
+    ).remove();
 
-    // dispatch(setIsSendFile());
+    dispatch(setIsChangeFile());
   }
 }

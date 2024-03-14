@@ -89,14 +89,12 @@ export const deleteFileApi = (token: string, fileId: string | number) => {
 export const updateFileApi = (
   token: string,
   fileId: string | number,
-  body: { name: string }
+  body: { name?: string; description?: string }
 ) => {
-  return connect
-    .patch(`api/files/${fileId}`, {
-      headers: { Authorization: "token " + token },
-      body,
-    })
-    .then((response) => response.data);
+  return connect.patch(`api/files/${fileId}/`, body, {
+    headers: { Authorization: "token " + token },
+  });
+  // .then((response) => response.data);
 };
 // ---------------------------------------------------------------
 

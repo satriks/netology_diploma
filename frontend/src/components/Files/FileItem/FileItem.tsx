@@ -6,6 +6,7 @@ import DropFileMenu from "../DropFileMenu/DropFileMenu";
 import { useState } from "react";
 import { useAppDispatch, useAppSelector } from "../../../models/hooks";
 import { setIsSendFile, setLastDropOn } from "../../../redux/MainSlice";
+import ChangeFileForm from "../ChangeFileForm/ChangeFileForm";
 
 type Props = {
   data: File_data | { file: "add"; name: "Добавить файл"; id: 0 };
@@ -34,9 +35,12 @@ export default function FileItem({ data }: Props) {
     e.preventDefault();
     e.stopPropagation();
 
+    // if (e.target.tagName == "LI") {
+    //   console.log(17);
+    //   return;
+    // }
     if (data.file === "add") {
       dispatch(setIsSendFile());
-      console.log(42);
     } else {
       lastDropOn == data.id
         ? dispatch(setLastDropOn(null))

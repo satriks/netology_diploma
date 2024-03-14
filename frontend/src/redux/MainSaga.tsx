@@ -10,6 +10,7 @@ import {
   getLoginLoading,
   getSuccessFiles,
   getSuccessToken,
+  setIsChangeFile,
   setIsSendFile,
 } from "./MainSlice";
 import { call, put, select, takeEvery } from "redux-saga/effects";
@@ -21,6 +22,7 @@ import {
   getUsersApi,
   loginApi,
   registrationApi,
+  updateFileApi,
 } from "../utils/api";
 import { useAppSelector } from "../models/hooks";
 import File_data from "../models/models";
@@ -152,15 +154,21 @@ export function* updateFileSaga(action: PayloadAction) {
   console.log(action.payload, "from update saga");
 
   if (token) {
+    const FileCangeInfo = yield select((store) => store.isChangeFile);
+
     // yield put(getLoginLoading());
     try {
-      // const response: AxiosResponse = yield addFileApi(token, action.payload);
-      // console.log(response.status, "this ststus from update saga");
+      const response: AxiosResponse = yield updateFileApi(
+        token,
+        FileCangeInfo.id,
+        action.payload
+      );
+      console.log(response.status, "this ststus from update saga");
       // yield call(getFilesSaga);
-      // if (response.status === 201) {
-      //   yield call(getFilesSaga);
-      //   yield put(setIsSendFile());
-      // }
+      if (response.status === 200) {
+        yield call(getFilesSaga);
+        yield put(setIsChangeFile());
+      }
       // console.log(response);
       // console.log(token);
       // if response.status{

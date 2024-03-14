@@ -11,9 +11,13 @@ class FilesSerializer(serializers.ModelSerializer):
         model = Files
         fields = ['id','name', 'description','file', 'size', 'created_at', 'user']
         read_only_fields = ['created_at', 'size']
-    def save(self, **kwargs):
-        kwargs["user"] = self.fields["user"].get_default()
-        return super().save(**kwargs)
+
+    def create(self, validated_data):
+        validated_data['user'] = self.context['request'].user
+        return Files.objects.create(**validated_data)
+    # def save(self, **kwargs):
+    #     kwargs["user"] = self.fields["user"].get_default()
+    #     return super().save(**kwargs)
 
 
 class UserSerializer(serializers.HyperlinkedModelSerializer):

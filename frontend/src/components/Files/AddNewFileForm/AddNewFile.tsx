@@ -1,5 +1,11 @@
-import React, { ChangeEvent, FormEvent, useRef, useState } from "react";
-import "./addNewFile.scss";
+import React, {
+  ChangeEvent,
+  FormEvent,
+  useEffect,
+  useRef,
+  useState,
+} from "react";
+import "./AddNewFile.scss";
 import { useAppDispatch } from "../../../models/hooks";
 import { send_file, setIsSendFile } from "../../../redux/MainSlice";
 
@@ -13,6 +19,11 @@ export default function AddNewFile({ file, setDragFile }: Props) {
   const [fileName, setFileName] = useState<string>("");
   const [fileDescription, setFileDescription] = useState<string>("");
   // const [dragFile, setDragFile] = useState(file);
+  useEffect(() => {
+    if (file) {
+      setFileName(file.name.split(".")[0]);
+    }
+  }, []);
 
   return (
     <div className="new-form__wrapper">
