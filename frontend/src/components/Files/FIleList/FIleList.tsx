@@ -9,6 +9,7 @@ import {
 } from "../../../redux/MainSlice";
 import AddNewFile from "../AddNewFileForm/AddNewFile";
 import ChangeFileForm from "../ChangeFileForm/ChangeFileForm";
+import ShareFileForm from "../ShareFileForm/ShareFileForm";
 
 type Props = {};
 
@@ -17,6 +18,7 @@ export default function FileList({}: Props) {
   const files = useAppSelector((state) => state.files);
   const isSendFile = useAppSelector((state) => state.isSendFile);
   const isChangeFile = useAppSelector((state) => state.isChangeFile);
+  const isShareFile = useAppSelector((state) => state.isShareFile);
   const [isDragging, setIsDragging] = useState(false);
   const [dragFile, setDragFIle] = useState<File | null>(null);
   const dispatch = useAppDispatch();
@@ -53,6 +55,7 @@ export default function FileList({}: Props) {
           desc={isChangeFile.description}
         />
       )}
+      {isShareFile.isShare && <ShareFileForm uuid={isShareFile.uuid} />}
     </div>
   );
 

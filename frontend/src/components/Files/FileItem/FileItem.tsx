@@ -3,7 +3,7 @@ import addFileLogo from "../../../assets/addFile2.png";
 import "./FIleItem.scss";
 import File_data from "../../../models/models";
 import DropFileMenu from "../DropFileMenu/DropFileMenu";
-import { useState } from "react";
+import { useRef, useState } from "react";
 import { useAppDispatch, useAppSelector } from "../../../models/hooks";
 import { setIsSendFile, setLastDropOn } from "../../../redux/MainSlice";
 import ChangeFileForm from "../ChangeFileForm/ChangeFileForm";
@@ -22,16 +22,30 @@ export default function FileItem({ data }: Props) {
 
   const dispatch = useAppDispatch();
   const lastDropOn = useAppSelector((state) => state.lastDropOn);
+  const baseURL = import.meta.env.VITE_HOST || "http://localhost:8000/";
+  const link = baseURL + "download/" + data.linkUiid;
+  const downloadLink = useRef(null);
 
   return (
     <div className="file-item" onClick={clickFile} onContextMenu={clickFile}>
       <img src={file_url} alt="" />
       <span>{data.name}</span>
       {lastDropOn == data.id && <DropFileMenu data={data} />}
+      <a
+        hidden={true}
+        href={link}
+        download={link}
+        ref={downloadLink}
+        target="_blank"
+      />
     </div>
   );
 
   function clickFile(e) {
+    if (e.target.className === "download") {
+      return;
+    }
+
     e.preventDefault();
     e.stopPropagation();
 

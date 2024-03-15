@@ -6,4 +6,5 @@ export default interface File_data {
   name: string;
   size: number;
   user: number;
+  linkUiid: string;
 }

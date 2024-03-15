@@ -1,7 +1,8 @@
-
+from django.http import FileResponse
 from django.shortcuts import render
 from rest_framework import viewsets
 from rest_framework.authtoken.admin import User
+from rest_framework.response import Response
 from rest_framework.viewsets import ModelViewSet
 from rest_framework.views import APIView
 from rest_framework.permissions import IsAuthenticated, IsAdminUser, AllowAny
@@ -10,6 +11,7 @@ from django.shortcuts import redirect
 
 from backend_api.models import Files
 from backend_api.serializers import FilesSerializer, UserSerializer
+from datetime import datetime
 
 
 # Create your views here.
@@ -22,6 +24,19 @@ class BackendAPIView(ModelViewSet):
         return Files.objects.filter(user=user)
     # def perform_create(self, serializer):
     #     serializer.save(user=self.request.user)
+
+class DownloadFileAPIView(APIView):
+    permission_classes = (AllowAny,)
+    def get(self,request, id, format=None):
+        queryset = Files.objects.get(linkUiid=id)
+        queryset.download_counter += 1
+        queryset.download_at = datetime.now()
+        queryset.save()
+        name = queryset.name + '.' + queryset.file.name.split('.')[-1]
+        response = FileResponse(open(queryset.file.path, 'rb'), as_attachment=True, filename=name)
+        # response['Content-Disposition'] = f'attachment; filename="{queryset.name}"'
+        return response
+
 
 class UserViewSet(ModelViewSet):
     queryset = User.objects.all()

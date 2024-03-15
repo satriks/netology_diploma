@@ -15,6 +15,10 @@ interface InitialStateType {
     id?: string;
     isActive: boolean;
   };
+  isShareFile: {
+    isShare: boolean;
+    uuid?: string;
+  };
 }
 
 const initialState: InitialStateType = {
@@ -26,6 +30,7 @@ const initialState: InitialStateType = {
   lastDropOn: null,
   isSendFile: false,
   isChangeFile: { isActive: false },
+  isShareFile: { isShare: false },
 };
 
 const MainSlice = createSlice({
@@ -49,6 +54,12 @@ const MainSlice = createSlice({
     },
     setIsSendFile(state) {
       state.isSendFile = !state.isSendFile;
+    },
+    setIsShareFile(state, action: PayloadAction<string>) {
+      state.isShareFile.isShare = !state.isShareFile.isShare;
+      if (action.payload) {
+        state.isShareFile.uuid = action.payload;
+      }
     },
     setIsChangeFile(
       state,
@@ -107,6 +118,7 @@ export const {
   setLastDropOn,
   setIsSendFile,
   setIsChangeFile,
+  setIsShareFile,
   // clearLastDRopOn,
 } = MainSlice.actions;
 

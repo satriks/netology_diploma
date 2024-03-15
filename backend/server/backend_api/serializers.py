@@ -9,11 +9,12 @@ class FilesSerializer(serializers.ModelSerializer):
     user = serializers.PrimaryKeyRelatedField(read_only=True, default=serializers.CurrentUserDefault())
     class Meta:
         model = Files
-        fields = ['id','name', 'description','file', 'size', 'created_at', 'user']
-        read_only_fields = ['created_at', 'size']
+        fields = ['id','name', 'description','file', 'size', 'created_at', 'user', 'linkUiid', 'download_counter']
+        read_only_fields = ['created_at', 'size', 'linkUiid']
 
     def create(self, validated_data):
         validated_data['user'] = self.context['request'].user
+        validated_data['file'].name = validated_data['name'] + '.' + validated_data['file'].name.split('.')[-1]
         return Files.objects.create(**validated_data)
     # def save(self, **kwargs):
     #     kwargs["user"] = self.fields["user"].get_default()
