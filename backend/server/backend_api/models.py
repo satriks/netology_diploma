@@ -2,7 +2,7 @@ import os
 import uuid
 
 from django.conf import settings
-from django.contrib.auth.models import User
+from django.contrib.auth.models import User,  AbstractUser
 from django.db import models
 
 
@@ -10,7 +10,12 @@ def get_upload_to(instance, filename):
     return f'{instance.user.id}/' + f'{filename}'
 # Create your models here.
 
-#TODO add url : uuid field
+
+
+# class CostumUser(AbstractUser):
+#     avatar = models.ImageField(upload_to='avatars/', blank=True, null=True)
+
+
 class Files(models.Model):
     name = models.CharField(max_length=256, unique=True)
     description = models.TextField(blank=True, null=True)
@@ -26,7 +31,8 @@ class Files(models.Model):
         super(Files, self).save( *args, **kwargs)
         self.size = self.file.size
         super(Files, self).save(update_fields=['size'])
-class FilesLinks(models.Model):
-    file = models.ForeignKey(Files, on_delete=models.CASCADE)
-    link = models.TextField()
-    created_at = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return self.name | self.size
+
+

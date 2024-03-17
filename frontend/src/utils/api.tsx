@@ -1,4 +1,5 @@
 import axios from "axios";
+import { ChangeUser } from "../models/models";
 // import { OrderModel } from "../models/models";
 
 const connect = axios.create({
@@ -45,13 +46,23 @@ export const getUsersApi = (token: string) => {
     .then((response) => response.data);
 };
 //Get user
-
+export const getUserDetailApi = (token: string) => {
+  return connect
+    .get("api/users/detail", { headers: { Authorization: "token " + token } })
+    .then((response) => response.data);
+};
 //Add user
 
 //Del user
 
 //Update user
-
+export const UpdateUserApi = (token: string, body: ChangeUser, id: number) => {
+  return connect
+    .patch(`api/users/${id}/`, body, {
+      headers: { Authorization: "token " + token },
+    })
+    .then((response) => response.data);
+};
 //Get files
 export const getFilesApi = (token: string) => {
   return connect

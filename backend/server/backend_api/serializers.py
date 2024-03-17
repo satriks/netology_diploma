@@ -23,6 +23,7 @@ class FilesSerializer(serializers.ModelSerializer):
 
 class UserSerializer(serializers.HyperlinkedModelSerializer):
     password = serializers.CharField(write_only=True)
+    files = FilesSerializer(many=True, read_only=True)
 
     def create(self, validated_data):
         user = User.objects.create_user(
@@ -34,10 +35,24 @@ class UserSerializer(serializers.HyperlinkedModelSerializer):
         return user
     class Meta:
         model = User
-        fields = ['id','url', 'username','password', 'is_staff','email', 'files']
+        fields = ['id', 'username','password', 'is_staff','email', 'files', "first_name", "last_name", "date_joined"]
         read_only_fields = ['files']
 
 
     def save(self, **kwargs):
         user = super(UserSerializer, self).save(**kwargs)
-        Token.objects.create(user=user)
+        if not Token.objects.filter(user=user):
+            Token.objects.create(user=user)
+
+    def update(self, instance, validated_data):
+        # instance.name = validated_data.get('name', instance.name)
+        # validated_data.update(instance)
+
+        instance.last_name = validated_data.get('last_name', instance.last_name)
+        instance.first_name = validated_data.get('first_name', instance.first_name)
+        instance.email = validated_data.get('email', instance.email)
+        # instance.last_name = validated_data.get('last_name', instance.last_name)
+        instance.set_password(validated_data.get('password', instance.password))
+        instance.save()
+
+        return instance

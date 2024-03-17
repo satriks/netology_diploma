@@ -4,28 +4,34 @@ import {
   GET_FILES,
   GET_TOKEN,
   GET_USERS,
+  GET_USER_DETAIL,
   REGISTRATION,
   SEND_FILE,
   UPDATE_FILE,
+  UPDATE_USER,
   getLoginLoading,
   getSuccessFiles,
   getSuccessToken,
+  getSuccessUserDetail,
   setIsChangeFile,
   setIsSendFile,
 } from "./MainSlice";
 import { call, put, select, takeEvery } from "redux-saga/effects";
 import { AxiosResponse } from "axios";
 import {
+  UpdateUserApi,
   addFileApi,
   deleteFileApi,
   getFilesApi,
+  getUserDetailApi,
   getUsersApi,
   loginApi,
   registrationApi,
   updateFileApi,
 } from "../utils/api";
 import { useAppSelector } from "../models/hooks";
-import File_data from "../models/models";
+import File_data, { ChangeUser } from "../models/models";
+import User from "../models/models";
 
 export function* getTokenSaga(action: PayloadAction) {
   const token: string | null = yield select((store) => store.token);
@@ -249,6 +255,71 @@ export function* getUsersSaga(action: PayloadAction) {
     // );
   }
 }
+export function* getUserDetailSaga(action: PayloadAction) {
+  const token: string | null = yield select((store) => store.token);
+
+  console.log("get users");
+
+  // yield put(getLoginLoading());
+  if (token) {
+    try {
+      const response: User[] = yield getUserDetailApi(token);
+
+      // console.log(response[0]);
+
+      yield put(getSuccessUserDetail(response[0]));
+      // console.log(response);
+      // console.log(token);
+
+      // if response.status{
+      //   localStorage.setItem('token', JSON.stringify(response.token))
+      // }
+
+      // if (response.status > 200 && response.status < 300) {
+      //   yield put(getOrderSuccess());
+      //   yield delay(10000);
+      //   yield put(clearOrderSuccess());
+      // }
+    } catch (error) {
+      // yield put(
+      //   getItemFailed({ message: (error as Error).message, errFunc: action })
+      // );
+    }
+  }
+}
+export function* getUpdateUserSaga(
+  action: PayloadAction<{ body: ChangeUser; id: number }>
+) {
+  const token: string | null = yield select((store) => store.token);
+
+  console.log("get update");
+  console.log(action);
+  const { body, id } = action.payload;
+  console.log(body, id, " from update saga");
+
+  // yield put(getLoginLoading());
+  if (token && body) {
+    try {
+      const response: User[] = yield UpdateUserApi(token, body, id);
+      // console.log(response[0]);
+      // yield put(getSuccessUserDetail(response[0]));
+      console.log(response);
+      // console.log(token);
+      // if response.status{
+      //   localStorage.setItem('token', JSON.stringify(response.token))
+      // }
+      // if (response.status > 200 && response.status < 300) {
+      //   yield put(getOrderSuccess());
+      //   yield delay(10000);
+      //   yield put(clearOrderSuccess());
+      // }
+    } catch (error) {
+      // yield put(
+      //   getItemFailed({ message: (error as Error).message, errFunc: action })
+      // );
+    }
+  }
+}
 
 export function* mainSaga() {
   yield takeEvery(GET_TOKEN, getTokenSaga);
@@ -258,5 +329,7 @@ export function* mainSaga() {
   yield takeEvery(DEL_FILES, delFilesSaga);
   yield takeEvery(SEND_FILE, sendFileSaga);
   yield takeEvery(UPDATE_FILE, updateFileSaga);
+  yield takeEvery(GET_USER_DETAIL, getUserDetailSaga);
+  yield takeEvery(UPDATE_USER, getUpdateUserSaga);
   // yield takeEvery(GET_CATEGORY, getCategorySaga);
 }

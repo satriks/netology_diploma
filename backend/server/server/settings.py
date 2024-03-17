@@ -162,3 +162,7 @@ REST_FRAMEWORK = {
 #CORS
 
 CORS_ALLOW_ALL_ORIGINS = True
+
+#USERS
+
+# AUTH_USER_MODEL = 'backend_api.CostumUser'

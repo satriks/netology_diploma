@@ -1,5 +1,6 @@
 import { createAction, createSlice, PayloadAction } from "@reduxjs/toolkit";
-import File_data from "../models/models";
+import File_data, { ChangeUser } from "../models/models";
+import { User } from "../models/models";
 
 interface InitialStateType {
   loading: {
@@ -19,6 +20,7 @@ interface InitialStateType {
     isShare: boolean;
     uuid?: string;
   };
+  user: User | null;
 }
 
 const initialState: InitialStateType = {
@@ -31,6 +33,7 @@ const initialState: InitialStateType = {
   isSendFile: false,
   isChangeFile: { isActive: false },
   isShareFile: { isShare: false },
+  user: null,
 };
 
 const MainSlice = createSlice({
@@ -45,6 +48,9 @@ const MainSlice = createSlice({
     },
     getSuccessFiles(state, action: PayloadAction<File_data[]>) {
       state.files = [...action.payload];
+    },
+    getSuccessUserDetail(state, action: PayloadAction<User>) {
+      state.user = action.payload;
     },
     logout(state) {
       state.token = null;
@@ -109,6 +115,12 @@ export const update_file = createAction<{
   name: string;
   description: string;
 }>(UPDATE_FILE);
+export const GET_USER_DETAIL = "main/getUserDetail";
+export const get_user_detail = createAction(GET_USER_DETAIL);
+export const UPDATE_USER = "main/updateUser";
+export const update_user = createAction<{ body: ChangeUser; id: number }>(
+  UPDATE_USER
+);
 
 export const {
   getLoginLoading,
@@ -119,6 +131,7 @@ export const {
   setIsSendFile,
   setIsChangeFile,
   setIsShareFile,
+  getSuccessUserDetail,
   // clearLastDRopOn,
 } = MainSlice.actions;
 

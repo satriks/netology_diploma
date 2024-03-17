@@ -1,7 +1,7 @@
 from django.http import FileResponse
 from django.shortcuts import render
 from rest_framework import viewsets
-from rest_framework.authtoken.admin import User
+
 from rest_framework.response import Response
 from rest_framework.viewsets import ModelViewSet
 from rest_framework.views import APIView
@@ -9,10 +9,12 @@ from rest_framework.permissions import IsAuthenticated, IsAdminUser, AllowAny
 from django.contrib.auth import logout
 from django.shortcuts import redirect
 
+from django.contrib.auth.models import User
 from backend_api.models import Files
 from backend_api.serializers import FilesSerializer, UserSerializer
 from datetime import datetime
-
+# from django.contrib.auth import get_user_model
+# User = get_user_model()
 
 # Create your views here.
 class BackendAPIView(ModelViewSet):
@@ -49,13 +51,17 @@ class UserViewSet(ModelViewSet):
             self.permission_classes = (AllowAny, )
         return super(UserViewSet, self).get_permissions()
 
-# class UserDetailView(ModelViewSet):
-#     queryset = User.objects.all()
-#     serializer_class = UserSerializer
-#
-#     def get_queryset(self):
-#         user = self.request.user
-#         return User.objects.filter(user=user)
+
+
+class UserDetailView(ModelViewSet):
+    queryset = User.objects.all()
+    serializer_class = UserSerializer
+    permission_classes = (IsAuthenticated,)
+
+    def get_queryset(self):
+        queryset = User.objects.filter(id=self.request.user.id)
+        return queryset
+
 
 class LogoutView(APIView):
     """

@@ -20,7 +20,7 @@ from rest_framework import routers
 from django.conf.urls.static import static
 from django.conf import settings
 
-from backend_api.views import BackendAPIView, UserViewSet, LogoutView, DownloadFileAPIView
+from backend_api.views import BackendAPIView, UserViewSet, LogoutView, DownloadFileAPIView, UserDetailView
 from rest_framework.authtoken import views
 
 router = routers.SimpleRouter()
@@ -32,7 +32,7 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('api/', include(router.urls)),
     path('download/<str:id>', DownloadFileAPIView.as_view(), name='download' ),
-    # path('api/users/detail', UserDetailView.as_view({'head'})),
+    path('api/users/detail', UserDetailView.as_view({'get': 'list'})),
     path('api-auth/logout/', LogoutView.as_view(), name='logout'),
     path('api-auth/', include('rest_framework.urls', namespace='rest_framework')),
     path('api-token-auth/', views.obtain_auth_token)
