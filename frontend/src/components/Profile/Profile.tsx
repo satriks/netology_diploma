@@ -5,6 +5,7 @@ import { useAppDispatch, useAppSelector } from "../../models/hooks";
 import { get_user_detail, update_user } from "../../redux/MainSlice";
 import { useNavigate } from "react-router-dom";
 import File_data, { ChangeUser } from "../../models/models";
+import { sizeValidator, timeConverter } from "../../utils/utils";
 
 //TODO Изменить вывод даты регистрации, Сделать удобочитаемый размер фалов
 type Props = {};
@@ -27,7 +28,9 @@ export default function Profile({}: Props) {
       setLastName(user?.last_name);
       setFirstName(user?.first_name);
       setEmail(user?.email);
+      console.log(timeConverter(user?.date_joined), "time converter");
     }
+
     console.log(user, "from profile ");
   }, [user]);
 
@@ -48,7 +51,7 @@ export default function Profile({}: Props) {
           </label>
           <label>
             Дата регистрации
-            <input value={user?.date_joined} disabled />
+            <input value={timeConverter(user?.date_joined)} disabled />
           </label>
           <label>
             Email
@@ -72,7 +75,10 @@ export default function Profile({}: Props) {
         <div className="profile__file__info">
           <label>
             Всего загружено :
-            <input value={user ? count_sizes(user?.files) : 0} disabled />
+            <input
+              value={user ? sizeValidator(count_sizes(user.files)) : 0}
+              disabled
+            />
           </label>
           <label>
             Всего файлов :
