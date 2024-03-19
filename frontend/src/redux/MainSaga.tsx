@@ -4,6 +4,7 @@ import {
   GET_FILES,
   GET_TOKEN,
   GET_USERS,
+  GET_USER_DATA,
   GET_USER_DETAIL,
   REGISTRATION,
   SEND_FILE,
@@ -12,13 +13,16 @@ import {
   getLoginLoading,
   getSuccessFiles,
   getSuccessToken,
+  getSuccessUser,
   getSuccessUserDetail,
+  getSuccessUsers,
   setIsChangeFile,
   setIsSendFile,
 } from "./MainSlice";
 import { call, put, select, takeEvery } from "redux-saga/effects";
 import { AxiosResponse } from "axios";
 import {
+  GetUserApi,
   UpdateUserApi,
   addFileApi,
   deleteFileApi,
@@ -211,6 +215,8 @@ export function* delFilesSaga(action: PayloadAction) {
       if (response.status === 204) {
         yield call(getFilesSaga);
       }
+      // console.log(adminPanel.currentUser, "from del saga");
+
       console.log(response);
       // console.log(token);
       // if response.status{
@@ -228,31 +234,34 @@ export function* delFilesSaga(action: PayloadAction) {
     }
   }
 }
-export function* getUsersSaga(action: PayloadAction) {
+export function* getUsersSaga() {
   const token: string | null = yield select((store) => store.token);
 
   console.log("get users");
 
   // yield put(getLoginLoading());
-  try {
-    const response: AxiosResponse = yield getUsersApi(token);
+  if (token) {
+    try {
+      const response: User[] = yield getUsersApi(token);
 
-    console.log(response);
-    // console.log(token);
+      yield put(getSuccessUsers(response));
+      console.log(response);
+      // console.log(token);
 
-    // if response.status{
-    //   localStorage.setItem('token', JSON.stringify(response.token))
-    // }
+      // if response.status{
+      //   localStorage.setItem('token', JSON.stringify(response.token))
+      // }
 
-    // if (response.status > 200 && response.status < 300) {
-    //   yield put(getOrderSuccess());
-    //   yield delay(10000);
-    //   yield put(clearOrderSuccess());
-    // }
-  } catch (error) {
-    // yield put(
-    //   getItemFailed({ message: (error as Error).message, errFunc: action })
-    // );
+      // if (response.status > 200 && response.status < 300) {
+      //   yield put(getOrderSuccess());
+      //   yield delay(10000);
+      //   yield put(clearOrderSuccess());
+      // }
+    } catch (error) {
+      // yield put(
+      //   getItemFailed({ message: (error as Error).message, errFunc: action })
+      // );
+    }
   }
 }
 export function* getUserDetailSaga(action: PayloadAction) {
@@ -287,7 +296,40 @@ export function* getUserDetailSaga(action: PayloadAction) {
     }
   }
 }
-export function* getUpdateUserSaga(
+export function* getUserSaga(action: PayloadAction) {
+  const token: string | null = yield select((store) => store.token);
+
+  console.log("get user user user  ");
+
+  // yield put(getLoginLoading());
+  if (token) {
+    try {
+      const response: User = yield GetUserApi(token, action.payload);
+
+      // console.log(response[0]);
+      console.log(response);
+
+      yield put(getSuccessUser(response));
+      // console.log(response);
+      // console.log(token);
+
+      // if response.status{
+      //   localStorage.setItem('token', JSON.stringify(response.token))
+      // }
+
+      // if (response.status > 200 && response.status < 300) {
+      //   yield put(getOrderSuccess());
+      //   yield delay(10000);
+      //   yield put(clearOrderSuccess());
+      // }
+    } catch (error) {
+      // yield put(
+      //   getItemFailed({ message: (error as Error).message, errFunc: action })
+      // );
+    }
+  }
+}
+export function* updateUserSaga(
   action: PayloadAction<{ body: ChangeUser; id: number }>
 ) {
   const token: string | null = yield select((store) => store.token);
@@ -330,6 +372,7 @@ export function* mainSaga() {
   yield takeEvery(SEND_FILE, sendFileSaga);
   yield takeEvery(UPDATE_FILE, updateFileSaga);
   yield takeEvery(GET_USER_DETAIL, getUserDetailSaga);
-  yield takeEvery(UPDATE_USER, getUpdateUserSaga);
+  yield takeEvery(UPDATE_USER, updateUserSaga);
+  yield takeEvery(GET_USER_DATA, getUserSaga);
   // yield takeEvery(GET_CATEGORY, getCategorySaga);
 }

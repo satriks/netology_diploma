@@ -6,6 +6,7 @@ import Profile from "./components/Profile/Profile";
 import AuthorisationForm from "./components/LoginForm/AuthorisationForm";
 import { useAppSelector } from "./models/hooks";
 import ChangeFileForm from "./components/Files/ChangeFileForm/ChangeFileForm";
+import AdminPanel from "./components/AdminPanel/AdminPanel";
 
 function App() {
   const isLogin = useAppSelector((state) => state.token);
@@ -20,7 +21,7 @@ function App() {
       <Routes>
         <Route path="/" element={<FileList />} />
         <Route path="/profile" element={<Profile />} />
-        <Route path="/admin" element={<FileList />} />y
+        <Route path="/admin" element={<AdminPanel />} />y
       </Routes>
       <Footer />
     </BrowserRouter>

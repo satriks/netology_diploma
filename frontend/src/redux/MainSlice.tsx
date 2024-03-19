@@ -21,6 +21,10 @@ interface InitialStateType {
     uuid?: string;
   };
   user: User | null;
+  adminPanel: {
+    users: User[] | null;
+    currentUser: User | null;
+  };
 }
 
 const initialState: InitialStateType = {
@@ -34,6 +38,10 @@ const initialState: InitialStateType = {
   isChangeFile: { isActive: false },
   isShareFile: { isShare: false },
   user: null,
+  adminPanel: {
+    users: null,
+    currentUser: null,
+  },
 };
 
 const MainSlice = createSlice({
@@ -51,6 +59,15 @@ const MainSlice = createSlice({
     },
     getSuccessUserDetail(state, action: PayloadAction<User>) {
       state.user = action.payload;
+    },
+    getSuccessUser(state, action: PayloadAction<User>) {
+      state.adminPanel.currentUser = action.payload;
+    },
+    clearCurrentUser(state) {
+      state.adminPanel.currentUser = null;
+    },
+    getSuccessUsers(state, action: PayloadAction<User[]>) {
+      state.adminPanel.users = action.payload;
     },
     logout(state) {
       state.token = null;
@@ -121,6 +138,8 @@ export const UPDATE_USER = "main/updateUser";
 export const update_user = createAction<{ body: ChangeUser; id: number }>(
   UPDATE_USER
 );
+export const GET_USER_DATA = "main/getUserData";
+export const get_user_data = createAction<{ id: number }>(GET_USER_DATA);
 
 export const {
   getLoginLoading,
@@ -132,6 +151,9 @@ export const {
   setIsChangeFile,
   setIsShareFile,
   getSuccessUserDetail,
+  getSuccessUser,
+  getSuccessUsers,
+  clearCurrentUser,
   // clearLastDRopOn,
 } = MainSlice.actions;
 

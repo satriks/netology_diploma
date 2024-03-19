@@ -1,0 +1,38 @@
+.admin__fileItem {
+  position: relative;
+  border: 1px solid black;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  padding: 5px;
+
+  .fileItem__control {
+    position: absolute;
+    top: 5px;
+    right: 5px;
+    display: flex;
+    justify-content: flex-end;
+    align-items: flex-start;
+    gap: 5px;
+    flex-grow: 1;
+    margin-left: 30px;
+
+    button {
+      box-sizing: border-box;
+      background-color: transparent;
+      border: 0;
+      border-radius: 50%;
+      cursor: pointer;
+      //   padding-bottom: 10px;
+    }
+
+    button:hover {
+      border: 1px solid blue;
+    }
+
+    .redact {
+    }
+    .del {
+    }
+  }
+}

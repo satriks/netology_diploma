@@ -7,6 +7,8 @@ export default interface File_data {
   size: number;
   user: number;
   linkUiid: string;
+  download_counter: number;
+  download_at: string;
 }
 
 export interface User {

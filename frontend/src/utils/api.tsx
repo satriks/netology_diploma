@@ -45,10 +45,19 @@ export const getUsersApi = (token: string) => {
     .get("api/users/", { headers: { Authorization: "token " + token } })
     .then((response) => response.data);
 };
-//Get user
+//Get user detail
 export const getUserDetailApi = (token: string) => {
   return connect
     .get("api/users/detail", { headers: { Authorization: "token " + token } })
+    .then((response) => response.data);
+};
+
+//Get user
+export const GetUserApi = (token: string, id: number) => {
+  return connect
+    .get(`api/users/${id}/`, {
+      headers: { Authorization: "token " + token },
+    })
     .then((response) => response.data);
 };
 //Add user

@@ -9,7 +9,7 @@ class FilesSerializer(serializers.ModelSerializer):
     user = serializers.PrimaryKeyRelatedField(read_only=True, default=serializers.CurrentUserDefault())
     class Meta:
         model = Files
-        fields = ['id','name', 'description','file', 'size', 'created_at', 'user', 'linkUiid', 'download_counter']
+        fields = ['id','name', 'description','file', 'size', 'created_at', 'user', 'linkUiid', 'download_counter', "download_at"]
         read_only_fields = ['created_at', 'size', 'linkUiid']
 
     def create(self, validated_data):
@@ -51,7 +51,7 @@ class UserSerializer(serializers.HyperlinkedModelSerializer):
         instance.last_name = validated_data.get('last_name', instance.last_name)
         instance.first_name = validated_data.get('first_name', instance.first_name)
         instance.email = validated_data.get('email', instance.email)
-        # instance.last_name = validated_data.get('last_name', instance.last_name)
+        instance.is_staff = validated_data.get('is_staff', instance.is_staff)
         instance.set_password(validated_data.get('password', instance.password))
         instance.save()
 

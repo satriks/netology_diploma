@@ -1,5 +1,6 @@
 import dayjs from "dayjs";
 dayjs().format();
+
 // приводит размер Byte к ед.измерения
 export function sizeValidator(size: number) {
   const units = ["KB", "MB", "GB", "TB"];
@@ -13,10 +14,11 @@ export function sizeValidator(size: number) {
 
   return Math.round(rez) + " " + units[count];
 }
-
+// перевод дат в дд.мм.гг
 export function timeConverter(time: string) {
   if (time) {
     const day = dayjs(time);
     return day.format("DD-MM-YY");
   }
+  return "нет данных";
 }

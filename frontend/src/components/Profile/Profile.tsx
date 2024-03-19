@@ -28,10 +28,7 @@ export default function Profile({}: Props) {
       setLastName(user?.last_name);
       setFirstName(user?.first_name);
       setEmail(user?.email);
-      console.log(timeConverter(user?.date_joined), "time converter");
     }
-
-    console.log(user, "from profile ");
   }, [user]);
 
   return (
