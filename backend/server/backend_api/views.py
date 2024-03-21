@@ -21,15 +21,26 @@ class BackendAPIView(ModelViewSet):
     queryset = Files.objects.all()
     serializer_class = FilesSerializer
     permission_classes = [IsAuthenticated]
-    def get_queryset(self):
-        user = self.request.user
-        return Files.objects.filter(user=user)
+    # def get_queryset(self):
+    #     user = self.request.user
+    #     return Files.objects.filter(user=user)
+
+    # def get(self, request, id, format=None):
+    #     user = self.request.user.id
+    #     queryset = Files.objects.filter(user=user)
+    #     return Response(FilesSerializer(queryset, many=True).data)
+
+    def list(self, request, format=None):
+        user = self.request.user.id
+        queryset = Files.objects.filter(user=user)
+        return Response(FilesSerializer(queryset, many=True).data)
+
     # def perform_create(self, serializer):
     #     serializer.save(user=self.request.user)
 
 class DownloadFileAPIView(APIView):
     permission_classes = (AllowAny,)
-    def get(self,request, id, format=None):
+    def get(self, request, id, format=None):
         queryset = Files.objects.get(linkUiid=id)
         queryset.download_counter += 1
         queryset.download_at = datetime.now()
@@ -38,6 +49,8 @@ class DownloadFileAPIView(APIView):
         response = FileResponse(open(queryset.file.path, 'rb'), as_attachment=True, filename=name)
         # response['Content-Disposition'] = f'attachment; filename="{queryset.name}"'
         return response
+
+
 
 
 class UserViewSet(ModelViewSet):

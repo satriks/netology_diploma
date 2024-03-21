@@ -1,36 +1,15 @@
 import { useState } from "react";
 import "./RegistrationForm.scss";
 import { useAppDispatch } from "../../models/hooks";
-import { registration } from "../../redux/MainSlice";
+import { endAuthorization, registration } from "../../redux/MainSlice";
 
-export default function RegistrationForm({ onLogin }) {
+type Props = { onLogin: React.Dispatch<React.SetStateAction<boolean>> };
+
+export default function RegistrationForm({ onLogin }: Props) {
   const [username, setUsername] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const dispatch = useAppDispatch();
-
-  const handleUsernameChange = (e) => {
-    setUsername(e.target.value);
-  };
-
-  const handlePasswordChange = (e) => {
-    setPassword(e.target.value);
-  };
-  const handleEmailChange = (e) => {
-    setEmail(e.target.value);
-  };
-
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    // Add your login logic here
-    console.log("Username:", username);
-    console.log("Password:", password);
-    dispatch(registration({ username, password, email }));
-    onLogin(false);
-    // Reset form fields
-    setUsername("");
-    setPassword("");
-  };
 
   return (
     <form className="registration-form" onSubmit={handleSubmit}>
@@ -56,7 +35,9 @@ export default function RegistrationForm({ onLogin }) {
       <br />
       <div className="login-form__btns">
         <button type="submit">Регистрация</button>
-        <button className="cancel">Отмена</button>
+        <button className="cancel" onClick={handleCancel}>
+          Отмена
+        </button>
       </div>
       <span>
         Если у вас уже есть аккаунт вы можете{" "}
@@ -64,4 +45,31 @@ export default function RegistrationForm({ onLogin }) {
       </span>
     </form>
   );
+
+  function handleUsernameChange(e: React.ChangeEvent<HTMLInputElement>) {
+    setUsername(e.target.value);
+  }
+
+  function handlePasswordChange(e: React.ChangeEvent<HTMLInputElement>) {
+    setPassword(e.target.value);
+  }
+  function handleEmailChange(e: React.ChangeEvent<HTMLInputElement>) {
+    setEmail(e.target.value);
+  }
+  function handleCancel(e: React.MouseEvent<HTMLButtonElement>) {
+    e.preventDefault();
+    dispatch(endAuthorization());
+  }
+
+  function handleSubmit(e: React.FormEvent) {
+    e.preventDefault();
+    // Add your login logic here
+    console.log("Username:", username);
+    console.log("Password:", password);
+    dispatch(registration({ username, password, email }));
+    onLogin(false);
+    // Reset form fields
+    setUsername("");
+    setPassword("");
+  }
 }

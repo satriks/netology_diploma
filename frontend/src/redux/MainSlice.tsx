@@ -9,6 +9,7 @@ interface InitialStateType {
   token: string | null;
   files: File_data[];
   lastDropOn: number | null;
+  authorization: boolean;
   isSendFile: boolean;
   isChangeFile: {
     name?: string;
@@ -42,12 +43,22 @@ const initialState: InitialStateType = {
     users: null,
     currentUser: null,
   },
+  authorization: false,
 };
 
 const MainSlice = createSlice({
   name: "main",
   initialState,
   reducers: {
+    startAuthorization(state) {
+      state.authorization = true;
+    },
+    endAuthorization(state) {
+      state.authorization = false;
+    },
+    clearUserToken(state) {
+      state.token = null;
+    },
     getLoginLoading(state) {
       state.loading.login = true;
     },
@@ -112,9 +123,16 @@ const MainSlice = createSlice({
 });
 
 export const GET_TOKEN = "main/getToken";
-export const getToken = createAction(GET_TOKEN);
+export const getToken = createAction<{
+  username: string;
+  password: string;
+}>(GET_TOKEN);
 export const REGISTRATION = "main/registration";
-export const registration = createAction(REGISTRATION);
+export const registration = createAction<{
+  username: string;
+  password: string;
+  email: string;
+}>(REGISTRATION);
 export const GET_USERS = "main/getUsers";
 export const get_users = createAction(GET_USERS);
 export const GET_FILES = "main/getFiles";
@@ -142,6 +160,9 @@ export const GET_USER_DATA = "main/getUserData";
 export const get_user_data = createAction<{ id: number }>(GET_USER_DATA);
 
 export const {
+  clearUserToken,
+  startAuthorization,
+  endAuthorization,
   getLoginLoading,
   getSuccessToken,
   getSuccessFiles,

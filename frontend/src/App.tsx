@@ -9,13 +9,13 @@ import ChangeFileForm from "./components/Files/ChangeFileForm/ChangeFileForm";
 import AdminPanel from "./components/AdminPanel/AdminPanel";
 
 function App() {
-  const isLogin = useAppSelector((state) => state.token);
+  const authorization = useAppSelector((state) => state.authorization);
 
   // const list = [1, 2, 3, 4, 5];
   return (
     <BrowserRouter>
       <Header />
-      {!isLogin && <AuthorisationForm />}
+      {authorization && <AuthorisationForm />}
       {/* <ChangeFileForm /> */}
       {/* <AddNewFile /> */}
       <Routes>

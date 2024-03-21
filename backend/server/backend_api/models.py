@@ -32,7 +32,7 @@ class Files(models.Model):
         self.size = self.file.size
         super(Files, self).save(update_fields=['size'])
 
-    def __str__(self):
-        return self.name | self.size
+    # def __str__(self):
+    #     return self.name +' | ' + self.size
 
 

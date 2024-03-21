@@ -10,6 +10,7 @@ import {
   SEND_FILE,
   UPDATE_FILE,
   UPDATE_USER,
+  endAuthorization,
   getLoginLoading,
   getSuccessFiles,
   getSuccessToken,
@@ -50,6 +51,8 @@ export function* getTokenSaga(action: PayloadAction) {
     console.log(response);
     console.log(token);
     yield put(getSuccessToken(response));
+    yield put(endAuthorization());
+    yield call(getUserDetailSaga);
     // if response.status{
     //   localStorage.setItem('token', JSON.stringify(response.token))
     // }
@@ -122,6 +125,8 @@ export function* getFilesSaga() {
       //   getItemFailed({ message: (error as Error).message, errFunc: action })
       // );
     }
+  } else {
+    yield put(getSuccessFiles([]));
   }
 }
 export function* sendFileSaga(action: PayloadAction) {
@@ -205,6 +210,8 @@ export function* delFilesSaga(action: PayloadAction) {
   if (token) {
     // yield put(getLoginLoading());
     try {
+      console.log(token, action.payload, " from del token + id");
+
       const response: AxiosResponse = yield deleteFileApi(
         token,
         action.payload
@@ -264,7 +271,7 @@ export function* getUsersSaga() {
     }
   }
 }
-export function* getUserDetailSaga(action: PayloadAction) {
+export function* getUserDetailSaga() {
   const token: string | null = yield select((store) => store.token);
 
   console.log("get users");

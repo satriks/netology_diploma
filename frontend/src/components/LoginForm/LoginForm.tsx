@@ -1,32 +1,14 @@
 import { useState } from "react";
 import "./LoginForm.scss";
 import { useAppDispatch } from "../../models/hooks";
-import { getToken } from "../../redux/MainSlice";
+import { endAuthorization, getToken } from "../../redux/MainSlice";
 
-export default function LoginForm({ onLogin }) {
+type Props = { onLogin: React.Dispatch<React.SetStateAction<boolean>> };
+
+export default function LoginForm({ onLogin }: Props) {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const dispatch = useAppDispatch();
-
-  const handleUsernameChange = (e) => {
-    setUsername(e.target.value);
-  };
-
-  const handlePasswordChange = (e) => {
-    setPassword(e.target.value);
-  };
-
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    // Add your login logic here
-    console.log("Username:", username);
-    console.log("Password:", password);
-    dispatch(getToken({ username, password }));
-
-    // Reset form fields
-    setUsername("");
-    setPassword("");
-  };
 
   return (
     <form className="login-form" onSubmit={handleSubmit}>
@@ -47,12 +29,14 @@ export default function LoginForm({ onLogin }) {
       <br />
       <div className="login-form__btns">
         <button type="submit">Войти</button>
-        <button className="cancel">Отмена</button>
+        <button className="cancel" onClick={handleCancel}>
+          Отмена
+        </button>
       </div>
       <span>
         Если у вас нет аккаунта вы можете{" "}
         <b
-          onClick={(e) => {
+          onClick={() => {
             onLogin(true);
           }}
         >
@@ -61,4 +45,28 @@ export default function LoginForm({ onLogin }) {
       </span>
     </form>
   );
+
+  function handleUsernameChange(e: React.ChangeEvent<HTMLInputElement>) {
+    setUsername(e.target.value);
+  }
+
+  function handlePasswordChange(e: React.ChangeEvent<HTMLInputElement>) {
+    setPassword(e.target.value);
+  }
+  function handleCancel(e: React.MouseEvent<HTMLButtonElement>) {
+    e.preventDefault();
+    dispatch(endAuthorization());
+  }
+
+  function handleSubmit(e: React.FormEvent) {
+    e.preventDefault();
+    // Add your login logic here
+    console.log("Username:", username);
+    console.log("Password:", password);
+    dispatch(getToken({ username, password }));
+
+    // Reset form fields
+    setUsername("");
+    setPassword("");
+  }
 }

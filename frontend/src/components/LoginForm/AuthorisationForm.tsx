@@ -9,9 +9,11 @@ type Props = {};
 export default function AuthorisationForm({}: Props) {
   const [login, setLogin] = useState(false);
   const navigate = useNavigate();
+
   useEffect(() => {
     navigate("/");
   }, []);
+
   return (
     <div className="authorization__wrapper">
       {login ? (

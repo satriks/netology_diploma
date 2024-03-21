@@ -1,7 +1,6 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import avatarUnknown from "../../assets/avatar_unknown.png";
 import { useAppDispatch, useAppSelector } from "../../models/hooks";
-import { useNavigate } from "react-router-dom";
 import { sizeValidator, timeConverter } from "../../utils/utils";
 import { update_user } from "../../redux/MainSlice";
 import "./UserInfo.scss";
@@ -101,22 +100,22 @@ export default function UserInfo() {
       </div>
     </div>
   );
-  function handleLastNameChange(e) {
+  function handleLastNameChange(e: React.ChangeEvent<HTMLInputElement>) {
     setLastName(e.target.value);
   }
-  function handleFirstNameChange(e) {
+  function handleFirstNameChange(e: React.ChangeEvent<HTMLInputElement>) {
     setFirstName(e.target.value);
   }
-  function handlePasswordChange(e) {
+  function handlePasswordChange(e: React.ChangeEvent<HTMLInputElement>) {
     setPassword(e.target.value);
   }
-  function handleEmailChange(e) {
+  function handleEmailChange(e: React.ChangeEvent<HTMLInputElement>) {
     setEmail(e.target.value);
   }
-  function handleIsStaffChange(e) {
+  function handleIsStaffChange(e: React.ChangeEvent<HTMLInputElement>) {
     setIsStaff(e.target.checked);
   }
-  function handleSubmit(e) {
+  function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
     const body: ChangeUser = {};
 
@@ -135,7 +134,6 @@ export default function UserInfo() {
     if (password.trim()) {
       body["password"] = password;
     }
-    // console.log(e.target.isStaff.checked);
 
     if (isStaff != user?.is_staff) {
       body["is_staff"] = isStaff;

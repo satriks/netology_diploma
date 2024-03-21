@@ -7,3 +7,4 @@ from backend_api.models import Files
 @admin.register(Files)
 class FilesAdmin(admin.ModelAdmin):
     list_display = ('id','name', 'description','file', 'size', 'created_at', 'user', 'linkUiid')
+    readonly_fields = ('file',)

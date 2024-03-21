@@ -3,12 +3,15 @@ import logo from "../../assets/logo.png";
 import cloudy from "../../assets/cloudy.png";
 import DropMenu from "./DropMenu/DropMenu";
 import avatarUnknown from "../../assets/avatar_unknown.png";
-import { useAppSelector } from "../../models/hooks";
+import { useAppDispatch, useAppSelector } from "../../models/hooks";
+import { startAuthorization } from "../../redux/MainSlice";
 
 type Props = {};
 
 export default function Header({}: Props) {
   const isLogin = useAppSelector((state) => state.token);
+  const dispatch = useAppDispatch();
+
   return (
     <div className="header">
       <img className="header-logo" src={logo}></img>
@@ -24,7 +27,18 @@ export default function Header({}: Props) {
           ></img>
         </div>
         <div className="page">
-          <DropMenu />
+          {isLogin ? (
+            <DropMenu />
+          ) : (
+            <div
+              className="header__login"
+              onClick={() => {
+                dispatch(startAuthorization());
+              }}
+            >
+              Войти
+            </div>
+          )}
         </div>
       </div>
     </div>

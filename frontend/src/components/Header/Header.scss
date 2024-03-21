@@ -47,6 +47,11 @@
         border-radius: 10px;
         background-color: $secondFontColor;
       }
+
+      .header__login {
+        border: 1px solid $secondFontColor;
+        cursor: pointer;
+      }
     }
   }
 }

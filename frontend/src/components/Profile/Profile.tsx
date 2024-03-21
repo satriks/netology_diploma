@@ -48,7 +48,10 @@ export default function Profile({}: Props) {
           </label>
           <label>
             Дата регистрации
-            <input value={timeConverter(user?.date_joined)} disabled />
+            <input
+              value={user ? timeConverter(user.date_joined) : ""}
+              disabled
+            />
           </label>
           <label>
             Email
@@ -86,19 +89,19 @@ export default function Profile({}: Props) {
     </div>
   );
 
-  function handleLastNameChange(e) {
+  function handleLastNameChange(e: React.ChangeEvent<HTMLInputElement>) {
     setLastName(e.target.value);
   }
-  function handleFirstNameChange(e) {
+  function handleFirstNameChange(e: React.ChangeEvent<HTMLInputElement>) {
     setFirstName(e.target.value);
   }
-  function handlePasswordChange(e) {
+  function handlePasswordChange(e: React.ChangeEvent<HTMLInputElement>) {
     setPassword(e.target.value);
   }
-  function handleEmailChange(e) {
+  function handleEmailChange(e: React.ChangeEvent<HTMLInputElement>) {
     setEmail(e.target.value);
   }
-  function handleSubmit(e) {
+  function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
     const body: ChangeUser = {};
 
@@ -126,13 +129,6 @@ export default function Profile({}: Props) {
         })
       );
     }
-
-    // body = {
-
-    //   first_name: firstName,
-    //   email: email,
-    //   password: password ? password : "",
-    // };
   }
 
   function count_sizes(files: File_data[]) {
