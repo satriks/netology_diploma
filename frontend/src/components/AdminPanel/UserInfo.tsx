@@ -79,7 +79,7 @@ export default function UserInfo() {
               />
             </label>
             <label>
-              Админ :
+              Администратор :
               <input
                 type="checkbox"
                 id="isStaff"

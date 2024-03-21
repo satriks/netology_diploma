@@ -17,6 +17,7 @@ import {
   getSuccessUser,
   getSuccessUserDetail,
   getSuccessUsers,
+  get_user_data,
   setIsChangeFile,
   setIsSendFile,
 } from "./MainSlice";
@@ -169,13 +170,14 @@ export function* updateFileSaga(action: PayloadAction) {
   console.log(action.payload, "from update saga");
 
   if (token) {
-    const FileCangeInfo = yield select((store) => store.isChangeFile);
+    const fileCangeInfo = yield select((store) => store.isChangeFile);
+    const currentUser = yield select((store) => store.adminPanel.currentUser);
 
     // yield put(getLoginLoading());
     try {
       const response: AxiosResponse = yield updateFileApi(
         token,
-        FileCangeInfo.id,
+        fileCangeInfo.id,
         action.payload
       );
       console.log(response.status, "this ststus from update saga");
@@ -183,6 +185,9 @@ export function* updateFileSaga(action: PayloadAction) {
       if (response.status === 200) {
         yield call(getFilesSaga);
         yield put(setIsChangeFile());
+        if (currentUser) {
+          yield put(get_user_data(currentUser.id));
+        }
       }
       // console.log(response);
       // console.log(token);
@@ -203,7 +208,7 @@ export function* updateFileSaga(action: PayloadAction) {
 }
 export function* delFilesSaga(action: PayloadAction) {
   const token: string | null = yield select((store) => store.token);
-
+  const currentUser = yield select((store) => store.adminPanel.currentUser);
   console.log(action.payload, "from del saga");
 
   console.log("del files");
@@ -221,6 +226,9 @@ export function* delFilesSaga(action: PayloadAction) {
 
       if (response.status === 204) {
         yield call(getFilesSaga);
+        if (currentUser) {
+          yield put(get_user_data(currentUser.id));
+        }
       }
       // console.log(adminPanel.currentUser, "from del saga");
 
