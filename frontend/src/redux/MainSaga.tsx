@@ -11,7 +11,11 @@ import {
   UPDATE_FILE,
   UPDATE_USER,
   endAuthorization,
+  getAdminFilesLoading,
+  getAdminUserDataLoading,
+  getAdminUsersLoading,
   getLoginLoading,
+  getProfileLoading,
   getSuccessFiles,
   getSuccessToken,
   getSuccessUser,
@@ -254,7 +258,7 @@ export function* getUsersSaga() {
 
   console.log("get users");
 
-  // yield put(getLoginLoading());
+  yield put(getAdminUsersLoading());
   if (token) {
     try {
       const response: User[] = yield getUsersApi(token);
@@ -284,7 +288,7 @@ export function* getUserDetailSaga() {
 
   console.log("get users");
 
-  // yield put(getLoginLoading());
+  yield put(getProfileLoading());
   if (token) {
     try {
       const response: User[] = yield getUserDetailApi(token);
@@ -316,7 +320,8 @@ export function* getUserSaga(action: PayloadAction) {
 
   console.log("get user user user  ");
 
-  // yield put(getLoginLoading());
+  yield put(getAdminUserDataLoading());
+  yield put(getAdminFilesLoading());
   if (token) {
     try {
       const response: User = yield GetUserApi(token, action.payload);

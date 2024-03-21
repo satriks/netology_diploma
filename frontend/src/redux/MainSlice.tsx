@@ -5,6 +5,10 @@ import { User } from "../models/models";
 interface InitialStateType {
   loading: {
     login: boolean;
+    profile: boolean;
+    adminUsers: boolean;
+    adminUserData: boolean;
+    adminFileData: boolean;
   };
   token: string | null;
   files: File_data[];
@@ -31,6 +35,10 @@ interface InitialStateType {
 const initialState: InitialStateType = {
   loading: {
     login: false,
+    profile: false,
+    adminUsers: false,
+    adminUserData: false,
+    adminFileData: false,
   },
   token: null,
   files: [],
@@ -62,23 +70,40 @@ const MainSlice = createSlice({
     getLoginLoading(state) {
       state.loading.login = true;
     },
+    getProfileLoading(state) {
+      state.loading.profile = true;
+    },
+    getAdminUsersLoading(state) {
+      state.loading.adminUsers = true;
+    },
+    getAdminUserDataLoading(state) {
+      state.loading.adminUserData = true;
+    },
+    getAdminFilesLoading(state) {
+      state.loading.adminFileData = true;
+    },
     getSuccessToken(state, action) {
       state.token = action.payload.token;
+      state.loading.login = false;
     },
     getSuccessFiles(state, action: PayloadAction<File_data[]>) {
       state.files = [...action.payload];
     },
     getSuccessUserDetail(state, action: PayloadAction<User>) {
       state.user = action.payload;
+      state.loading.profile = false;
     },
     getSuccessUser(state, action: PayloadAction<User>) {
       state.adminPanel.currentUser = action.payload;
+      state.loading.adminUserData = false;
+      state.loading.adminFileData = false;
     },
     clearCurrentUser(state) {
       state.adminPanel.currentUser = null;
     },
     getSuccessUsers(state, action: PayloadAction<User[]>) {
       state.adminPanel.users = action.payload;
+      state.loading.adminUsers = false;
     },
     logout(state) {
       state.token = null;
@@ -164,6 +189,10 @@ export const {
   startAuthorization,
   endAuthorization,
   getLoginLoading,
+  getProfileLoading,
+  getAdminUsersLoading,
+  getAdminUserDataLoading,
+  getAdminFilesLoading,
   getSuccessToken,
   getSuccessFiles,
   logout,

@@ -10,6 +10,7 @@ import {
 import AddNewFile from "../AddNewFileForm/AddNewFile";
 import ChangeFileForm from "../ChangeFileForm/ChangeFileForm";
 import ShareFileForm from "../ShareFileForm/ShareFileForm";
+import Louder from "../../Louder/Louder";
 
 type Props = {};
 
@@ -19,6 +20,7 @@ export default function FileList({}: Props) {
   const isSendFile = useAppSelector((state) => state.isSendFile);
   const isChangeFile = useAppSelector((state) => state.isChangeFile);
   const isShareFile = useAppSelector((state) => state.isShareFile);
+  const isLoading = useAppSelector((state) => state.loading.login);
   const [isDragging, setIsDragging] = useState(false);
   const [dragFile, setDragFIle] = useState<File | null>(null);
   const dispatch = useAppDispatch();
@@ -28,36 +30,42 @@ export default function FileList({}: Props) {
       dispatch(get_files());
     }
   }, [isLogin]);
-  return (
-    <div
-      className={`container ${isDragging ? "dragging" : ""}`}
-      onDragEnter={handleDragEnter}
-      onDragOver={handleDragOver}
-      onDragLeave={handleDragLeave}
-      onDrop={handleDrop}
-    >
+
+  if (isLoading) {
+    return <Louder />;
+  } else {
+    return (
       <div
-        className={`file-list `}
-        onClick={() => dispatch(setLastDropOn(null))}
+        className={`container ${isDragging ? "dragging" : ""}`}
+        onDragEnter={handleDragEnter}
+        onDragOver={handleDragOver}
+        onDragLeave={handleDragLeave}
+        onDrop={handleDrop}
       >
-        {files.map((el) => (
-          <FileItem key={el.id} data={el} />
-        ))}
-        <FileItem
-          key={"add"}
-          data={{ file: "add", name: "Добавить файл", id: 0 }}
-        />
+        {/* <Louder /> */}
+        <div
+          className={`file-list `}
+          onClick={() => dispatch(setLastDropOn(null))}
+        >
+          {files.map((el) => (
+            <FileItem key={el.id} data={el} />
+          ))}
+          <FileItem
+            key={"add"}
+            data={{ file: "add", name: "Добавить файл", id: 0 }}
+          />
+        </div>
+        {isSendFile && <AddNewFile file={dragFile} setDragFile={setDragFIle} />}
+        {isChangeFile.isActive && (
+          <ChangeFileForm
+            name={isChangeFile.name}
+            desc={isChangeFile.description}
+          />
+        )}
+        {isShareFile.isShare && <ShareFileForm uuid={isShareFile.uuid} />}
       </div>
-      {isSendFile && <AddNewFile file={dragFile} setDragFile={setDragFIle} />}
-      {isChangeFile.isActive && (
-        <ChangeFileForm
-          name={isChangeFile.name}
-          desc={isChangeFile.description}
-        />
-      )}
-      {isShareFile.isShare && <ShareFileForm uuid={isShareFile.uuid} />}
-    </div>
-  );
+    );
+  }
 
   function handleDragEnter(e) {
     e.preventDefault();

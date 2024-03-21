@@ -7,6 +7,7 @@ import AuthorisationForm from "./components/LoginForm/AuthorisationForm";
 import { useAppSelector } from "./models/hooks";
 import ChangeFileForm from "./components/Files/ChangeFileForm/ChangeFileForm";
 import AdminPanel from "./components/AdminPanel/AdminPanel";
+import Louder from "./components/Louder/Louder";
 
 function App() {
   const authorization = useAppSelector((state) => state.authorization);
@@ -15,6 +16,7 @@ function App() {
   return (
     <BrowserRouter>
       <Header />
+      {/* <Louder /> */}
       {authorization && <AuthorisationForm />}
       {/* <ChangeFileForm /> */}
       {/* <AddNewFile /> */}

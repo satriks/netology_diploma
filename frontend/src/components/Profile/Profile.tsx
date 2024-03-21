@@ -6,12 +6,14 @@ import { get_user_detail, update_user } from "../../redux/MainSlice";
 import { useNavigate } from "react-router-dom";
 import File_data, { ChangeUser } from "../../models/models";
 import { sizeValidator, timeConverter } from "../../utils/utils";
+import Louder from "../Louder/Louder";
 
 //TODO Изменить вывод даты регистрации, Сделать удобочитаемый размер фалов
 type Props = {};
 
 export default function Profile({}: Props) {
   const user = useAppSelector((state) => state.user);
+  const loading = useAppSelector((state) => state.loading.profile);
   const dispatch = useAppDispatch();
   const naigate = useNavigate();
   const [lastName, setLastName] = useState("");
@@ -31,64 +33,68 @@ export default function Profile({}: Props) {
     }
   }, [user]);
 
-  return (
-    <div className="profile__wrapper">
-      <form className="profile" onSubmit={handleSubmit}>
-        <h2>Данные профиля</h2>
-        <img src={avatarUnknown} alt="" />
-        <span> {user?.username}</span>
-        <div className="profile__info">
-          <label>
-            Имя
-            <input value={firstName} onChange={handleFirstNameChange} />
-          </label>
-          <label>
-            Фамилия
-            <input value={lastName} onChange={handleLastNameChange} />
-          </label>
-          <label>
-            Дата регистрации
-            <input
-              value={user ? timeConverter(user.date_joined) : ""}
-              disabled
-            />
-          </label>
-          <label>
-            Email
-            <input value={email} onChange={handleEmailChange} />
-          </label>
-          <label>
-            Сменить пароль :
-            <input
-              type="password"
-              value={password}
-              onChange={handlePasswordChange}
-            />
-          </label>
-        </div>
-        <div className="profile__control">
-          <button type="submit">Сохранить изменения </button>
-          {/* <button className="cancel" onClick={handleClose}>
+  if (loading) {
+    return <Louder />;
+  } else {
+    return (
+      <div className="profile__wrapper">
+        {/* <Louder /> */}
+        <form className="profile" onSubmit={handleSubmit}>
+          <h2>Данные профиля</h2>
+          <img src={avatarUnknown} alt="" />
+          <span> {user?.username}</span>
+          <div className="profile__info">
+            <label>
+              Имя
+              <input value={firstName} onChange={handleFirstNameChange} />
+            </label>
+            <label>
+              Фамилия
+              <input value={lastName} onChange={handleLastNameChange} />
+            </label>
+            <label>
+              Дата регистрации
+              <input
+                value={user ? timeConverter(user.date_joined) : ""}
+                disabled
+              />
+            </label>
+            <label>
+              Email
+              <input value={email} onChange={handleEmailChange} />
+            </label>
+            <label>
+              Сменить пароль :
+              <input
+                type="password"
+                value={password}
+                onChange={handlePasswordChange}
+              />
+            </label>
+          </div>
+          <div className="profile__control">
+            <button type="submit">Сохранить изменения </button>
+            {/* <button className="cancel" onClick={handleClose}>
             Отмена
           </button> */}
-        </div>
-        <div className="profile__file__info">
-          <label>
-            Всего загружено :
-            <input
-              value={user ? sizeValidator(count_sizes(user.files)) : 0}
-              disabled
-            />
-          </label>
-          <label>
-            Всего файлов :
-            <input value={user?.files.length} disabled />
-          </label>
-        </div>
-      </form>
-    </div>
-  );
-
+          </div>
+          <div className="profile__file__info">
+            <label>
+              Всего загружено :
+              <input
+                value={user ? sizeValidator(count_sizes(user.files)) : 0}
+                disabled
+              />
+            </label>
+            <label>
+              Всего файлов :
+              <input value={user?.files.length} disabled />
+            </label>
+          </div>
+        </form>
+      </div>
+    );
+  }
   function handleLastNameChange(e: React.ChangeEvent<HTMLInputElement>) {
     setLastName(e.target.value);
   }
