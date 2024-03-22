@@ -177,6 +177,8 @@ export const update_file = createAction<{
 }>(UPDATE_FILE);
 export const GET_USER_DETAIL = "main/getUserDetail";
 export const get_user_detail = createAction(GET_USER_DETAIL);
+export const DELETE_USER = "main/delUser";
+export const del_user = createAction<number>(DELETE_USER);
 export const UPDATE_USER = "main/updateUser";
 export const update_user = createAction<{ body: ChangeUser; id: number }>(
   UPDATE_USER

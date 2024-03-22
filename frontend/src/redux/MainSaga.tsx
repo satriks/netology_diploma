@@ -1,5 +1,6 @@
 import { PayloadAction } from "@reduxjs/toolkit";
 import {
+  DELETE_USER,
   DEL_FILES,
   GET_FILES,
   GET_TOKEN,
@@ -22,14 +23,15 @@ import {
   getSuccessUserDetail,
   getSuccessUsers,
   get_user_data,
+  get_users,
   setIsChangeFile,
   setIsSendFile,
 } from "./MainSlice";
 import { call, put, select, takeEvery } from "redux-saga/effects";
 import { AxiosResponse } from "axios";
 import {
-  GetUserApi,
-  UpdateUserApi,
+  getUserApi,
+  updateUserApi,
   addFileApi,
   deleteFileApi,
   getFilesApi,
@@ -38,6 +40,7 @@ import {
   loginApi,
   registrationApi,
   updateFileApi,
+  delUserApi,
 } from "../utils/api";
 import { useAppSelector } from "../models/hooks";
 import File_data, { ChangeUser } from "../models/models";
@@ -324,7 +327,7 @@ export function* getUserSaga(action: PayloadAction) {
   yield put(getAdminFilesLoading());
   if (token) {
     try {
-      const response: User = yield GetUserApi(token, action.payload);
+      const response: User = yield getUserApi(token, action.payload);
 
       // console.log(response[0]);
       console.log(response);
@@ -362,7 +365,7 @@ export function* updateUserSaga(
   // yield put(getLoginLoading());
   if (token && body) {
     try {
-      const response: User[] = yield UpdateUserApi(token, body, id);
+      const response: User[] = yield updateUserApi(token, body, id);
       // console.log(response[0]);
       // yield put(getSuccessUserDetail(response[0]));
       console.log(response);
@@ -382,6 +385,28 @@ export function* updateUserSaga(
     }
   }
 }
+export function* delUserSaga(action: PayloadAction<number>) {
+  const token: string | null = yield select((store) => store.token);
+
+  const id = action.payload;
+
+  if (token) {
+    try {
+      const response: AxiosResponse = yield delUserApi(token, id);
+
+      console.log(response);
+      console.log(response.status);
+
+      if (response.status > 200 && response.status < 300) {
+        yield put(get_users());
+      }
+    } catch (error) {
+      // yield put(
+      //   getItemFailed({ message: (error as Error).message, errFunc: action })
+      // );
+    }
+  }
+}
 
 export function* mainSaga() {
   yield takeEvery(GET_TOKEN, getTokenSaga);
@@ -394,5 +419,6 @@ export function* mainSaga() {
   yield takeEvery(GET_USER_DETAIL, getUserDetailSaga);
   yield takeEvery(UPDATE_USER, updateUserSaga);
   yield takeEvery(GET_USER_DATA, getUserSaga);
+  yield takeEvery(DELETE_USER, delUserSaga);
   // yield takeEvery(GET_CATEGORY, getCategorySaga);
 }

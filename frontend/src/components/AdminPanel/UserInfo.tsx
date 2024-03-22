@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import avatarUnknown from "../../assets/avatar_unknown.png";
 import { useAppDispatch, useAppSelector } from "../../models/hooks";
 import { sizeValidator, timeConverter } from "../../utils/utils";
-import { update_user } from "../../redux/MainSlice";
+import { del_user, update_user } from "../../redux/MainSlice";
 import "./UserInfo.scss";
 import File_data, { ChangeUser } from "../../models/models";
 import Louder from "../Louder/Louder";
@@ -93,6 +93,9 @@ export default function UserInfo() {
           </div>
           <div className="admin-profile__control">
             <button type="submit">Сохранить изменения </button>
+            <button className="del__user" onClick={delUser}>
+              Удалить пользователя{" "}
+            </button>
             {/* <button className="cancel" onClick={handleClose}>
         Отмена
       </button> */}
@@ -115,6 +118,12 @@ export default function UserInfo() {
   }
   function handleIsStaffChange(e: React.ChangeEvent<HTMLInputElement>) {
     setIsStaff(e.target.checked);
+  }
+  function delUser(e) {
+    e.preventDefault();
+    if (user?.id) {
+      dispatch(del_user(user?.id));
+    }
   }
   function handleSubmit(e: React.FormEvent) {
     e.preventDefault();

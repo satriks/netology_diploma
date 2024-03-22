@@ -53,7 +53,7 @@ export const getUserDetailApi = (token: string) => {
 };
 
 //Get user
-export const GetUserApi = (token: string, id: number) => {
+export const getUserApi = (token: string, id: number) => {
   return connect
     .get(`api/users/${id}/`, {
       headers: { Authorization: "token " + token },
@@ -63,9 +63,13 @@ export const GetUserApi = (token: string, id: number) => {
 //Add user
 
 //Del user
-
+export const delUserApi = (token: string, id: number) => {
+  return connect.delete(`api/users/${id}/`, {
+    headers: { Authorization: "token " + token },
+  });
+};
 //Update user
-export const UpdateUserApi = (token: string, body: ChangeUser, id: number) => {
+export const updateUserApi = (token: string, body: ChangeUser, id: number) => {
   return connect
     .patch(`api/users/${id}/`, body, {
       headers: { Authorization: "token " + token },
