@@ -4,14 +4,23 @@ import FileList from "./components/Files/FIleList/FIleList";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import Profile from "./components/Profile/Profile";
 import AuthorisationForm from "./components/LoginForm/AuthorisationForm";
-import { useAppSelector } from "./models/hooks";
-import ChangeFileForm from "./components/Files/ChangeFileForm/ChangeFileForm";
+import { useAppDispatch, useAppSelector } from "./models/hooks";
 import AdminPanel from "./components/AdminPanel/AdminPanel";
-import Louder from "./components/Louder/Louder";
+import { useEffect } from "react";
+import { get_user_detail, getSuccessToken } from "./redux/MainSlice";
 
 function App() {
   const authorization = useAppSelector((state) => state.authorization);
+  const Atoken = useAppSelector((state) => state.token);
+  const dispatch = useAppDispatch();
 
+  useEffect(() => {
+    const token = localStorage.getItem("token");
+    if (token) {
+      dispatch(getSuccessToken({ token: JSON.parse(token) }));
+      dispatch(get_user_detail());
+    }
+  }, []);
   // const list = [1, 2, 3, 4, 5];
   return (
     <BrowserRouter>

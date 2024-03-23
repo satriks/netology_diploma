@@ -42,7 +42,6 @@ import {
   updateFileApi,
   delUserApi,
 } from "../utils/api";
-import { useAppSelector } from "../models/hooks";
 import File_data, { ChangeUser } from "../models/models";
 import User from "../models/models";
 
@@ -56,20 +55,14 @@ export function* getTokenSaga(action: PayloadAction) {
       action.payload.username,
       action.payload.password
     );
-    console.log(response);
-    console.log(token);
+
     yield put(getSuccessToken(response));
     yield put(endAuthorization());
     yield call(getUserDetailSaga);
-    // if response.status{
-    //   localStorage.setItem('token', JSON.stringify(response.token))
-    // }
 
-    // if (response.status > 200 && response.status < 300) {
-    //   yield put(getOrderSuccess());
-    //   yield delay(10000);
-    //   yield put(clearOrderSuccess());
-    // }
+    if (response.token) {
+      localStorage.setItem("token", JSON.stringify(response.token));
+    }
   } catch (error) {
     // yield put(
     //   getItemFailed({ message: (error as Error).message, errFunc: action })
@@ -290,6 +283,7 @@ export function* getUserDetailSaga() {
   const token: string | null = yield select((store) => store.token);
 
   console.log("get users");
+  console.log(token);
 
   yield put(getProfileLoading());
   if (token) {

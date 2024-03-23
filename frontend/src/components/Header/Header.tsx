@@ -27,7 +27,7 @@ export default function Header({}: Props) {
           ></img>
         </div>
         <div className="page">
-          {isLogin ? (
+          {isLogin !== null ? (
             <DropMenu />
           ) : (
             <div

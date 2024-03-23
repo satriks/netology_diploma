@@ -66,6 +66,7 @@ const MainSlice = createSlice({
     },
     clearUserToken(state) {
       state.token = null;
+      localStorage.removeItem("token");
     },
     getLoginLoading(state) {
       state.loading.login = true;
