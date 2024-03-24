@@ -13,8 +13,9 @@ type Props = {
 };
 
 export default function FileItem({ data }: Props) {
+  const baseURL = import.meta.env.VITE_HOST || "http://localhost:8000/";
   let file_url = ["png", "jpg", "jpeg"].includes(data.file.split(".")[1])
-    ? data.file
+    ? baseURL.substring(0, baseURL.length - 1) + data.file
     : fileLogo;
   if (data.file === "add") {
     file_url = addFileLogo;
@@ -22,7 +23,7 @@ export default function FileItem({ data }: Props) {
 
   const dispatch = useAppDispatch();
   const lastDropOn = useAppSelector((state) => state.lastDropOn);
-  const baseURL = import.meta.env.VITE_HOST || "http://localhost:8000/";
+
   const link = baseURL + "download/" + data.linkUiid;
   const downloadLink = useRef(null);
 

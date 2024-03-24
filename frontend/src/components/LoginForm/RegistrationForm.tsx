@@ -2,6 +2,11 @@ import { useState } from "react";
 import "./RegistrationForm.scss";
 import { useAppDispatch } from "../../models/hooks";
 import { endAuthorization, registration } from "../../redux/MainSlice";
+import {
+  validateEmail,
+  validateLogin,
+  validatePassword,
+} from "../../utils/validators";
 
 type Props = { onLogin: React.Dispatch<React.SetStateAction<boolean>> };
 
@@ -16,17 +21,28 @@ export default function RegistrationForm({ onLogin }: Props) {
       <h2>Регистрация</h2>
       <label>
         Username:
-        <input type="text" value={username} onChange={handleUsernameChange} />
+        <input
+          type="text"
+          id="username"
+          value={username}
+          onChange={handleUsernameChange}
+        />
       </label>
       <br />
       <label>
         Email:
-        <input type="email" value={email} onChange={handleEmailChange} />
+        <input
+          type="email"
+          id="email"
+          value={email}
+          onChange={handleEmailChange}
+        />
       </label>
       <br />
       <label>
         Password:
         <input
+          id="password"
           type="password"
           value={password}
           onChange={handlePasswordChange}
@@ -47,13 +63,16 @@ export default function RegistrationForm({ onLogin }: Props) {
   );
 
   function handleUsernameChange(e: React.ChangeEvent<HTMLInputElement>) {
+    e.target.setCustomValidity("");
     setUsername(e.target.value);
   }
 
   function handlePasswordChange(e: React.ChangeEvent<HTMLInputElement>) {
+    e.target.setCustomValidity("");
     setPassword(e.target.value);
   }
   function handleEmailChange(e: React.ChangeEvent<HTMLInputElement>) {
+    e.target.setCustomValidity("");
     setEmail(e.target.value);
   }
   function handleCancel(e: React.MouseEvent<HTMLButtonElement>) {
@@ -63,13 +82,38 @@ export default function RegistrationForm({ onLogin }: Props) {
 
   function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
-    // Add your login logic here
     console.log("Username:", username);
     console.log("Password:", password);
-    dispatch(registration({ username, password, email }));
-    onLogin(false);
-    // Reset form fields
-    setUsername("");
-    setPassword("");
+    let check = true;
+    const target = e.target as HTMLFormElement;
+    try {
+      validateLogin(username);
+    } catch (error) {
+      target.username.setCustomValidity((error as Error).message);
+      target.username.reportValidity();
+      check = false;
+    }
+    try {
+      validatePassword(password);
+    } catch (error) {
+      target.password.setCustomValidity((error as Error).message);
+      target.password.reportValidity();
+      check = false;
+    }
+    try {
+      validateEmail(email);
+    } catch (error) {
+      target.email.setCustomValidity((error as Error).message);
+      target.email.reportValidity();
+      check = false;
+    }
+
+    if (check) {
+      dispatch(registration({ username, password, email }));
+      onLogin(false);
+      // Reset form fields
+      setUsername("");
+      setPassword("");
+    }
   }
 }

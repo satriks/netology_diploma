@@ -40,7 +40,7 @@ export default function LoginForm({ onLogin }: Props) {
             onLogin(true);
           }}
         >
-          Зарегестрироваться
+          Зарегистрироваться
         </b>
       </span>
     </form>
@@ -60,9 +60,11 @@ export default function LoginForm({ onLogin }: Props) {
 
   function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
-    // Add your login logic here
+    console.log("submit");
+
     console.log("Username:", username);
     console.log("Password:", password);
+
     dispatch(getToken({ username, password }));
 
     // Reset form fields

@@ -36,8 +36,10 @@ export default function UserInfo() {
       <div className="admin-profile__wrapper">
         <form className="admin-profile" onSubmit={handleSubmit}>
           <h2>Данные профиля</h2>
-          <img src={avatarUnknown} alt="" />
-          <span> {user?.username}</span>
+          <div className="admin-profile__short-info">
+            <img src={avatarUnknown} alt="" />
+            <span> {user?.username}</span>
+          </div>
           <div className="admin-profile__file__info">
             <label>
               Всего загружено :
