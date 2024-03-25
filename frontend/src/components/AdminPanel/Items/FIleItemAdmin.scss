@@ -1,3 +1,5 @@
+@import "../../../scss/base.scss";
+
 .admin__fileItem {
   position: relative;
   border: 1px solid black;
@@ -5,6 +7,30 @@
   flex-wrap: wrap;
   gap: 10px;
   padding: 5px;
+  padding-right: 70px;
+
+  .admin__fileItem__info-btn {
+    height: 20px;
+    background-color: transparent;
+    border: 0;
+    color: $mainTextColor;
+  }
+
+  .admin__fileItem__info {
+    display: flex;
+    gap: 10px;
+    justify-content: space-around;
+    // flex-direction: column;
+    margin-top: 10px;
+    padding: 5px;
+    padding-right: 70px;
+    transition: height 2s ease-in-out;
+  }
+
+  .hidden {
+    display: none;
+    height: 0;
+  }
 
   .fileItem__control {
     position: absolute;

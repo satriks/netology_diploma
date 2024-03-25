@@ -120,7 +120,7 @@ export default function UserInfo() {
   function handleIsStaffChange(e: React.ChangeEvent<HTMLInputElement>) {
     setIsStaff(e.target.checked);
   }
-  function delUser(e) {
+  function delUser(e: React.MouseEvent<HTMLButtonElement>) {
     e.preventDefault();
     if (user?.id) {
       dispatch(del_user(user?.id));

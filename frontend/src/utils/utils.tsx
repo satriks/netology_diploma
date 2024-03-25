@@ -18,7 +18,7 @@ export function sizeValidator(size: number) {
 export function timeConverter(time: string) {
   if (time) {
     const day = dayjs(time);
-    return day.format("DD-MM-YY");
+    return day.format("DD-MM-YY HH:mm:ss");
   }
   return "нет данных";
 }

@@ -47,6 +47,8 @@ export default function FileItem({ data }: Props) {
       return;
     }
 
+    console.log(e.target.className);
+
     e.preventDefault();
     e.stopPropagation();
 
@@ -54,6 +56,12 @@ export default function FileItem({ data }: Props) {
     //   console.log(17);
     //   return;
     // }
+
+    if (e.target.className == "file__info") {
+      console.log(42);
+      return;
+    }
+
     if (data.file === "add") {
       dispatch(setIsSendFile());
     } else {

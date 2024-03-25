@@ -1,6 +1,26 @@
 @import "../../../scss/base.scss";
 .drop-file-menu {
   //   display: none;
+
+  .detail {
+    position: absolute;
+    left: 203px;
+    top: 21px;
+    display: flex;
+    flex-direction: column;
+    background-color: $mainFontColor;
+    border: 1px solid;
+    padding: 5px;
+    text-align: center;
+    z-index: 3;
+    // flex-grow: 1;
+    span {
+      width: 250px;
+      // width: 100%;
+      text-align: left;
+      // height: 40px;
+    }
+  }
   ul {
     position: absolute;
     right: -110px;
