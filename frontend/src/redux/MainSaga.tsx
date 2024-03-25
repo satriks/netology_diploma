@@ -11,6 +11,7 @@ import {
   SEND_FILE,
   UPDATE_FILE,
   UPDATE_USER,
+  clearCurrentUser,
   endAuthorization,
   getAdminFilesLoading,
   getAdminUserDataLoading,
@@ -393,6 +394,7 @@ export function* delUserSaga(action: PayloadAction<number>) {
 
       if (response.status > 200 && response.status < 300) {
         yield put(get_users());
+        yield put(clearCurrentUser());
       }
     } catch (error) {
       // yield put(

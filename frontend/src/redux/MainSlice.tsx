@@ -30,6 +30,7 @@ interface InitialStateType {
     users: User[] | null;
     currentUser: User | null;
   };
+  dropMenuHeader: string | null;
 }
 
 const initialState: InitialStateType = {
@@ -52,6 +53,7 @@ const initialState: InitialStateType = {
     currentUser: null,
   },
   authorization: false,
+  dropMenuHeader: null,
 };
 
 const MainSlice = createSlice({
@@ -108,6 +110,9 @@ const MainSlice = createSlice({
     },
     logout(state) {
       state.token = null;
+    },
+    setDropMenuHeader(state, action: PayloadAction<string>) {
+      state.dropMenuHeader = action.payload;
     },
     setLastDropOn(state, action) {
       state.lastDropOn = action.payload;
@@ -207,6 +212,7 @@ export const {
   getSuccessUser,
   getSuccessUsers,
   clearCurrentUser,
+  setDropMenuHeader,
   // clearLastDRopOn,
 } = MainSlice.actions;
 

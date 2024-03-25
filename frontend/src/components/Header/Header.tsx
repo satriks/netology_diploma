@@ -4,17 +4,26 @@ import cloudy from "../../assets/cloudy.png";
 import DropMenu from "./DropMenu/DropMenu";
 import avatarUnknown from "../../assets/avatar_unknown.png";
 import { useAppDispatch, useAppSelector } from "../../models/hooks";
-import { startAuthorization } from "../../redux/MainSlice";
+import { setDropMenuHeader, startAuthorization } from "../../redux/MainSlice";
+import { useNavigate } from "react-router-dom";
 
 type Props = {};
 
 export default function Header({}: Props) {
   const isLogin = useAppSelector((state) => state.token);
   const dispatch = useAppDispatch();
+  const navigate = useNavigate();
 
   return (
     <div className="header">
-      <img className="header-logo" src={logo}></img>
+      <img
+        className="header-logo"
+        src={logo}
+        onClick={() => {
+          dispatch(setDropMenuHeader("Каталог"));
+          navigate("/");
+        }}
+      ></img>
       <img src={cloudy}></img>
       <img src={cloudy}></img>
       <img src={cloudy}></img>
@@ -23,7 +32,11 @@ export default function Header({}: Props) {
           <img
             className="avatar"
             src={avatarUnknown}
-            style={isLogin && { backgroundColor: "green" }}
+            style={
+              isLogin
+                ? { backgroundColor: "green" }
+                : { backgroundColor: "red" }
+            }
           ></img>
         </div>
         <div className="page">

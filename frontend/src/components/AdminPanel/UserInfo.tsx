@@ -5,7 +5,6 @@ import { sizeValidator, timeConverter } from "../../utils/utils";
 import { del_user, update_user } from "../../redux/MainSlice";
 import "./UserInfo.scss";
 import File_data, { ChangeUser } from "../../models/models";
-import Louder from "../Louder/Louder";
 
 export default function UserInfo() {
   const user = useAppSelector((state) => state.adminPanel.currentUser);
