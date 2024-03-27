@@ -13,6 +13,7 @@ import ShareFileForm from "../ShareFileForm/ShareFileForm";
 import Louder from "../../Louder/Louder";
 import ErrorForm from "../../Messages/ErrorForm";
 import ErrorMessage from "../../Messages/ErrorMessage";
+import SuccessMessage from "../../Messages/SuccessMessge";
 
 type Props = {};
 
@@ -27,6 +28,7 @@ export default function FileList({}: Props) {
   const isLoading = useAppSelector((state) => state.loading.catalog);
   const authorization = useAppSelector((state) => state.authorization);
   const delFileLoading = useAppSelector((state) => state.loading.delFile);
+  const infoMessage = useAppSelector((state) => state.infoMessage);
   const [isDragging, setIsDragging] = useState(false);
   const [dragFile, setDragFIle] = useState<File | null>(null);
   const dispatch = useAppDispatch();
@@ -53,6 +55,9 @@ export default function FileList({}: Props) {
           onClick={() => dispatch(setLastDropOn(null))}
         >
           {delFileLoading && <Louder />}
+          {infoMessage && !isChangeFile.isActive && !authorization && (
+            <SuccessMessage message={infoMessage} />
+          )}
           {error && !isChangeFile.isActive && !authorization && (
             <ErrorMessage message={error.message} />
           )}

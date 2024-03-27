@@ -9,6 +9,7 @@ import ChangeFileForm from "../Files/ChangeFileForm/ChangeFileForm";
 import Louder from "../Louder/Louder";
 import ErrorForm from "../Messages/ErrorForm";
 import ErrorMessage from "../Messages/ErrorMessage";
+import SuccessMessage from "../Messages/SuccessMessge";
 
 type Props = {};
 
@@ -19,6 +20,7 @@ export default function AdminPanel({}: Props) {
   const error = useAppSelector((state) => state.error);
 
   const errorUsers = useAppSelector((state) => state.errorsGet.adminUsers);
+  const infoMessage = useAppSelector((state) => state.infoMessage);
   const adminPanel = useAppSelector((state) => state.adminPanel);
   const isChangeFile = useAppSelector((state) => state.isChangeFile);
   const loading = useAppSelector((state) => state.loading);
@@ -42,6 +44,10 @@ export default function AdminPanel({}: Props) {
       <div className="admin__info">
         {errorUserData && <ErrorForm data={errorUserData} />}
         {loading.adminUserData ? <Louder /> : <UserInfo />}
+        {infoMessage && !isChangeFile.isActive && (
+          <SuccessMessage message={infoMessage} />
+        )}
+
         {error && !isChangeFile.isActive && (
           <ErrorMessage message={error.message} />
         )}

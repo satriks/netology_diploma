@@ -171,6 +171,7 @@ export function* sendFileSaga(action: Action) {
       if (response.status === 201) {
         yield call(getFilesSaga);
         yield put(setIsSendFile());
+        yield call(showMessage, "Успешно добавлен");
       }
       console.log(response);
       // console.log(token);
@@ -210,6 +211,8 @@ export function* updateFileSaga(action: Action) {
       if (response.status === 200) {
         yield call(getFilesSaga);
         yield put(setIsChangeFile());
+        yield call(showMessage, "Файл изменен");
+
         if (currentUser) {
           yield put(get_user_data(currentUser.id));
         }
@@ -250,6 +253,8 @@ export function* delFilesSaga(action: Action) {
       if (response.status === 204) {
         yield put(setDelFileLoading(false));
         yield call(getFilesSaga);
+        yield call(showMessage, "Файл удален");
+
         if (currentUser) {
           yield put(get_user_data(currentUser.id));
         }
@@ -369,6 +374,7 @@ export function* updateUserSaga(
     try {
       const response: User[] = yield updateUserApi(token, body, id);
       yield put(setSendChangeLoading(false));
+      yield call(showMessage, "Данные изменены");
     } catch (error) {
       yield put(setSendChangeLoading(false));
       yield call(showErrorMessage, error);
@@ -390,6 +396,9 @@ export function* delUserSaga(action: PayloadAction<number>) {
       if (response.status > 200 && response.status < 300) {
         yield put(get_users());
         yield put(clearCurrentUser());
+        yield call(showMessage, "Пользователь удален");
+
+        // yield call(showErrorMessage, error);
       }
     } catch (error) {
       yield call(showErrorMessage, error);

@@ -9,6 +9,7 @@ import { sizeValidator, timeConverter } from "../../utils/utils";
 import Louder from "../Louder/Louder";
 import ErrorForm from "../Messages/ErrorForm";
 import ErrorMessage from "../Messages/ErrorMessage";
+import SuccessMessage from "../Messages/SuccessMessge";
 
 //TODO Изменить вывод даты регистрации, Сделать удобочитаемый размер фалов
 type Props = {};
@@ -19,6 +20,8 @@ export default function Profile({}: Props) {
   const user = useAppSelector((state) => state.user);
   const loading = useAppSelector((state) => state.loading.profile);
   const sendChangeLoading = useAppSelector((state) => state.loading.sendChange);
+  const infoMessage = useAppSelector((state) => state.infoMessage);
+
   const dispatch = useAppDispatch();
   const naigate = useNavigate();
   const [lastName, setLastName] = useState("");
@@ -47,6 +50,8 @@ export default function Profile({}: Props) {
         <form className="profile" onSubmit={handleSubmit}>
           {errorChange && <ErrorMessage message={errorChange.message} />}
           {errorMain && <ErrorForm data={errorMain} />}
+          {infoMessage && <SuccessMessage message={infoMessage} />}
+
           {sendChangeLoading && <Louder />}
           <h2>Данные профиля</h2>
           <img src={avatarUnknown} alt="" />

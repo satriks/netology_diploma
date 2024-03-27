@@ -12,9 +12,14 @@
   background-color: $secondFontColor;
   padding-right: 400px;
 
-  .error__message__wrapper {
+  .error__message__wrapper,
+  .success__message__wrapper {
     top: 30%;
     left: 40%;
+  }
+  .success__message__wrapper {
+    min-width: 300px;
+    text-align: center;
   }
   .prelouder__wrapper {
     position: absolute;

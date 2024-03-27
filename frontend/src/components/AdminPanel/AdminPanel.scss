@@ -32,9 +32,14 @@
     .error__form__wrapper {
       left: 25%;
     }
-    .error__message__wrapper {
+    .error__message__wrapper,
+    .success__message__wrapper {
       top: 30%;
       left: 30%;
+    }
+    .success__message__wrapper {
+      min-width: 280px;
+      text-align: center;
     }
     .admin_userInfo {
       // position: relative;

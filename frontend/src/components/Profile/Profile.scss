@@ -21,9 +21,11 @@
     .error__form__wrapper {
       left: 25%;
     }
-    .error__message__wrapper {
+    .error__message__wrapper,
+    .success__message__wrapper {
       top: 20%;
     }
+
     .prelouder__wrapper {
       position: absolute;
     }
