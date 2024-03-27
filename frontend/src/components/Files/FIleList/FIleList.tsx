@@ -11,16 +11,22 @@ import AddNewFile from "../AddNewFileForm/AddNewFile";
 import ChangeFileForm from "../ChangeFileForm/ChangeFileForm";
 import ShareFileForm from "../ShareFileForm/ShareFileForm";
 import Louder from "../../Louder/Louder";
+import ErrorForm from "../../Messages/ErrorForm";
+import ErrorMessage from "../../Messages/ErrorMessage";
 
 type Props = {};
 
 export default function FileList({}: Props) {
+  const errorMain = useAppSelector((state) => state.errorsGet.catalog);
+  const error = useAppSelector((state) => state.error);
   const isLogin = useAppSelector((state) => state.token);
   const files = useAppSelector((state) => state.files);
   const isSendFile = useAppSelector((state) => state.isSendFile);
   const isChangeFile = useAppSelector((state) => state.isChangeFile);
   const isShareFile = useAppSelector((state) => state.isShareFile);
-  const isLoading = useAppSelector((state) => state.loading.login);
+  const isLoading = useAppSelector((state) => state.loading.catalog);
+  const authorization = useAppSelector((state) => state.authorization);
+  const delFileLoading = useAppSelector((state) => state.loading.delFile);
   const [isDragging, setIsDragging] = useState(false);
   const [dragFile, setDragFIle] = useState<File | null>(null);
   const dispatch = useAppDispatch();
@@ -30,7 +36,7 @@ export default function FileList({}: Props) {
       dispatch(get_files());
     }
   }, [isLogin]);
-
+  // if (errorMessage) return <ErrorMessage message={errorMessage.message} />;
   if (isLoading) {
     return <Louder />;
   } else {
@@ -42,11 +48,14 @@ export default function FileList({}: Props) {
         onDragLeave={handleDragLeave}
         onDrop={handleDrop}
       >
-        {/* <Louder /> */}
         <div
           className={`file-list `}
           onClick={() => dispatch(setLastDropOn(null))}
         >
+          {delFileLoading && <Louder />}
+          {error && !isChangeFile.isActive && !authorization && (
+            <ErrorMessage message={error.message} />
+          )}
           {files.map((el) => (
             <FileItem key={el.id} data={el} />
           ))}
@@ -54,6 +63,7 @@ export default function FileList({}: Props) {
             key={"add"}
             data={{ file: "add", name: "Добавить файл", id: 0 }}
           />
+          {errorMain && <ErrorForm data={errorMain} />}
         </div>
         {isSendFile && <AddNewFile file={dragFile} setDragFile={setDragFIle} />}
         {isChangeFile.isActive && (

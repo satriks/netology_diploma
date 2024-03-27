@@ -1,12 +1,17 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import "./RegistrationForm.scss";
-import { useAppDispatch } from "../../models/hooks";
-import { endAuthorization, registration } from "../../redux/MainSlice";
+import { useAppDispatch, useAppSelector } from "../../models/hooks";
+import {
+  endAuthorization,
+  getSuccessRegistration,
+  registration,
+} from "../../redux/MainSlice";
 import {
   validateEmail,
   validateLogin,
   validatePassword,
 } from "../../utils/validators";
+import ErrorMessage from "../Messages/ErrorMessage";
 
 type Props = { onLogin: React.Dispatch<React.SetStateAction<boolean>> };
 
@@ -14,10 +19,25 @@ export default function RegistrationForm({ onLogin }: Props) {
   const [username, setUsername] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const errorMessage = useAppSelector((state) => state.error);
+  const success = useAppSelector((state) => state.success.registration);
+
   const dispatch = useAppDispatch();
+
+  useEffect(() => {
+    if (success) {
+      onLogin(false);
+      setUsername("");
+      setPassword("");
+      dispatch(getSuccessRegistration(false));
+    }
+
+    console.log(success);
+  }, [success]);
 
   return (
     <form className="registration-form" onSubmit={handleSubmit}>
+      {errorMessage && <ErrorMessage message={errorMessage.message} />}
       <h2>Регистрация</h2>
       <label>
         Username:
@@ -110,10 +130,10 @@ export default function RegistrationForm({ onLogin }: Props) {
 
     if (check) {
       dispatch(registration({ username, password, email }));
-      onLogin(false);
-      // Reset form fields
-      setUsername("");
-      setPassword("");
+      // onLogin(false);
+      // // Reset form fields
+      // setUsername("");
+      // setPassword("");
     }
   }
 }

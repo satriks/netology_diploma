@@ -1,17 +1,25 @@
 import { useState } from "react";
 import "./LoginForm.scss";
-import { useAppDispatch } from "../../models/hooks";
+import { useAppDispatch, useAppSelector } from "../../models/hooks";
 import { endAuthorization, getToken } from "../../redux/MainSlice";
+import ErrorMessage from "../Messages/ErrorMessage";
+import SuccessMessage from "../Messages/SuccessMessge";
+// import ErrorMessage from "../ErrorsForm/ErrorMessage";
 
 type Props = { onLogin: React.Dispatch<React.SetStateAction<boolean>> };
 
 export default function LoginForm({ onLogin }: Props) {
+  const infoMessage = useAppSelector((state) => state.infoMessage);
+  const errorMessage = useAppSelector((state) => state.error);
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const dispatch = useAppDispatch();
 
   return (
     <form className="login-form" onSubmit={handleSubmit}>
+      {infoMessage && <SuccessMessage message={infoMessage} />}
+
+      {errorMessage && <ErrorMessage message={errorMessage.message} />}
       <h2>Авторизация</h2>
       <label>
         Username:

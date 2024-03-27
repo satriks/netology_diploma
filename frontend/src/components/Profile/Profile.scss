@@ -4,11 +4,12 @@
   background-color: $secondFontColor;
   padding: 10px;
   .profile {
+    position: relative;
     display: flex;
     flex-direction: column;
     align-items: center;
     width: 600px;
-    height: 800px;
+    height: 77vh;
     background-color: $mainFontColor;
     margin: 0 auto;
     flex-wrap: wrap;
@@ -16,6 +17,16 @@
 
     border-radius: 10px;
     text-align: center;
+
+    .error__form__wrapper {
+      left: 25%;
+    }
+    .error__message__wrapper {
+      top: 20%;
+    }
+    .prelouder__wrapper {
+      position: absolute;
+    }
 
     img {
       height: 80px;

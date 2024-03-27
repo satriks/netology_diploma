@@ -7,13 +7,18 @@ import { useNavigate } from "react-router-dom";
 import File_data, { ChangeUser } from "../../models/models";
 import { sizeValidator, timeConverter } from "../../utils/utils";
 import Louder from "../Louder/Louder";
+import ErrorForm from "../Messages/ErrorForm";
+import ErrorMessage from "../Messages/ErrorMessage";
 
 //TODO Изменить вывод даты регистрации, Сделать удобочитаемый размер фалов
 type Props = {};
 
 export default function Profile({}: Props) {
+  const errorMain = useAppSelector((state) => state.errorsGet.profile);
+  const errorChange = useAppSelector((state) => state.error);
   const user = useAppSelector((state) => state.user);
   const loading = useAppSelector((state) => state.loading.profile);
+  const sendChangeLoading = useAppSelector((state) => state.loading.sendChange);
   const dispatch = useAppDispatch();
   const naigate = useNavigate();
   const [lastName, setLastName] = useState("");
@@ -40,6 +45,9 @@ export default function Profile({}: Props) {
       <div className="profile__wrapper">
         {/* <Louder /> */}
         <form className="profile" onSubmit={handleSubmit}>
+          {errorChange && <ErrorMessage message={errorChange.message} />}
+          {errorMain && <ErrorForm data={errorMain} />}
+          {sendChangeLoading && <Louder />}
           <h2>Данные профиля</h2>
           <img src={avatarUnknown} alt="" />
           <span> {user?.username}</span>

@@ -10,20 +10,40 @@
   .admin__users,
   .admin__info {
     width: 50%;
-    height: 800px;
+    height: 77vh;
     background-color: $secondFontColor;
   }
   .admin__users {
+    position: relative;
+    .error__form__wrapper {
+      left: 25%;
+    }
+
     h2 {
       text-align: center;
     }
+    div {
+      max-height: 77vh;
+      overflow-y: auto;
+    }
   }
   .admin__info {
+    position: relative;
+    .error__form__wrapper {
+      left: 25%;
+    }
+    .error__message__wrapper {
+      top: 30%;
+      left: 30%;
+    }
     .admin_userInfo {
-      height: 55%;
+      // position: relative;
+      // height: 55%;
       // overflow-y: auto;
     }
     .admin__files {
+      // position: relative;
+
       padding: 0 5px;
       height: 45%;
       display: flex;

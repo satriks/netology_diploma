@@ -1,4 +1,9 @@
-import { PayloadAction } from "@reduxjs/toolkit";
+import {
+  Action,
+  ActionCreator,
+  ActionCreatorWithPayload,
+  PayloadAction,
+} from "@reduxjs/toolkit";
 import {
   DELETE_USER,
   DEL_FILES,
@@ -13,11 +18,11 @@ import {
   UPDATE_USER,
   clearCurrentUser,
   endAuthorization,
-  getAdminFilesLoading,
-  getAdminUserDataLoading,
-  getAdminUsersLoading,
-  getLoginLoading,
-  getProfileLoading,
+  // setAdminFilesLoading,
+  setAdminUserDataLoading,
+  setAdminUsersLoading,
+  setLoginLoading,
+  setProfileLoading,
   getSuccessFiles,
   getSuccessToken,
   getSuccessUser,
@@ -27,9 +32,19 @@ import {
   get_users,
   setIsChangeFile,
   setIsSendFile,
+  setErrorState,
+  setCatalogError,
+  setProfileError,
+  setCatalogLoading,
+  setAdminUsersError,
+  setAdminUserDataError,
+  getSuccessRegistration,
+  setSendChangeLoading,
+  setDelFileLoading,
+  setInfoMessage,
 } from "./MainSlice";
-import { call, put, select, takeEvery } from "redux-saga/effects";
-import { AxiosResponse } from "axios";
+import { call, delay, put, select, takeEvery } from "redux-saga/effects";
+import { AxiosError, AxiosResponse } from "axios";
 import {
   getUserApi,
   updateUserApi,
@@ -45,12 +60,13 @@ import {
 } from "../utils/api";
 import File_data, { ChangeUser } from "../models/models";
 import User from "../models/models";
+import { AnyAction } from "redux-saga";
 
-export function* getTokenSaga(action: PayloadAction) {
+export function* getTokenSaga(action: Action) {
   const token: string | null = yield select((store) => store.token);
   const { username, password } = action.payload;
 
-  yield put(getLoginLoading());
+  yield put(setLoginLoading(true));
   try {
     const response: AxiosResponse = yield loginApi(
       action.payload.username,
@@ -59,58 +75,67 @@ export function* getTokenSaga(action: PayloadAction) {
 
     yield put(getSuccessToken(response));
     yield put(endAuthorization());
-    yield call(getUserDetailSaga);
+    yield call(getUserDetailForTokenSaga);
 
     if (response.token) {
       localStorage.setItem("token", JSON.stringify(response.token));
     }
   } catch (error) {
+    yield put(setLoginLoading(false));
+    if (error.code === "ERR_NETWORK") {
+      yield call(showError, {
+        status: "0",
+        message: "Сервер не отвечает, попробуйте позже",
+      });
+    }
+    if (error && error.code !== "ERR_NETWORK") {
+      const errorData = {
+        status: error.response.status,
+        message: error.response.data.non_field_errors[0],
+      };
+
+      yield call(showError, errorData);
+      // yield put(setErrorState(errorData));
+      // yield delay(5000);
+      // yield put(setErrorState(null));
+    }
+
     // yield put(
     //   getItemFailed({ message: (error as Error).message, errFunc: action })
     // );
   }
 }
-
-export function* registrationSaga(action: PayloadAction) {
+export function* registrationSaga(action: Action) {
   const token: string | null = yield select((store) => store.token);
   const { username, password, email } = action.payload;
 
-  yield put(getLoginLoading());
+  yield put(setLoginLoading(true));
   try {
     const response: AxiosResponse = yield registrationApi(
       username,
       password,
       email
     );
+    yield put(getSuccessRegistration(true));
+    yield call(showMessage, "Успешно зарегистрирован");
+
     console.log(response);
-    // console.log(token);
-
-    // if response.status{
-    //   localStorage.setItem('token', JSON.stringify(response.token))
-    // }
-
-    // if (response.status > 200 && response.status < 300) {
-    //   yield put(getOrderSuccess());
-    //   yield delay(10000);
-    //   yield put(clearOrderSuccess());
-    // }
   } catch (error) {
-    // yield put(
-    //   getItemFailed({ message: (error as Error).message, errFunc: action })
-    // );
+    yield call(showErrorMessage, error);
+    yield put(setLoginLoading(false));
   }
 }
 
-export function* getFilesSaga() {
+export function* getFilesSaga(action: Action) {
   const token: string | null = yield select((store) => store.token);
 
-  console.log("get files");
+  yield put(setCatalogError(null));
+
   if (token) {
-    // yield put(getLoginLoading());
+    yield put(setCatalogLoading(true));
     try {
       const response: File_data = yield getFilesApi(token);
       yield put(getSuccessFiles(response));
-      console.log(response);
       // console.log(token);
 
       // if response.status{
@@ -123,15 +148,14 @@ export function* getFilesSaga() {
       //   yield put(clearOrderSuccess());
       // }
     } catch (error) {
-      // yield put(
-      //   getItemFailed({ message: (error as Error).message, errFunc: action })
-      // );
+      yield call(setError, error, setCatalogError, action);
+      yield put(setCatalogLoading(false));
     }
   } else {
     yield put(getSuccessFiles([]));
   }
 }
-export function* sendFileSaga(action: PayloadAction) {
+export function* sendFileSaga(action: Action) {
   const token: string | null = yield select((store) => store.token);
 
   console.log(action.payload, "from send saga");
@@ -165,7 +189,7 @@ export function* sendFileSaga(action: PayloadAction) {
     }
   }
 }
-export function* updateFileSaga(action: PayloadAction) {
+export function* updateFileSaga(action: Action) {
   const token: string | null = yield select((store) => store.token);
 
   console.log(action.payload, "from update saga");
@@ -201,20 +225,18 @@ export function* updateFileSaga(action: PayloadAction) {
       //   yield put(clearOrderSuccess());
       // }
     } catch (error) {
-      // yield put(
-      //   getItemFailed({ message: (error as Error).message, errFunc: action })
-      // );
+      yield call(showErrorMessage, error);
     }
   }
 }
-export function* delFilesSaga(action: PayloadAction) {
+export function* delFilesSaga(action: Action) {
   const token: string | null = yield select((store) => store.token);
   const currentUser = yield select((store) => store.adminPanel.currentUser);
   console.log(action.payload, "from del saga");
 
   console.log("del files");
   if (token) {
-    // yield put(getLoginLoading());
+    yield put(setDelFileLoading(true));
     try {
       console.log(token, action.payload, " from del token + id");
 
@@ -226,6 +248,7 @@ export function* delFilesSaga(action: PayloadAction) {
       console.log(response.status);
 
       if (response.status === 204) {
+        yield put(setDelFileLoading(false));
         yield call(getFilesSaga);
         if (currentUser) {
           yield put(get_user_data(currentUser.id));
@@ -244,54 +267,37 @@ export function* delFilesSaga(action: PayloadAction) {
       //   yield put(clearOrderSuccess());
       // }
     } catch (error) {
-      // yield put(
-      //   getItemFailed({ message: (error as Error).message, errFunc: action })
-      // );
+      yield put(setDelFileLoading(false));
+      yield call(showErrorMessage, error);
     }
   }
 }
-export function* getUsersSaga() {
+
+export function* getUsersSaga(action: Action) {
   const token: string | null = yield select((store) => store.token);
 
-  console.log("get users");
+  yield put(setAdminUsersError(null));
+  yield put(setAdminUsersLoading(true));
 
-  yield put(getAdminUsersLoading());
   if (token) {
     try {
       const response: User[] = yield getUsersApi(token);
 
       yield put(getSuccessUsers(response));
-      console.log(response);
-      // console.log(token);
-
-      // if response.status{
-      //   localStorage.setItem('token', JSON.stringify(response.token))
-      // }
-
-      // if (response.status > 200 && response.status < 300) {
-      //   yield put(getOrderSuccess());
-      //   yield delay(10000);
-      //   yield put(clearOrderSuccess());
-      // }
     } catch (error) {
-      // yield put(
-      //   getItemFailed({ message: (error as Error).message, errFunc: action })
-      // );
+      yield call(setError, error, setAdminUsersError, action);
+      yield put(setAdminUsersLoading(false));
     }
   }
 }
-export function* getUserDetailSaga() {
+export function* getUserDetailForTokenSaga(action: Action) {
   const token: string | null = yield select((store) => store.token);
 
-  console.log("get users");
-  console.log(token);
-
-  yield put(getProfileLoading());
+  yield put(setProfileError(null));
+  yield put(setProfileLoading(true));
   if (token) {
     try {
       const response: User[] = yield getUserDetailApi(token);
-
-      // console.log(response[0]);
 
       yield put(getSuccessUserDetail(response[0]));
       // console.log(response);
@@ -307,43 +313,47 @@ export function* getUserDetailSaga() {
       //   yield put(clearOrderSuccess());
       // }
     } catch (error) {
-      // yield put(
-      //   getItemFailed({ message: (error as Error).message, errFunc: action })
-      // );
+      yield call(setError, error, setProfileError, action);
+      yield put(setProfileLoading(false));
+
+      // if (error.code === "ERR_NETWORK") {
+      //   yield put(
+      //     setProfileError({
+      //       status: "0",
+      //       message: "Сервер не работает, попробуйте позже",
+      //       action: action,
+      //     })
+      //   );
+      // }
+      // if (error && error.code !== "ERR_NETWORK") {
+      //   const errorData = {
+      //     status: error.response.status,
+      //     message: error.response.data.non_field_errors[0],
+      //     action: action,
+      //   };
+
+      //   yield put(setProfileError(errorData));
+      // }
+      // yield put(setProfileLoading(false));
     }
   }
 }
 export function* getUserSaga(action: PayloadAction) {
   const token: string | null = yield select((store) => store.token);
 
-  console.log("get user user user  ");
+  yield put(setAdminUserDataLoading(true));
+  yield put(setAdminUserDataError(null));
 
-  yield put(getAdminUserDataLoading());
-  yield put(getAdminFilesLoading());
   if (token) {
     try {
       const response: User = yield getUserApi(token, action.payload);
 
-      // console.log(response[0]);
-      console.log(response);
-
       yield put(getSuccessUser(response));
-      // console.log(response);
-      // console.log(token);
-
-      // if response.status{
-      //   localStorage.setItem('token', JSON.stringify(response.token))
-      // }
-
-      // if (response.status > 200 && response.status < 300) {
-      //   yield put(getOrderSuccess());
-      //   yield delay(10000);
-      //   yield put(clearOrderSuccess());
-      // }
     } catch (error) {
-      // yield put(
-      //   getItemFailed({ message: (error as Error).message, errFunc: action })
-      // );
+      yield call(setError, error, setAdminUserDataError, action);
+      yield put(getSuccessUser(null));
+
+      yield put(setAdminUserDataLoading(false));
     }
   }
 }
@@ -351,32 +361,17 @@ export function* updateUserSaga(
   action: PayloadAction<{ body: ChangeUser; id: number }>
 ) {
   const token: string | null = yield select((store) => store.token);
-
-  console.log("get update");
-  console.log(action);
   const { body, id } = action.payload;
-  console.log(body, id, " from update saga");
 
-  // yield put(getLoginLoading());
+  yield put(setSendChangeLoading(true));
+
   if (token && body) {
     try {
       const response: User[] = yield updateUserApi(token, body, id);
-      // console.log(response[0]);
-      // yield put(getSuccessUserDetail(response[0]));
-      console.log(response);
-      // console.log(token);
-      // if response.status{
-      //   localStorage.setItem('token', JSON.stringify(response.token))
-      // }
-      // if (response.status > 200 && response.status < 300) {
-      //   yield put(getOrderSuccess());
-      //   yield delay(10000);
-      //   yield put(clearOrderSuccess());
-      // }
+      yield put(setSendChangeLoading(false));
     } catch (error) {
-      // yield put(
-      //   getItemFailed({ message: (error as Error).message, errFunc: action })
-      // );
+      yield put(setSendChangeLoading(false));
+      yield call(showErrorMessage, error);
     }
   }
 }
@@ -397,9 +392,7 @@ export function* delUserSaga(action: PayloadAction<number>) {
         yield put(clearCurrentUser());
       }
     } catch (error) {
-      // yield put(
-      //   getItemFailed({ message: (error as Error).message, errFunc: action })
-      // );
+      yield call(showErrorMessage, error);
     }
   }
 }
@@ -407,14 +400,66 @@ export function* delUserSaga(action: PayloadAction<number>) {
 export function* mainSaga() {
   yield takeEvery(GET_TOKEN, getTokenSaga);
   yield takeEvery(REGISTRATION, registrationSaga);
-  yield takeEvery(GET_USERS, getUsersSaga);
   yield takeEvery(GET_FILES, getFilesSaga);
   yield takeEvery(DEL_FILES, delFilesSaga);
   yield takeEvery(SEND_FILE, sendFileSaga);
   yield takeEvery(UPDATE_FILE, updateFileSaga);
-  yield takeEvery(GET_USER_DETAIL, getUserDetailSaga);
+  yield takeEvery(GET_USERS, getUsersSaga);
+  yield takeEvery(GET_USER_DETAIL, getUserDetailForTokenSaga);
   yield takeEvery(UPDATE_USER, updateUserSaga);
   yield takeEvery(GET_USER_DATA, getUserSaga);
   yield takeEvery(DELETE_USER, delUserSaga);
   // yield takeEvery(GET_CATEGORY, getCategorySaga);
+}
+
+function* showError(myError: { status: string; message: string }) {
+  yield put(setErrorState(myError));
+  yield delay(5 * 1000);
+  yield put(setErrorState(null));
+}
+function* showMessage(message: string) {
+  yield put(setInfoMessage(message));
+  yield delay(5 * 1000);
+  yield put(setInfoMessage(null));
+}
+
+function* showErrorMessage(error: AxiosError) {
+  if (error.code === "ERR_NETWORK") {
+    yield call(showError, {
+      status: "0",
+      message: "Сервер не работает, попробуйте позже",
+    });
+  }
+  if (error && error.code !== "ERR_NETWORK") {
+    const errorData = {
+      status: error.response.status,
+      message: error.response.data.non_field_errors[0],
+    };
+
+    yield call(showError, errorData);
+  }
+}
+function* setError(
+  error: AxiosError,
+  setErrorFunc: PayloadAction,
+  action: Action
+) {
+  if (error.code === "ERR_NETWORK") {
+    yield put(
+      setErrorFunc({
+        status: "0",
+        message: "Сервер не работает, попробуйте позже",
+        action: action,
+      })
+    );
+  }
+  if (error && error.code !== "ERR_NETWORK") {
+    const errorData = {
+      status: error.response.status,
+      message: error.response.data.non_field_errors[0],
+      action: action,
+    };
+
+    yield put(setErrorFunc(errorData));
+  }
 }

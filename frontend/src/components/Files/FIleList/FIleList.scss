@@ -8,9 +8,17 @@
   // justify-content: space-between;
   align-content: flex-start;
   // flex-grow: 0;
-  min-height: 800px;
+  min-height: 80vh;
   background-color: $secondFontColor;
   padding-right: 400px;
+
+  .error__message__wrapper {
+    top: 30%;
+    left: 40%;
+  }
+  .prelouder__wrapper {
+    position: absolute;
+  }
 }
 
 .container.dragging {

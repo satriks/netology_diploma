@@ -1,14 +1,34 @@
-import { createAction, createSlice, PayloadAction } from "@reduxjs/toolkit";
+import {
+  Action,
+  createAction,
+  createSlice,
+  PayloadAction,
+} from "@reduxjs/toolkit";
 import File_data, { ChangeUser } from "../models/models";
 import { User } from "../models/models";
 
 interface InitialStateType {
   loading: {
     login: boolean;
+    catalog: boolean;
     profile: boolean;
     adminUsers: boolean;
     adminUserData: boolean;
-    adminFileData: boolean;
+    sendChange: boolean;
+    delFile: boolean;
+    // adminFileData: boolean;
+  };
+  error: { status: string; message: string } | null;
+  infoMessage: string | null;
+  success: {
+    registration: boolean;
+  };
+  errorsGet: {
+    catalog: { status: string; message: string; action: Action } | null;
+    profile: { status: string; message: string; action: Action } | null;
+    adminUsers: { status: string; message: string; action: Action } | null;
+    adminUserData: { status: string; message: string; action: Action } | null;
+    // adminFileData: { status: string; message: string; action: Action } | null;
   };
   token: string | null;
   files: File_data[];
@@ -36,10 +56,29 @@ interface InitialStateType {
 const initialState: InitialStateType = {
   loading: {
     login: false,
+    catalog: false,
     profile: false,
     adminUsers: false,
     adminUserData: false,
-    adminFileData: false,
+    sendChange: false,
+    delFile: false,
+    // adminFileData: false,
+  },
+  error: null,
+  infoMessage: null,
+  // error: {
+  //   status: "0",
+  //   message: "Сервер не отвечает, попробуйте позже",
+  // },
+  success: {
+    registration: false,
+  },
+  errorsGet: {
+    catalog: null,
+    profile: null,
+    adminUsers: null,
+    adminUserData: null,
+    // adminFileData: null,
   },
   token: null,
   files: [],
@@ -66,40 +105,55 @@ const MainSlice = createSlice({
     endAuthorization(state) {
       state.authorization = false;
     },
-    clearUserToken(state) {
+    logout(state) {
       state.token = null;
-      localStorage.removeItem("token");
-    },
-    getLoginLoading(state) {
-      state.loading.login = true;
-    },
-    getProfileLoading(state) {
-      state.loading.profile = true;
-    },
-    getAdminUsersLoading(state) {
-      state.loading.adminUsers = true;
-    },
-    getAdminUserDataLoading(state) {
-      state.loading.adminUserData = true;
-    },
-    getAdminFilesLoading(state) {
-      state.loading.adminFileData = true;
     },
     getSuccessToken(state, action) {
       state.token = action.payload.token;
       state.loading.login = false;
     },
-    getSuccessFiles(state, action: PayloadAction<File_data[]>) {
-      state.files = [...action.payload];
+    clearUserToken(state) {
+      state.token = null;
+      localStorage.removeItem("token");
     },
+    getSuccessRegistration(state, action) {
+      state.success.registration = action.payload;
+    },
+
+    setLoginLoading(state, action) {
+      state.loading.login = action.payload;
+      state.success.registration = false;
+    },
+    setProfileLoading(state, action) {
+      state.loading.profile = action.payload;
+    },
+    setCatalogLoading(state, action) {
+      state.loading.catalog = action.payload;
+    },
+    setAdminUsersLoading(state, action) {
+      state.loading.adminUsers = action.payload;
+    },
+    setAdminUserDataLoading(state, action) {
+      state.loading.adminUserData = action.payload;
+    },
+    setSendChangeLoading(state, action) {
+      state.loading.sendChange = action.payload;
+    },
+    setDelFileLoading(state, action) {
+      state.loading.delFile = action.payload;
+    },
+    // setAdminFilesLoading(state, action) {
+    //   state.loading.adminFileData = action.payload;
+    // },
+
     getSuccessUserDetail(state, action: PayloadAction<User>) {
       state.user = action.payload;
       state.loading.profile = false;
     },
-    getSuccessUser(state, action: PayloadAction<User>) {
+    getSuccessUser(state, action: PayloadAction<User | null>) {
       state.adminPanel.currentUser = action.payload;
       state.loading.adminUserData = false;
-      state.loading.adminFileData = false;
+      // state.loading.adminFileData = false;
     },
     clearCurrentUser(state) {
       state.adminPanel.currentUser = null;
@@ -107,9 +161,29 @@ const MainSlice = createSlice({
     getSuccessUsers(state, action: PayloadAction<User[]>) {
       state.adminPanel.users = action.payload;
       state.loading.adminUsers = false;
+      state.errorsGet.adminUsers = null;
     },
-    logout(state) {
-      state.token = null;
+
+    setErrorState(state, action) {
+      state.error = action.payload;
+      state.success.registration = false;
+    },
+    setCatalogError(state, action) {
+      state.errorsGet.catalog = action.payload;
+    },
+    setAdminUsersError(state, action) {
+      state.errorsGet.adminUsers = action.payload;
+    },
+    setProfileError(state, action) {
+      state.errorsGet.profile = action.payload;
+    },
+    setAdminUserDataError(state, action) {
+      state.errorsGet.adminUserData = action.payload;
+    },
+
+    getSuccessFiles(state, action: PayloadAction<File_data[]>) {
+      state.files = [...action.payload];
+      state.loading.catalog = false;
     },
     setDropMenuHeader(state, action: PayloadAction<string>) {
       state.dropMenuHeader = action.payload;
@@ -126,6 +200,9 @@ const MainSlice = createSlice({
         state.isShareFile.uuid = action.payload;
       }
     },
+    setInfoMessage(state, action: PayloadAction<string | null>) {
+      state.infoMessage = action.payload;
+    },
     setIsChangeFile(
       state,
       action: PayloadAction<{
@@ -141,15 +218,6 @@ const MainSlice = createSlice({
         state.isChangeFile.id = action.payload.id;
       }
     },
-    // clearLastDRopOn(state) {
-    //   const dropOn = state.lastDropOn;
-    //   if (dropOn) {
-    //     dropOn(false);
-    //   }
-    // },
-    // getSuccessUsers(state, action) {
-    //   state.token = action.payload.token;
-    // },
   },
 });
 
@@ -193,27 +261,40 @@ export const GET_USER_DATA = "main/getUserData";
 export const get_user_data = createAction<{ id: number }>(GET_USER_DATA);
 
 export const {
-  clearUserToken,
   startAuthorization,
   endAuthorization,
-  getLoginLoading,
-  getProfileLoading,
-  getAdminUsersLoading,
-  getAdminUserDataLoading,
-  getAdminFilesLoading,
-  getSuccessToken,
-  getSuccessFiles,
   logout,
-  setLastDropOn,
-  setIsSendFile,
-  setIsChangeFile,
-  setIsShareFile,
+  clearUserToken,
+  getSuccessToken,
+  getSuccessRegistration,
+
+  setLoginLoading,
+  setProfileLoading,
+  setCatalogLoading,
+  setAdminUsersLoading,
+  setAdminUserDataLoading,
+  setSendChangeLoading,
+  setDelFileLoading,
+  // setAdminFilesLoading,
+
   getSuccessUserDetail,
   getSuccessUser,
   getSuccessUsers,
   clearCurrentUser,
+
+  setErrorState,
+  setCatalogError,
+  setProfileError,
+  setAdminUsersError,
+  setAdminUserDataError,
+
+  getSuccessFiles,
+  setIsSendFile,
+  setIsChangeFile,
+  setIsShareFile,
+  setLastDropOn,
   setDropMenuHeader,
-  // clearLastDRopOn,
+  setInfoMessage,
 } = MainSlice.actions;
 
 export default MainSlice.reducer;

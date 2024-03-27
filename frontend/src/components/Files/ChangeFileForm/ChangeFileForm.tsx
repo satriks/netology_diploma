@@ -1,11 +1,13 @@
 import React, { ChangeEvent, FormEvent, useEffect, useState } from "react";
 import { setIsChangeFile, update_file } from "../../../redux/MainSlice";
-import { useAppDispatch } from "../../../models/hooks";
+import { useAppDispatch, useAppSelector } from "../../../models/hooks";
 import "./ChangeFileForm.scss";
+import ErrorMessage from "../../Messages/ErrorMessage";
 
 type Props = {};
 
 export default function ChangeFileForm({ name, desc }: Props) {
+  const errorChange = useAppSelector((state) => state.error);
   const [fileName, setFileName] = useState<string>("");
   const [fileDescription, setFileDescription] = useState<string>("");
   const dispatch = useAppDispatch();
@@ -18,6 +20,7 @@ export default function ChangeFileForm({ name, desc }: Props) {
   return (
     <div className="change-form__wrapper">
       <form className="change-form" onSubmit={submitForm}>
+        {errorChange && <ErrorMessage message={errorChange.message} />}
         <label>
           Название
           <input value={fileName} onChange={handleFileNameChange}></input>
@@ -48,8 +51,8 @@ export default function ChangeFileForm({ name, desc }: Props) {
     };
     dispatch(update_file(changeData));
 
-    setFileName("");
-    setFileDescription("");
+    // setFileName("");
+    // setFileDescription("");
   }
 
   function handleFileNameChange(e: ChangeEvent<HTMLInputElement>) {
