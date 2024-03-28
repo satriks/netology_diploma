@@ -187,6 +187,8 @@ export function* sendFileSaga(action: Action) {
       //   yield put(clearOrderSuccess());
       // }
     } catch (error) {
+      console.log(error, "from send file");
+
       yield call(showErrorMessage, error);
 
       //   getItemFailed({ message: (error as Error).message, errFunc: action })

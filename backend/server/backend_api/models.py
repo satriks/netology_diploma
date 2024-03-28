@@ -17,7 +17,7 @@ def get_upload_to(instance, filename):
 
 
 class Files(models.Model):
-    name = models.CharField(max_length=256, unique=True)
+    name = models.CharField(max_length=256)
     description = models.TextField(blank=True, null=True)
     file = models.FileField(upload_to=get_upload_to)
     size = models.BigIntegerField( blank=True, null=True, editable=False)
