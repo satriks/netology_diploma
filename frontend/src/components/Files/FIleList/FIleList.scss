@@ -4,13 +4,11 @@
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
-  // align-items: ;
-  // justify-content: space-between;
   align-content: flex-start;
-  // flex-grow: 0;
+  width: 100%;
   min-height: 80vh;
   background-color: $secondFontColor;
-  padding-right: 400px;
+  // padding-right: 400px;
 
   .error__message__wrapper,
   .success__message__wrapper {

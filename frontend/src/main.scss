@@ -14,9 +14,14 @@ body {
   font-family: "Czizh", "Arial", sans-serif;
   color: $mainTextColor;
   overflow-y: hidden;
+  display: flex;
 }
 
+#root {
+  width: 100%;
+}
 .container {
-  height: 79vh;
+  display: flex;
+  // height: 79vh;
   background-color: $secondFontColor;
 }

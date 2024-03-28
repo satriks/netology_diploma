@@ -42,6 +42,7 @@ import {
   setSendChangeLoading,
   setDelFileLoading,
   setInfoMessage,
+  setAdminFileChangeLoading,
 } from "./MainSlice";
 import { call, delay, put, select, takeEvery } from "redux-saga/effects";
 import { AxiosError, AxiosResponse } from "axios";
@@ -200,6 +201,8 @@ export function* updateFileSaga(action: Action) {
     const currentUser = yield select((store) => store.adminPanel.currentUser);
 
     // yield put(getLoginLoading());
+    yield put(setAdminFileChangeLoading(true));
+
     try {
       const response: AxiosResponse = yield updateFileApi(
         token,
@@ -235,21 +238,15 @@ export function* updateFileSaga(action: Action) {
 export function* delFilesSaga(action: Action) {
   const token: string | null = yield select((store) => store.token);
   const currentUser = yield select((store) => store.adminPanel.currentUser);
-  console.log(action.payload, "from del saga");
 
-  console.log("del files");
   if (token) {
     yield put(setDelFileLoading(true));
+    yield put(setAdminFileChangeLoading(true));
     try {
-      console.log(token, action.payload, " from del token + id");
-
       const response: AxiosResponse = yield deleteFileApi(
         token,
         action.payload
       );
-      // добавить сообщение об удалении
-      console.log(response.status);
-
       if (response.status === 204) {
         yield put(setDelFileLoading(false));
         yield call(getFilesSaga);
@@ -259,7 +256,6 @@ export function* delFilesSaga(action: Action) {
           yield put(get_user_data(currentUser.id));
         }
       }
-      // console.log(adminPanel.currentUser, "from del saga");
 
       console.log(response);
       // console.log(token);
@@ -354,6 +350,7 @@ export function* getUserSaga(action: PayloadAction) {
       const response: User = yield getUserApi(token, action.payload);
 
       yield put(getSuccessUser(response));
+      yield put(setAdminFileChangeLoading(false));
     } catch (error) {
       yield call(setError, error, setAdminUserDataError, action);
       yield put(getSuccessUser(null));

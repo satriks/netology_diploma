@@ -24,9 +24,9 @@ export default function Header({}: Props) {
           navigate("/");
         }}
       ></img>
-      <img src={cloudy}></img>
-      <img src={cloudy}></img>
-      <img src={cloudy}></img>
+      <img src={cloudy} className="cloud1"></img>
+      <img src={cloudy} className="cloud2"></img>
+      <img src={cloudy} className="cloud3"></img>
       <div className="header__menu">
         <div>
           <img

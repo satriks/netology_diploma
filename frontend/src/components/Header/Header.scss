@@ -18,6 +18,7 @@
 
   img {
     height: 80px;
+    transition: all 2s linear;
   }
 
   .header__search {
@@ -53,5 +54,30 @@
         cursor: pointer;
       }
     }
+  }
+}
+
+@media (max-width: 1100px) {
+  .cloud3 {
+    display: none;
+    opacity: 0;
+    width: 0;
+    visibility: hidden;
+  }
+}
+@media (max-width: 900px) {
+  .cloud2 {
+    opacity: 0;
+    width: 0;
+    visibility: hidden;
+    display: none;
+  }
+}
+@media (max-width: 700px) {
+  .cloud1 {
+    opacity: 0;
+    width: 0;
+    visibility: hidden;
+    display: none;
   }
 }

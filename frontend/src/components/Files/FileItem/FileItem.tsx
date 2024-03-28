@@ -21,6 +21,7 @@ export default function FileItem({ data }: Props) {
     file_url = addFileLogo;
   }
 
+  const [leftDropMenu, setLeftDropMenu] = useState(false);
   const dispatch = useAppDispatch();
   const lastDropOn = useAppSelector((state) => state.lastDropOn);
 
@@ -31,7 +32,9 @@ export default function FileItem({ data }: Props) {
     <div className="file-item" onClick={clickFile} onContextMenu={clickFile}>
       <img src={file_url} alt="" />
       <span>{data.name}</span>
-      {lastDropOn == data.id && <DropFileMenu data={data} />}
+      {lastDropOn == data.id && (
+        <DropFileMenu data={data} side={leftDropMenu} />
+      )}
       <a
         hidden={true}
         href={link}
@@ -43,6 +46,13 @@ export default function FileItem({ data }: Props) {
   );
 
   function clickFile(e) {
+    // console.log(e.screenX, "screenX");
+    // console.log(e.clientX, "clientX");
+    // console.log(window.innerWidth);
+    if (window.innerWidth - e.clientX < 450) {
+      setLeftDropMenu(true);
+    }
+
     if (e.target.className === "download") {
       return;
     }

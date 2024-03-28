@@ -14,6 +14,7 @@ interface InitialStateType {
     profile: boolean;
     adminUsers: boolean;
     adminUserData: boolean;
+    adminFilesChange: boolean;
     sendChange: boolean;
     delFile: boolean;
     // adminFileData: boolean;
@@ -60,6 +61,7 @@ const initialState: InitialStateType = {
     profile: false,
     adminUsers: false,
     adminUserData: false,
+    adminFilesChange: false,
     sendChange: false,
     delFile: false,
     // adminFileData: false,
@@ -138,6 +140,9 @@ const MainSlice = createSlice({
     },
     setSendChangeLoading(state, action) {
       state.loading.sendChange = action.payload;
+    },
+    setAdminFileChangeLoading(state, action) {
+      state.loading.adminFilesChange = action.payload;
     },
     setDelFileLoading(state, action) {
       state.loading.delFile = action.payload;
@@ -273,8 +278,10 @@ export const {
   setCatalogLoading,
   setAdminUsersLoading,
   setAdminUserDataLoading,
+  setAdminFileChangeLoading,
   setSendChangeLoading,
   setDelFileLoading,
+
   // setAdminFilesLoading,
 
   getSuccessUserDetail,

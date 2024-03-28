@@ -30,6 +30,20 @@ export default function UserInfo() {
     setIsStaff(false);
   }, [user]);
 
+  if (!user) {
+    return (
+      <div>
+        {" "}
+        <div className="admin-profile__wrapper">
+          <form className="admin-profile">
+            <h2>Информация</h2>
+            <div>(Выберите пользователя для получения информации)</div>
+          </form>
+        </div>
+      </div>
+    );
+  }
+
   return (
     <div>
       {" "}

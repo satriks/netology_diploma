@@ -57,8 +57,26 @@
     }
 
     .redact {
+      font-size: 18px;
     }
     .del {
+      font-size: 16px;
     }
+  }
+}
+
+@media (max-width: 768px) {
+  .admin__fileItem {
+    padding-right: 35px;
+  }
+  .fileItem__control {
+    flex-direction: column-reverse;
+    // align-items: center
+    justify-content: center;
+    align-content: flex-end;
+    order: 1;
+  }
+  .redact {
+    padding-left: 10px;
   }
 }

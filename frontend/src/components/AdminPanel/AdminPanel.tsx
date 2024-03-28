@@ -18,7 +18,7 @@ export default function AdminPanel({}: Props) {
     (state) => state.errorsGet.adminUserData
   );
   const error = useAppSelector((state) => state.error);
-
+  const user = useAppSelector((state) => state.adminPanel.currentUser);
   const errorUsers = useAppSelector((state) => state.errorsGet.adminUsers);
   const infoMessage = useAppSelector((state) => state.infoMessage);
   const adminPanel = useAppSelector((state) => state.adminPanel);
@@ -51,16 +51,11 @@ export default function AdminPanel({}: Props) {
         {error && !isChangeFile.isActive && (
           <ErrorMessage message={error.message} />
         )}
-        <div className="admin_userInfo">
-          {/* {<ErrorForm data={"какой то текст "} />} */}
-          {/* {loading.adminUserData ? <Louder /> : <UserInfo />} */}
-          {/* <h2>Данные аккаунта:</h2> */}
-        </div>
         {loading.adminUserData ? null : (
           <div className="admin__files">
             {/* {<ErrorForm data={"какой то текст "} />} */}
-
-            <h2>Список файлов:</h2>
+            {user && <h2>Список файлов:</h2>}
+            {loading.adminFilesChange && <Louder />}
             {adminPanel.currentUser &&
               adminPanel.currentUser.files.map((file) => (
                 <FIleItemAdmin key={file.id + file.name} data={file} />

@@ -10,16 +10,16 @@ import {
 import "./DropFIleMenu.scss";
 import { sizeValidator, timeConverter } from "../../../utils/utils";
 
-type Props = { data: File_data };
+type Props = { data: File_data; side: boolean };
 
-export default function DropFileMenu({ data }: Props) {
+export default function DropFileMenu({ data, side }: Props) {
   const dispatch = useAppDispatch();
   const baseURL = import.meta.env.VITE_HOST || "http://localhost:8000/";
   const link = baseURL + "download/" + data.linkUiid;
   const [detailFIle, setDetailFile] = useState(false);
 
   return (
-    <div className="drop-file-menu">
+    <div className={side ? "drop-file-menu left" : "drop-file-menu"}>
       <ul>
         <li className="file__info" onClick={fileInfo}>
           Информация
