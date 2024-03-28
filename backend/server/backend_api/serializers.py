@@ -52,7 +52,8 @@ class UserSerializer(serializers.HyperlinkedModelSerializer):
         instance.first_name = validated_data.get('first_name', instance.first_name)
         instance.email = validated_data.get('email', instance.email)
         instance.is_staff = validated_data.get('is_staff', instance.is_staff)
-        instance.set_password(validated_data.get('password', instance.password))
+        if validated_data.get('password') is not None:
+            instance.set_password(validated_data.get('password'))
         instance.save()
 
         return instance

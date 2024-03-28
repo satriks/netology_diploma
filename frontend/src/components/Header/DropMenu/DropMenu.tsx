@@ -50,7 +50,9 @@ export default function DropMenu({}: Props) {
         dispatch(logout());
         dispatch(clearUserToken());
         dispatch(get_files());
-        target.value = "Каталог";
+        dispatch(setDropMenuHeader("Каталог"));
+
+        // target.value = "Каталог";
         navigate("/");
         break;
       default:

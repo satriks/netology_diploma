@@ -68,10 +68,6 @@ const initialState: InitialStateType = {
   },
   error: null,
   infoMessage: null,
-  // error: {
-  //   status: "0",
-  //   message: "Сервер не отвечает, попробуйте позже",
-  // },
   success: {
     registration: false,
   },
@@ -109,6 +105,10 @@ const MainSlice = createSlice({
     },
     logout(state) {
       state.token = null;
+      state.user = null;
+      state.adminPanel.users = null;
+      state.adminPanel.currentUser = null;
+      state.files = [];
     },
     getSuccessToken(state, action) {
       state.token = action.payload.token;

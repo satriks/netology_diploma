@@ -70,6 +70,8 @@ export const delUserApi = (token: string, id: number) => {
 };
 //Update user
 export const updateUserApi = (token: string, body: ChangeUser, id: number) => {
+  console.log(body, " from api");
+
   return connect
     .patch(`api/users/${id}/`, body, {
       headers: { Authorization: "token " + token },

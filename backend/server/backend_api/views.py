@@ -58,8 +58,11 @@ class UserViewSet(ModelViewSet):
     serializer_class = UserSerializer
 
     def get_permissions(self):
-        if self.action in ('list', 'update', 'destroy'):
-            self.permission_classes = (IsAdminUser,)
+        if self.action in ('list', 'update', 'partial_update', 'destroy'):
+            if self.kwargs and self.queryset.filter(id=self.kwargs['pk']).first() == self.request.user:
+                permission_classes = [IsAuthenticated]
+            else:
+                self.permission_classes = (IsAdminUser, )
         if self.action == 'create':
             self.permission_classes = (AllowAny, )
         return super(UserViewSet, self).get_permissions()

@@ -370,6 +370,8 @@ export function* updateUserSaga(
 
   if (token && body) {
     try {
+      console.log(body, " from saga update");
+
       const response: User[] = yield updateUserApi(token, body, id);
       yield put(setSendChangeLoading(false));
       yield call(showMessage, "Данные изменены");
