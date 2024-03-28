@@ -236,6 +236,8 @@ export const registration = createAction<{
   username: string;
   password: string;
   email: string;
+  firstName: string;
+  lastName: string;
 }>(REGISTRATION);
 export const GET_USERS = "main/getUsers";
 export const get_users = createAction(GET_USERS);

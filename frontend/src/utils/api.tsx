@@ -32,10 +32,20 @@ export const loginApi = (username: string, password: string) => {
 export const registrationApi = (
   username: string,
   password: string,
-  email: string
+  email: string,
+  firstName: string,
+  lastName: string
 ) => {
+  console.log(lastName, firstName, " from api");
+
   return connect
-    .post("api/users/", { username, password, email })
+    .post("api/users/", {
+      username,
+      password,
+      email,
+      first_name: firstName,
+      last_name: lastName,
+    })
     .then((response) => response.data); //
 };
 

@@ -108,14 +108,16 @@ export function* getTokenSaga(action: Action) {
 }
 export function* registrationSaga(action: Action) {
   const token: string | null = yield select((store) => store.token);
-  const { username, password, email } = action.payload;
+  const { username, password, email, firstName, lastName } = action.payload;
 
   yield put(setLoginLoading(true));
   try {
     const response: AxiosResponse = yield registrationApi(
       username,
       password,
-      email
+      email,
+      firstName,
+      lastName
     );
     yield put(getSuccessRegistration(true));
     yield call(showMessage, "Успешно зарегистрирован");

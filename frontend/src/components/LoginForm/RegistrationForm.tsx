@@ -17,6 +17,8 @@ type Props = { onLogin: React.Dispatch<React.SetStateAction<boolean>> };
 
 export default function RegistrationForm({ onLogin }: Props) {
   const [username, setUsername] = useState("");
+  const [firstName, setFirstName] = useState("");
+  const [lastName, setLastName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const errorMessage = useAppSelector((state) => state.error);
@@ -46,6 +48,26 @@ export default function RegistrationForm({ onLogin }: Props) {
           id="username"
           value={username}
           onChange={handleUsernameChange}
+        />
+      </label>
+      <br />
+      <label>
+        Иня:
+        <input
+          type="text"
+          id="first_name"
+          value={firstName}
+          onChange={handleFirstNameChange}
+        />
+      </label>
+      <br />
+      <label>
+        Фамилия:
+        <input
+          type="text"
+          id="last_name"
+          value={lastName}
+          onChange={handleLastNameChange}
         />
       </label>
       <br />
@@ -85,6 +107,14 @@ export default function RegistrationForm({ onLogin }: Props) {
   function handleUsernameChange(e: React.ChangeEvent<HTMLInputElement>) {
     e.target.setCustomValidity("");
     setUsername(e.target.value);
+  }
+  function handleFirstNameChange(e: React.ChangeEvent<HTMLInputElement>) {
+    // e.target.setCustomValidity("");
+    setFirstName(e.target.value);
+  }
+  function handleLastNameChange(e: React.ChangeEvent<HTMLInputElement>) {
+    // e.target.setCustomValidity("");
+    setLastName(e.target.value);
   }
 
   function handlePasswordChange(e: React.ChangeEvent<HTMLInputElement>) {
@@ -129,7 +159,9 @@ export default function RegistrationForm({ onLogin }: Props) {
     }
 
     if (check) {
-      dispatch(registration({ username, password, email }));
+      dispatch(
+        registration({ username, password, email, firstName, lastName })
+      );
       // onLogin(false);
       // // Reset form fields
       // setUsername("");
