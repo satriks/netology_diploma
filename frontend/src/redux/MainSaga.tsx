@@ -185,7 +185,8 @@ export function* sendFileSaga(action: Action) {
       //   yield put(clearOrderSuccess());
       // }
     } catch (error) {
-      // yield put(
+      yield call(showErrorMessage, error);
+
       //   getItemFailed({ message: (error as Error).message, errFunc: action })
       // );
     }
@@ -439,7 +440,7 @@ function* showErrorMessage(error: AxiosError) {
   if (error && error.code !== "ERR_NETWORK") {
     const errorData = {
       status: error.response.status,
-      message: error.response.data.non_field_errors[0],
+      message: Object.values(error.response.data)[0],
     };
 
     yield call(showError, errorData);

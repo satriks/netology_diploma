@@ -6,8 +6,9 @@ import React, {
   useState,
 } from "react";
 import "./AddNewFile.scss";
-import { useAppDispatch } from "../../../models/hooks";
+import { useAppDispatch, useAppSelector } from "../../../models/hooks";
 import { send_file, setIsSendFile } from "../../../redux/MainSlice";
+import ErrorMessage from "../../Messages/ErrorMessage";
 
 type Props = {
   file: File | null;
@@ -16,6 +17,7 @@ type Props = {
 
 export default function AddNewFile({ file, setDragFile }: Props) {
   const dispatch = useAppDispatch();
+  const errorChange = useAppSelector((state) => state.error);
   const [fileName, setFileName] = useState<string>("");
   const [fileDescription, setFileDescription] = useState<string>("");
   // const [dragFile, setDragFile] = useState(file);
@@ -28,6 +30,8 @@ export default function AddNewFile({ file, setDragFile }: Props) {
   return (
     <div className="new-form__wrapper">
       <form className="new-form" onSubmit={submitForm}>
+        {errorChange && <ErrorMessage message={errorChange.message} />}
+
         <label>
           Название
           <input value={fileName} onChange={handleFileNameChange}></input>
@@ -70,9 +74,9 @@ export default function AddNewFile({ file, setDragFile }: Props) {
 
     dispatch(send_file(formDataText));
 
-    setFileName("");
-    setFileDescription("");
-    setDragFile(null);
+    // setFileName("");
+    // setFileDescription("");
+    // setDragFile(null);
   }
 
   function handleFileNameChange(e: ChangeEvent<HTMLInputElement>) {

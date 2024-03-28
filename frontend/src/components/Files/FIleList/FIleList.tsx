@@ -58,7 +58,7 @@ export default function FileList({}: Props) {
           {infoMessage && !isChangeFile.isActive && !authorization && (
             <SuccessMessage message={infoMessage} />
           )}
-          {error && !isChangeFile.isActive && !authorization && (
+          {error && !isChangeFile.isActive && !authorization && !isSendFile && (
             <ErrorMessage message={error.message} />
           )}
           {files.map((el) => (
