@@ -1,10 +1,4 @@
-import React, {
-  ChangeEvent,
-  FormEvent,
-  useEffect,
-  useRef,
-  useState,
-} from "react";
+import React, { ChangeEvent, FormEvent, useEffect, useState } from "react";
 import "./AddNewFile.scss";
 import { useAppDispatch, useAppSelector } from "../../../models/hooks";
 import { send_file, setIsSendFile } from "../../../redux/MainSlice";
@@ -76,7 +70,7 @@ export default function AddNewFile({ file, setDragFile }: Props) {
 
     // setFileName("");
     // setFileDescription("");
-    // setDragFile(null);
+    setDragFile(null);
   }
 
   function handleFileNameChange(e: ChangeEvent<HTMLInputElement>) {

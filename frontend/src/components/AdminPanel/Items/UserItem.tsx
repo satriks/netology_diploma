@@ -1,4 +1,3 @@
-import React from "react";
 import avatarUnknown from "../../../assets/avatar_unknown.png";
 import "./UserItem.scss";
 import { User } from "../../../models/models";
@@ -27,7 +26,6 @@ export default function UserItem({ user }: Props) {
     console.log(currentUser);
     if (currentUser?.id == user.id) {
       dispatch(clearCurrentUser());
-      //TODO убрать юзера из выбранных
       return;
     }
     dispatch(get_user_data(user.id));

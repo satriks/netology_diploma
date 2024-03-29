@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import { useEffect } from "react";
 import "./AdminPanel.scss";
 import UserCard from "./Items/UserItem";
 import { useAppDispatch, useAppSelector } from "../../models/hooks";
@@ -9,7 +9,7 @@ import ChangeFileForm from "../Files/ChangeFileForm/ChangeFileForm";
 import Louder from "../Louder/Louder";
 import ErrorForm from "../Messages/ErrorForm";
 import ErrorMessage from "../Messages/ErrorMessage";
-import SuccessMessage from "../Messages/SuccessMessge";
+import SuccessMessage from "../Messages/SuccessMessage";
 
 type Props = {};
 
@@ -65,8 +65,8 @@ export default function AdminPanel({}: Props) {
       </div>
       {isChangeFile.isActive && (
         <ChangeFileForm
-          name={isChangeFile.name}
-          desc={isChangeFile.description}
+          name={isChangeFile.name!}
+          desc={isChangeFile.description!}
         />
       )}
     </div>

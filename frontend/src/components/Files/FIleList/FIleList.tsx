@@ -13,7 +13,7 @@ import ShareFileForm from "../ShareFileForm/ShareFileForm";
 import Louder from "../../Louder/Louder";
 import ErrorForm from "../../Messages/ErrorForm";
 import ErrorMessage from "../../Messages/ErrorMessage";
-import SuccessMessage from "../../Messages/SuccessMessge";
+import SuccessMessage from "../../Messages/SuccessMessage";
 
 type Props = {};
 

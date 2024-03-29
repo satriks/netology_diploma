@@ -3,9 +3,9 @@ import { setIsChangeFile, update_file } from "../../../redux/MainSlice";
 import { useAppDispatch, useAppSelector } from "../../../models/hooks";
 import "./ChangeFileForm.scss";
 import ErrorMessage from "../../Messages/ErrorMessage";
-import SuccessMessage from "../../Messages/SuccessMessge";
+import SuccessMessage from "../../Messages/SuccessMessage";
 
-type Props = {};
+type Props = { name: string; desc: string };
 
 export default function ChangeFileForm({ name, desc }: Props) {
   const errorChange = useAppSelector((state) => state.error);
@@ -72,6 +72,6 @@ export default function ChangeFileForm({ name, desc }: Props) {
       (target.parentNode as HTMLFormElement).parentNode as HTMLFormElement
     ).remove();
 
-    dispatch(setIsChangeFile());
+    dispatch(setIsChangeFile({}));
   }
 }

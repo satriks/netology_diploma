@@ -1,7 +1,7 @@
 from django.http import FileResponse
 from django.shortcuts import render
 from rest_framework import viewsets
-
+import logging
 from rest_framework.response import Response
 from rest_framework.viewsets import ModelViewSet
 from rest_framework.views import APIView
@@ -14,21 +14,16 @@ from backend_api.models import Files
 from backend_api.serializers import FilesSerializer, UserSerializer
 from datetime import datetime
 # from django.contrib.auth import get_user_model
-# User = get_user_model()
+
+logger = logging.getLogger("django")
+
 
 # Create your views here.
 class BackendAPIView(ModelViewSet):
     queryset = Files.objects.all()
     serializer_class = FilesSerializer
     permission_classes = [IsAuthenticated]
-    # def get_queryset(self):
-    #     user = self.request.user
-    #     return Files.objects.filter(user=user)
 
-    # def get(self, request, id, format=None):
-    #     user = self.request.user.id
-    #     queryset = Files.objects.filter(user=user)
-    #     return Response(FilesSerializer(queryset, many=True).data)
 
     def list(self, request, format=None):
         user = self.request.user.id
@@ -40,6 +35,7 @@ class BackendAPIView(ModelViewSet):
 
 class DownloadFileAPIView(APIView):
     permission_classes = (AllowAny,)
+    logger.info('Downloading file')
     def get(self, request, id, format=None):
         queryset = Files.objects.get(linkUiid=id)
         queryset.download_counter += 1
@@ -86,7 +82,7 @@ class LogoutView(APIView):
     Details: https://github.com/encode/django-rest-framework/issues/9206
     """
     permission_classes = [IsAuthenticated]
-
+    logger.info('logout user')
     def get(self, request):
         logout(request)
         return redirect('/api/users')

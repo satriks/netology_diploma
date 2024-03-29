@@ -3,7 +3,7 @@ import "./LoginForm.scss";
 import { useAppDispatch, useAppSelector } from "../../models/hooks";
 import { endAuthorization, getToken } from "../../redux/MainSlice";
 import ErrorMessage from "../Messages/ErrorMessage";
-import SuccessMessage from "../Messages/SuccessMessge";
+import SuccessMessage from "../Messages/SuccessMessage";
 // import ErrorMessage from "../ErrorsForm/ErrorMessage";
 
 type Props = { onLogin: React.Dispatch<React.SetStateAction<boolean>> };

@@ -244,7 +244,7 @@ export const get_users = createAction(GET_USERS);
 export const GET_FILES = "main/getFiles";
 export const get_files = createAction(GET_FILES);
 export const DEL_FILES = "main/delFiles";
-export const del_files = createAction(DEL_FILES);
+export const del_files = createAction<string | number>(DEL_FILES);
 export const SEND_FILE = "main/sendFile";
 export const send_file = createAction<{
   name: string;
@@ -265,7 +265,7 @@ export const update_user = createAction<{ body: ChangeUser; id: number }>(
   UPDATE_USER
 );
 export const GET_USER_DATA = "main/getUserData";
-export const get_user_data = createAction<{ id: number }>(GET_USER_DATA);
+export const get_user_data = createAction<number>(GET_USER_DATA);
 
 export const {
   startAuthorization,

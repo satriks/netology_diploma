@@ -1,11 +1,12 @@
 from datetime import datetime
-
+import logging
 from rest_framework import serializers
 from rest_framework.authtoken.admin import User
 from rest_framework.authtoken.models import Token
 
 from backend_api.models import Files
 
+logger = logging.getLogger("django")
 
 class FilesSerializer(serializers.ModelSerializer):
     user = serializers.PrimaryKeyRelatedField(read_only=True, default=serializers.CurrentUserDefault())
@@ -28,6 +29,7 @@ class UserSerializer(serializers.HyperlinkedModelSerializer):
     files = FilesSerializer(many=True, read_only=True)
 
     def create(self, validated_data):
+        logger.info('Create new User')
         user = User.objects.create_user(
             username=validated_data['username'],
             password=validated_data['password'],

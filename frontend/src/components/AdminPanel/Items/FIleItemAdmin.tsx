@@ -1,9 +1,9 @@
-import React, { useRef, useState } from "react";
 import File_data from "../../../models/models";
 import { sizeValidator, timeConverter } from "../../../utils/utils";
 import "./FIleItemAdmin.scss";
-import { useAppDispatch, useAppSelector } from "../../../models/hooks";
+import { useAppDispatch } from "../../../models/hooks";
 import { del_files, setIsChangeFile } from "../../../redux/MainSlice";
+import { useRef, useState } from "react";
 
 type Props = { data: File_data };
 
@@ -53,7 +53,9 @@ export default function FIleItemAdmin({ data }: Props) {
     dispatch(del_files(data.id));
   }
   function toggle() {
-    detail.current.classList.toggle("hidden");
+    if (detail.current) {
+      (detail.current as HTMLDivElement).classList.toggle("hidden");
+    }
     setDetailActive(!detailActive);
 
     // detail.current.className
@@ -64,7 +66,7 @@ export default function FIleItemAdmin({ data }: Props) {
     const dataInfo = {
       name: data.name,
       description: data.description,
-      id: data.id,
+      id: String(data.id),
     };
     dispatch(setIsChangeFile(dataInfo));
   }

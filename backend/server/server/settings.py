@@ -170,3 +170,40 @@ CORS_ALLOW_ALL_ORIGINS = True
 #USERS
 
 # AUTH_USER_MODEL = 'backend_api.CostumUser'
+
+
+LOGGING = {
+    "version": 1,
+    "disable_existing_loggers": False,
+
+    "formatters": {
+        "main_format": {
+            'format': '{levelname} {asctime} {module} {funcName} {message}',
+            'style': "{",
+        }
+    },
+
+    "handlers": {
+        "console": {
+            "class": "logging.StreamHandler",
+            "formatter" : "main_format"
+        },
+        "file": {
+            "class": "logging.FileHandler",
+            "formatter": "main_format",
+            "filename": "logs.log",
+
+        }
+    },
+    # "root": {
+    #     "handlers": ["console"],
+    #     "level": "WARNING",
+    # },
+    "loggers": {
+        "django": {
+            "handlers": ["console", "file"],
+            "level": os.getenv("DJANGO_LOG_LEVEL", "INFO"),
+            "propagate": False,
+        },
+    },
+}

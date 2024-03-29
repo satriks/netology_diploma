@@ -4,7 +4,7 @@ import RegistrationForm from "./RegistrationForm";
 import "./AuthorisationForm.scss";
 import { useNavigate } from "react-router-dom";
 import { useAppSelector } from "../../models/hooks";
-import SuccessMessage from "../Messages/SuccessMessge";
+import SuccessMessage from "../Messages/SuccessMessage";
 
 type Props = {};
 

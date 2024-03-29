@@ -1,0 +1,101 @@
+INFO 2024-03-29 02:36:32,240 autoreload autoreload.py run_with_reloader Watching for file changes with StatReloader
+INFO 2024-03-29 02:36:37,169 basehttp basehttp.py log_message "GET /api/files/ HTTP/1.1" 200 5822
+INFO 2024-03-29 02:36:37,213 basehttp basehttp.py log_message "GET /api/files/ HTTP/1.1" 200 5822
+INFO 2024-03-29 02:36:45,202 basehttp basehttp.py log_message "OPTIONS /api/files/60/ HTTP/1.1" 200 0
+INFO 2024-03-29 02:36:45,244 basehttp basehttp.py log_message "DELETE /api/files/60/ HTTP/1.1" 204 0
+INFO 2024-03-29 02:36:45,288 basehttp basehttp.py log_message "GET /api/files/ HTTP/1.1" 200 5563
+WARNING 2024-03-29 02:37:18,068 log log.py log_response Method Not Allowed: /api-token-auth/
+WARNING 2024-03-29 02:37:18,068 basehttp basehttp.py log_message "GET /api-token-auth/ HTTP/1.1" 405 54
+WARNING 2024-03-29 02:37:18,124 log log.py log_response Not Found: /favicon.ico
+WARNING 2024-03-29 02:37:18,124 basehttp basehttp.py log_message "GET /favicon.ico HTTP/1.1" 404 2951
+INFO 2024-03-29 02:38:16,830 basehttp basehttp.py log_message "POST /api-token-auth/ HTTP/1.1" 200 52
+INFO 2024-03-29 02:38:16,985 basehttp basehttp.py log_message "GET /api/users/detail HTTP/1.1" 200 6148
+INFO 2024-03-29 02:38:17,024 basehttp basehttp.py log_message "GET /api/files/ HTTP/1.1" 200 5563
+WARNING 2024-03-29 02:38:31,118 log log.py log_response Bad Request: /api-token-auth/
+WARNING 2024-03-29 02:38:31,118 basehttp basehttp.py log_message "POST /api-token-auth/ HTTP/1.1" 400 125
+INFO 2024-03-29 02:39:54,920 autoreload autoreload.py trigger_reload E:\DIplom_fullstack\backend\server\server\settings.py changed, reloading.
+INFO 2024-03-29 02:39:55,363 autoreload autoreload.py E:\DIplom_fullstack\backend\venv\Lib\site-packages\django\utils\autoreload.py Watching for file changes with StatReloader
+INFO 2024-03-29 02:40:03,533 basehttp basehttp.py E:\DIplom_fullstack\backend\venv\Lib\site-packages\django\core\servers\basehttp.py "POST /api-token-auth/ HTTP/1.1" 200 52
+INFO 2024-03-29 02:40:03,611 basehttp basehttp.py E:\DIplom_fullstack\backend\venv\Lib\site-packages\django\core\servers\basehttp.py "GET /api/files/ HTTP/1.1" 200 5563
+INFO 2024-03-29 02:40:03,691 basehttp basehttp.py E:\DIplom_fullstack\backend\venv\Lib\site-packages\django\core\servers\basehttp.py "GET /api/users/detail HTTP/1.1" 200 6148
+INFO 2024-03-29 02:41:00,875 autoreload autoreload.py E:\DIplom_fullstack\backend\venv\Lib\site-packages\django\utils\autoreload.py E:\DIplom_fullstack\backend\server\server\settings.py changed, reloading.
+INFO 2024-03-29 02:41:01,333 autoreload autoreload.py 10500 Watching for file changes with StatReloader
+INFO 2024-03-29 02:41:11,877 autoreload autoreload.py 10500 E:\DIplom_fullstack\backend\server\server\settings.py changed, reloading.
+INFO 2024-03-29 02:41:12,303 autoreload MainProcess 6532 Watching for file changes with StatReloader
+INFO 2024-03-29 02:41:14,879 basehttp MainProcess 6532 "GET /api/users/detail HTTP/1.1" 200 6148
+INFO 2024-03-29 02:41:14,914 basehttp MainProcess 6532 "GET /api/users/detail HTTP/1.1" 200 6148
+INFO 2024-03-29 02:41:27,893 basehttp MainProcess 6532 "GET /api/users/ HTTP/1.1" 200 9850
+INFO 2024-03-29 02:41:27,932 basehttp MainProcess 6532 "GET /api/users/ HTTP/1.1" 200 9850
+INFO 2024-03-29 02:41:33,132 basehttp MainProcess 6532 "GET /api/users/1/ HTTP/1.1" 200 6146
+INFO 2024-03-29 02:41:34,610 basehttp MainProcess 6532 "OPTIONS /api/users/39/ HTTP/1.1" 200 0
+INFO 2024-03-29 02:41:34,652 basehttp MainProcess 6532 "GET /api/users/39/ HTTP/1.1" 200 400
+INFO 2024-03-29 02:41:35,193 basehttp MainProcess 6532 "OPTIONS /api/users/42/ HTTP/1.1" 200 0
+INFO 2024-03-29 02:41:35,233 basehttp MainProcess 6532 "GET /api/users/42/ HTTP/1.1" 200 158
+INFO 2024-03-29 02:41:36,155 basehttp MainProcess 6532 "GET /api/users/1/ HTTP/1.1" 200 6146
+INFO 2024-03-29 02:41:38,838 basehttp MainProcess 6532 "OPTIONS /api/users/22/ HTTP/1.1" 200 0
+INFO 2024-03-29 02:41:38,883 basehttp MainProcess 6532 "GET /api/users/22/ HTTP/1.1" 200 152
+INFO 2024-03-29 02:41:40,413 basehttp MainProcess 6532 "OPTIONS /api/users/23/ HTTP/1.1" 200 0
+INFO 2024-03-29 02:41:40,458 basehttp MainProcess 6532 "GET /api/users/23/ HTTP/1.1" 200 153
+INFO 2024-03-29 02:41:42,034 basehttp MainProcess 6532 "DELETE /api/users/23/ HTTP/1.1" 204 0
+INFO 2024-03-29 02:41:42,092 basehttp MainProcess 6532 "GET /api/users/ HTTP/1.1" 200 9696
+INFO 2024-03-29 02:42:53,124 autoreload MainProcess 6532 E:\DIplom_fullstack\backend\server\server\settings.py changed, reloading.
+INFO 2024-03-29 02:42:53,552 autoreload run_with_reloader Watching for file changes with StatReloader
+INFO 2024-03-29 02:42:56,306 basehttp log_message "OPTIONS /api/users/43/ HTTP/1.1" 200 0
+INFO 2024-03-29 02:42:56,354 basehttp log_message "GET /api/users/43/ HTTP/1.1" 200 406
+INFO 2024-03-29 02:42:59,689 basehttp log_message "PATCH /api/users/43/ HTTP/1.1" 200 411
+WARNING 2024-03-29 02:43:26,043 log log_response Bad Request: /api-token-auth/
+WARNING 2024-03-29 02:43:26,044 basehttp log_message "POST /api-token-auth/ HTTP/1.1" 400 125
+INFO 2024-03-29 02:45:48,971 autoreload run_with_reloader Watching for file changes with StatReloader
+INFO 2024-03-29 02:45:58,216 basehttp log_message "POST /api-token-auth/ HTTP/1.1" 200 52
+INFO 2024-03-29 02:45:58,301 basehttp log_message "GET /api/users/detail HTTP/1.1" 200 6148
+INFO 2024-03-29 02:45:58,301 basehttp log_message "GET /api/files/ HTTP/1.1" 200 5563
+INFO 2024-03-29 02:46:11,077 basehttp log_message "GET /download/3f9c5c70-0dcb-4fac-9eac-7899f82c7898 HTTP/1.1" 200 167775
+INFO 2024-03-29 02:48:11,187 autoreload trigger_reload E:\DIplom_fullstack\backend\server\backend_api\views.py changed, reloading.
+INFO 2024-03-29 02:48:11,598 autoreload run_with_reloader Watching for file changes with StatReloader
+INFO 2024-03-29 02:48:52,799 autoreload trigger_reload E:\DIplom_fullstack\backend\server\backend_api\views.py changed, reloading.
+INFO 2024-03-29 02:48:53,209 autoreload run_with_reloader Watching for file changes with StatReloader
+INFO 2024-03-29 02:48:53,275 views DownloadFileAPIView Downloading file
+INFO 2024-03-29 02:49:01,179 basehttp log_message "GET /download/3f9c5c70-0dcb-4fac-9eac-7899f82c7898 HTTP/1.1" 200 167775
+INFO 2024-03-29 02:54:18,037 autoreload trigger_reload E:\DIplom_fullstack\backend\server\backend_api\serializers.py changed, reloading.
+INFO 2024-03-29 02:54:18,445 autoreload run_with_reloader Watching for file changes with StatReloader
+INFO 2024-03-29 02:54:18,502 views DownloadFileAPIView Downloading file
+INFO 2024-03-29 02:54:18,503 views LogoutView logout user
+INFO 2024-03-29 02:54:26,051 basehttp log_message "GET /download/3f9c5c70-0dcb-4fac-9eac-7899f82c7898 HTTP/1.1" 200 167775
+INFO 2024-03-29 02:54:48,153 serializers create Create new User
+INFO 2024-03-29 02:54:48,577 basehttp log_message "POST /api/users/ HTTP/1.1" 201 161
+INFO 2024-03-29 02:54:58,981 basehttp log_message "POST /api-token-auth/ HTTP/1.1" 200 52
+INFO 2024-03-29 02:54:59,041 basehttp log_message "GET /api/files/ HTTP/1.1" 200 5563
+INFO 2024-03-29 02:54:59,041 basehttp log_message "GET /api/users/detail HTTP/1.1" 200 6148
+INFO 2024-03-29 03:01:53,776 basehttp log_message "GET /api/users/detail HTTP/1.1" 200 6148
+INFO 2024-03-29 03:01:53,776 basehttp log_message "GET /api/files/ HTTP/1.1" 200 5563
+INFO 2024-03-29 03:01:53,818 basehttp log_message "GET /api/users/detail HTTP/1.1" 200 6148
+INFO 2024-03-29 03:07:18,532 basehttp log_message "GET /api/files/ HTTP/1.1" 200 5563
+INFO 2024-03-29 03:07:18,532 basehttp log_message "GET /api/users/detail HTTP/1.1" 200 6148
+INFO 2024-03-29 03:07:18,569 basehttp log_message "GET /api/users/detail HTTP/1.1" 200 6148
+INFO 2024-03-29 03:10:47,189 basehttp log_message "GET /api/users/detail HTTP/1.1" 200 6148
+INFO 2024-03-29 03:10:47,199 basehttp log_message "GET /api/files/ HTTP/1.1" 200 5563
+INFO 2024-03-29 03:10:47,226 basehttp log_message "GET /api/users/detail HTTP/1.1" 200 6148
+INFO 2024-03-29 03:11:04,497 basehttp log_message "POST /api-token-auth/ HTTP/1.1" 200 52
+INFO 2024-03-29 03:11:04,547 basehttp log_message "GET /api/files/ HTTP/1.1" 200 5563
+INFO 2024-03-29 03:11:04,547 basehttp log_message "GET /api/users/detail HTTP/1.1" 200 6148
+INFO 2024-03-29 03:11:06,434 basehttp log_message "GET /api/users/detail HTTP/1.1" 200 6148
+INFO 2024-03-29 03:11:06,469 basehttp log_message "GET /api/users/detail HTTP/1.1" 200 6148
+INFO 2024-03-29 03:11:12,504 basehttp log_message "PATCH /api/users/1/ HTTP/1.1" 200 6144
+INFO 2024-03-29 03:11:15,473 basehttp log_message "GET /api/users/ HTTP/1.1" 200 9861
+INFO 2024-03-29 03:11:15,513 basehttp log_message "GET /api/users/ HTTP/1.1" 200 9861
+INFO 2024-03-29 03:11:23,383 basehttp log_message "OPTIONS /api/users/20/ HTTP/1.1" 200 0
+INFO 2024-03-29 03:11:23,421 basehttp log_message "GET /api/users/20/ HTTP/1.1" 200 150
+INFO 2024-03-29 03:11:23,739 basehttp log_message "GET /api/users/1/ HTTP/1.1" 200 6144
+INFO 2024-03-29 03:13:01,060 basehttp log_message "GET /api/users/ HTTP/1.1" 200 9861
+INFO 2024-03-29 03:13:32,033 basehttp log_message "GET /api/users/ HTTP/1.1" 200 9861
+INFO 2024-03-29 03:22:45,115 basehttp log_message "GET /api/users/detail HTTP/1.1" 200 6146
+INFO 2024-03-29 03:22:45,127 basehttp log_message "GET /api/files/ HTTP/1.1" 200 5563
+INFO 2024-03-29 03:22:45,175 basehttp log_message "GET /api/users/detail HTTP/1.1" 200 6146
+INFO 2024-03-29 03:22:45,459 basehttp log_message "GET /media/1/test_1ff.jpg HTTP/1.1" 304 0
+INFO 2024-03-29 03:22:45,462 basehttp log_message "GET /media/1/test_1_DQfzIVn.jpg HTTP/1.1" 304 0
+INFO 2024-03-29 03:22:58,388 basehttp log_message "POST /api/files/ HTTP/1.1" 201 258
+INFO 2024-03-29 03:22:58,437 basehttp log_message "GET /api/files/ HTTP/1.1" 200 5801
+INFO 2024-03-29 03:22:58,455 basehttp log_message "GET /media/1/test_1_C6lL3sz.jpg HTTP/1.1" 200 803944
+INFO 2024-03-29 03:23:06,091 basehttp log_message "POST /api/files/ HTTP/1.1" 201 258
+INFO 2024-03-29 03:23:06,132 basehttp log_message "GET /api/files/ HTTP/1.1" 200 6039
+INFO 2024-03-29 03:23:06,146 basehttp log_message "GET /media/1/test_1_tYOltt8.jpg HTTP/1.1" 200 803944

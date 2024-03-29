@@ -1,4 +1,4 @@
-import "./SuccessMessge.scss";
+import "./SuccessMessage.scss";
 
 type Props = { message: string };
 

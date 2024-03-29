@@ -1,11 +1,10 @@
-import { useRef, useState } from "react";
+import { useState } from "react";
 import { useAppDispatch } from "../../../models/hooks";
 import File_data from "../../../models/models";
 import {
   del_files,
   setIsChangeFile,
   setIsShareFile,
-  setLastDropOn,
 } from "../../../redux/MainSlice";
 import "./DropFIleMenu.scss";
 import { sizeValidator, timeConverter } from "../../../utils/utils";
@@ -24,7 +23,7 @@ export default function DropFileMenu({ data, side }: Props) {
         <li className="file__info" onClick={fileInfo}>
           Информация
         </li>
-        <li onClick={updatelFile}>Переименовать</li>
+        <li onClick={updateFile}>Переименовать</li>
         <li onClick={shareFile}>Поделиться</li>
         <li>
           <a
@@ -37,7 +36,6 @@ export default function DropFileMenu({ data, side }: Props) {
           </a>
         </li>
         <li onClick={delFile}>Удалить файл</li>
-        {/* <li>Добавить файл</li> */}
       </ul>
       {detailFIle && (
         <div className="detail">
@@ -57,18 +55,17 @@ export default function DropFileMenu({ data, side }: Props) {
   function delFile() {
     dispatch(del_files(data.id));
   }
-  function fileInfo(e) {
+  function fileInfo(e: React.MouseEvent) {
     e.preventDefault();
     setDetailFile(!detailFIle);
-    // dispatch(setLastDropOn(data.id));
   }
-  function updatelFile() {
+  function updateFile() {
     console.log("update");
 
     const dataInfo = {
       name: data.name,
       description: data.description,
-      id: data.id,
+      id: String(data.id),
     };
     dispatch(setIsChangeFile(dataInfo));
   }
