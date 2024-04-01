@@ -27,7 +27,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'django-insecure-7!^rlx9b#*f&_ox&$))eaw@%g(rct(x!2bchasozzta$_=j@6y'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = os.getenv('DEBUG') or True
 
 ALLOWED_HOSTS = []
 
@@ -91,11 +91,11 @@ WSGI_APPLICATION = 'server.wsgi.application'
 DATABASES = {
     "default": {
             "ENGINE": "django.db.backends.postgresql",
-            "NAME": "diplom",
+            "NAME": os.getenv('NAME'),
             "USER": os.getenv('USER'),
             "PASSWORD": os.getenv('PASSWORD'),
-            "HOST": "127.0.0.1",
-            "PORT": "5432",
+            "HOST": os.getenv('HOST'),
+            "PORT":  os.getenv('PORT'),
         }
 }
 
@@ -140,7 +140,7 @@ STATIC_URL = 'static/'
 # STATICFILES_DIRS = BASE_DIR / 'staticfiles'
 
 MEDIA_URL = '/media/'
-MEDIA_ROOT = BASE_DIR / 'storage'
+MEDIA_ROOT = BASE_DIR / os.getenv('MEDIA_ROOT')
 
 
 # Default primary key field type
