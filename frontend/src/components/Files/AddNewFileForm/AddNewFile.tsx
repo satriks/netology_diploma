@@ -14,7 +14,6 @@ export default function AddNewFile({ file, setDragFile }: Props) {
   const errorChange = useAppSelector((state) => state.error);
   const [fileName, setFileName] = useState<string>("");
   const [fileDescription, setFileDescription] = useState<string>("");
-  // const [dragFile, setDragFile] = useState(file);
   useEffect(() => {
     if (file) {
       setFileName(file.name.split(".")[0]);
@@ -67,9 +66,6 @@ export default function AddNewFile({ file, setDragFile }: Props) {
     };
 
     dispatch(send_file(formDataText));
-
-    // setFileName("");
-    // setFileDescription("");
     setDragFile(null);
   }
 
@@ -80,7 +76,6 @@ export default function AddNewFile({ file, setDragFile }: Props) {
     setFileDescription(e.target.value);
   }
   function handleClose(e: React.MouseEvent<HTMLButtonElement, MouseEvent>) {
-    console.log(e);
     const target = e.target as HTMLElement;
     (target.parentNode as HTMLFormElement).remove();
 

@@ -4,7 +4,6 @@ import { useAppDispatch, useAppSelector } from "../../models/hooks";
 import { endAuthorization, getToken } from "../../redux/MainSlice";
 import ErrorMessage from "../Messages/ErrorMessage";
 import SuccessMessage from "../Messages/SuccessMessage";
-// import ErrorMessage from "../ErrorsForm/ErrorMessage";
 
 type Props = { onLogin: React.Dispatch<React.SetStateAction<boolean>> };
 
@@ -68,14 +67,12 @@ export default function LoginForm({ onLogin }: Props) {
 
   function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
-    console.log("submit");
 
-    console.log("Username:", username);
-    console.log("Password:", password);
+    // console.log("Username:", username);
+    // console.log("Password:", password);
 
     dispatch(getToken({ username, password }));
 
-    // Reset form fields
     setUsername("");
     setPassword("");
   }

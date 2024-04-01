@@ -1,12 +1,11 @@
 import fileLogo from "../../../assets/file.png";
 import addFileLogo from "../../../assets/addFile2.png";
 import "./FIleItem.scss";
-import File_data from "../../../models/models";
+import { File_data } from "../../../models/models";
 import DropFileMenu from "../DropFileMenu/DropFileMenu";
 import { useRef, useState } from "react";
 import { useAppDispatch, useAppSelector } from "../../../models/hooks";
 import { setIsSendFile, setLastDropOn } from "../../../redux/MainSlice";
-import ChangeFileForm from "../ChangeFileForm/ChangeFileForm";
 
 type Props = {
   data: File_data | { file: "add"; name: "Добавить файл"; id: 0 };
@@ -25,7 +24,7 @@ export default function FileItem({ data }: Props) {
   const dispatch = useAppDispatch();
   const lastDropOn = useAppSelector((state) => state.lastDropOn);
 
-  const link = baseURL + "download/" + data.linkUiid;
+  const link = baseURL + "download/" + (data as File_data).linkUiid;
   const downloadLink = useRef(null);
 
   return (
@@ -45,30 +44,19 @@ export default function FileItem({ data }: Props) {
     </div>
   );
 
-  function clickFile(e) {
-    // console.log(e.screenX, "screenX");
-    // console.log(e.clientX, "clientX");
-    // console.log(window.innerWidth);
+  function clickFile(e: React.MouseEvent) {
     if (window.innerWidth - e.clientX < 450) {
       setLeftDropMenu(true);
     }
 
-    if (e.target.className === "download") {
+    if ((e.target as HTMLDivElement).className === "download") {
       return;
     }
-
-    console.log(e.target.className);
 
     e.preventDefault();
     e.stopPropagation();
 
-    // if (e.target.tagName == "LI") {
-    //   console.log(17);
-    //   return;
-    // }
-
-    if (e.target.className == "file__info") {
-      console.log(42);
+    if ((e.target as HTMLDivElement).className == "file__info") {
       return;
     }
 
@@ -79,6 +67,5 @@ export default function FileItem({ data }: Props) {
         ? dispatch(setLastDropOn(null))
         : dispatch(setLastDropOn(data.id));
     }
-    //active drop menu
   }
 }

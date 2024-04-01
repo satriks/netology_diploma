@@ -4,7 +4,7 @@ import {
   createSlice,
   PayloadAction,
 } from "@reduxjs/toolkit";
-import File_data, { ChangeUser } from "../models/models";
+import { File_data, ChangeUser, RegistrationData } from "../models/models";
 import { User } from "../models/models";
 
 interface InitialStateType {
@@ -17,7 +17,6 @@ interface InitialStateType {
     adminFilesChange: boolean;
     sendChange: boolean;
     delFile: boolean;
-    // adminFileData: boolean;
   };
   error: { status: string; message: string } | null;
   infoMessage: string | null;
@@ -29,7 +28,6 @@ interface InitialStateType {
     profile: { status: string; message: string; action: Action } | null;
     adminUsers: { status: string; message: string; action: Action } | null;
     adminUserData: { status: string; message: string; action: Action } | null;
-    // adminFileData: { status: string; message: string; action: Action } | null;
   };
   token: string | null;
   files: File_data[];
@@ -64,7 +62,6 @@ const initialState: InitialStateType = {
     adminFilesChange: false,
     sendChange: false,
     delFile: false,
-    // adminFileData: false,
   },
   error: null,
   infoMessage: null,
@@ -76,7 +73,6 @@ const initialState: InitialStateType = {
     profile: null,
     adminUsers: null,
     adminUserData: null,
-    // adminFileData: null,
   },
   token: null,
   files: [],
@@ -147,9 +143,6 @@ const MainSlice = createSlice({
     setDelFileLoading(state, action) {
       state.loading.delFile = action.payload;
     },
-    // setAdminFilesLoading(state, action) {
-    //   state.loading.adminFileData = action.payload;
-    // },
 
     getSuccessUserDetail(state, action: PayloadAction<User>) {
       state.user = action.payload;
@@ -158,7 +151,6 @@ const MainSlice = createSlice({
     getSuccessUser(state, action: PayloadAction<User | null>) {
       state.adminPanel.currentUser = action.payload;
       state.loading.adminUserData = false;
-      // state.loading.adminFileData = false;
     },
     clearCurrentUser(state) {
       state.adminPanel.currentUser = null;
@@ -232,13 +224,7 @@ export const getToken = createAction<{
   password: string;
 }>(GET_TOKEN);
 export const REGISTRATION = "main/registration";
-export const registration = createAction<{
-  username: string;
-  password: string;
-  email: string;
-  firstName: string;
-  lastName: string;
-}>(REGISTRATION);
+export const registration = createAction<RegistrationData>(REGISTRATION);
 export const GET_USERS = "main/getUsers";
 export const get_users = createAction(GET_USERS);
 export const GET_FILES = "main/getFiles";
@@ -283,8 +269,6 @@ export const {
   setAdminFileChangeLoading,
   setSendChangeLoading,
   setDelFileLoading,
-
-  // setAdminFilesLoading,
 
   getSuccessUserDetail,
   getSuccessUser,

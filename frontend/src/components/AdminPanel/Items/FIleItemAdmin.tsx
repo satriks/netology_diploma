@@ -1,4 +1,4 @@
-import File_data from "../../../models/models";
+import { File_data } from "../../../models/models";
 import { sizeValidator, timeConverter } from "../../../utils/utils";
 import "./FIleItemAdmin.scss";
 import { useAppDispatch } from "../../../models/hooks";
@@ -57,12 +57,8 @@ export default function FIleItemAdmin({ data }: Props) {
       (detail.current as HTMLDivElement).classList.toggle("hidden");
     }
     setDetailActive(!detailActive);
-
-    // detail.current.className
   }
   function updateFile() {
-    console.log("update");
-
     const dataInfo = {
       name: data.name,
       description: data.description,

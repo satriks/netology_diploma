@@ -9,7 +9,7 @@ const connect = axios.create({
 export const loginApi = (username: string, password: string) => {
   return connect
     .post("api-token-auth/", { username, password })
-    .then((response) => response.data); // получим токен и нужно обработку ошибок добавить
+    .then((response) => response.data);
 };
 
 //Registration user
@@ -20,17 +20,13 @@ export const registrationApi = (
   firstName: string,
   lastName: string
 ) => {
-  console.log(lastName, firstName, " from api");
-
-  return connect
-    .post("api/users/", {
-      username,
-      password,
-      email,
-      first_name: firstName,
-      last_name: lastName,
-    })
-    .then((response) => response.data); //
+  return connect.post("api/users/", {
+    username,
+    password,
+    email,
+    first_name: firstName,
+    last_name: lastName,
+  });
 };
 
 //Get users
@@ -47,7 +43,7 @@ export const getUserDetailApi = (token: string) => {
 };
 
 //Get user
-export const getUserApi = (token: string, id: number) => {
+export const getUserApi = (token: string, id: number | string) => {
   return connect
     .get(`api/users/${id}/`, {
       headers: { Authorization: "token " + token },
@@ -63,13 +59,9 @@ export const delUserApi = (token: string, id: number) => {
 };
 //Update user
 export const updateUserApi = (token: string, body: ChangeUser, id: number) => {
-  console.log(body, " from api");
-
-  return connect
-    .patch(`api/users/${id}/`, body, {
-      headers: { Authorization: "token " + token },
-    })
-    .then((response) => response.data);
+  return connect.patch(`api/users/${id}/`, body, {
+    headers: { Authorization: "token " + token },
+  });
 };
 //Get files
 export const getFilesApi = (token: string) => {

@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { useAppDispatch } from "../../../models/hooks";
-import File_data from "../../../models/models";
+import { File_data } from "../../../models/models";
 import {
   del_files,
   setIsChangeFile,
@@ -9,12 +9,15 @@ import {
 import "./DropFIleMenu.scss";
 import { sizeValidator, timeConverter } from "../../../utils/utils";
 
-type Props = { data: File_data; side: boolean };
+type Props = {
+  data: File_data | { file: "add"; name: "Добавить файл"; id: 0 };
+  side: boolean;
+};
 
 export default function DropFileMenu({ data, side }: Props) {
   const dispatch = useAppDispatch();
   const baseURL = import.meta.env.VITE_HOST || "http://localhost:8000/";
-  const link = baseURL + "download/" + data.linkUiid;
+  const link = baseURL + "download/" + (data as File_data).linkUiid;
   const [detailFIle, setDetailFile] = useState(false);
 
   return (
@@ -40,13 +43,18 @@ export default function DropFileMenu({ data, side }: Props) {
       {detailFIle && (
         <div className="detail">
           Информация о файле :
-          <span>{"Дата создания : " + timeConverter(data.created_at)}</span>
           <span>
-            {"Последнее скачивание: " + timeConverter(data.download_at)}
+            {"Дата создания : " + timeConverter((data as File_data).created_at)}
           </span>
-          <span>{"Скачан : " + data.download_counter + " раз(а)"}</span>
-          <span>{"Размер : " + sizeValidator(data.size)}</span>
-          <span>{"Описание : " + data.description} </span>
+          <span>
+            {"Последнее скачивание: " +
+              timeConverter((data as File_data).download_at)}
+          </span>
+          <span>
+            {"Скачан : " + (data as File_data).download_counter + " раз(а)"}
+          </span>
+          <span>{"Размер : " + sizeValidator((data as File_data).size)}</span>
+          <span>{"Описание : " + (data as File_data).description} </span>
         </div>
       )}
     </div>
@@ -60,16 +68,14 @@ export default function DropFileMenu({ data, side }: Props) {
     setDetailFile(!detailFIle);
   }
   function updateFile() {
-    console.log("update");
-
     const dataInfo = {
       name: data.name,
-      description: data.description,
+      description: (data as File_data).description,
       id: String(data.id),
     };
     dispatch(setIsChangeFile(dataInfo));
   }
   function shareFile() {
-    dispatch(setIsShareFile(data.linkUiid));
+    dispatch(setIsShareFile((data as File_data).linkUiid));
   }
 }

@@ -54,9 +54,6 @@ export default function ChangeFileForm({ name, desc }: Props) {
       description: fileDescription,
     };
     dispatch(update_file(changeData));
-
-    // setFileName("");
-    // setFileDescription("");
   }
 
   function handleFileNameChange(e: ChangeEvent<HTMLInputElement>) {

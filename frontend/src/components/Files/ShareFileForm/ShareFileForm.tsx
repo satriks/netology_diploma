@@ -27,15 +27,15 @@ export default function ShareFileForm({ uuid }: Props) {
     </div>
   );
 
-  function closeShareFile(e: React.ChangeEvent<HTMLInputElement>) {
-    if (e.target.className === "share-form__wrapper") {
-      dispatch(setIsShareFile());
+  function closeShareFile(e: React.MouseEvent<HTMLInputElement>) {
+    if ((e.target as HTMLDivElement).className === "share-form__wrapper") {
+      dispatch(setIsShareFile(""));
     }
   }
   function handleClose() {
-    dispatch(setIsShareFile());
+    dispatch(setIsShareFile(""));
   }
-  function handleCopy(e: React.ChangeEvent<HTMLInputElement>) {
+  function handleCopy(e: React.MouseEvent<HTMLButtonElement>) {
     e.preventDefault();
     navigator.clipboard.writeText(link);
   }

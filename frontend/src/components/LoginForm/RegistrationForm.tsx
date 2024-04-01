@@ -33,8 +33,6 @@ export default function RegistrationForm({ onLogin }: Props) {
       setPassword("");
       dispatch(getSuccessRegistration(false));
     }
-
-    console.log(success);
   }, [success]);
 
   return (
@@ -109,11 +107,9 @@ export default function RegistrationForm({ onLogin }: Props) {
     setUsername(e.target.value);
   }
   function handleFirstNameChange(e: React.ChangeEvent<HTMLInputElement>) {
-    // e.target.setCustomValidity("");
     setFirstName(e.target.value);
   }
   function handleLastNameChange(e: React.ChangeEvent<HTMLInputElement>) {
-    // e.target.setCustomValidity("");
     setLastName(e.target.value);
   }
 
@@ -132,8 +128,8 @@ export default function RegistrationForm({ onLogin }: Props) {
 
   function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
-    console.log("Username:", username);
-    console.log("Password:", password);
+    // console.log("Username:", username);
+    // console.log("Password:", password);
     let check = true;
     const target = e.target as HTMLFormElement;
     try {
@@ -162,10 +158,6 @@ export default function RegistrationForm({ onLogin }: Props) {
       dispatch(
         registration({ username, password, email, firstName, lastName })
       );
-      // onLogin(false);
-      // // Reset form fields
-      // setUsername("");
-      // setPassword("");
     }
   }
 }

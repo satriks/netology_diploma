@@ -6,7 +6,6 @@ type Props = { data: { status: string; message: string; action: Action } };
 
 export default function ErrorForm({ data }: Props) {
   const dispatch = useAppDispatch();
-  console.log(data);
 
   return (
     <div className="error__form__wrapper">

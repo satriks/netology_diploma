@@ -3,7 +3,7 @@ import Footer from "./components/Footer/Footer";
 import FileList from "./components/Files/FIleList/FIleList";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import Profile from "./components/Profile/Profile";
-import AuthorisationForm from "./components/LoginForm/AuthorisationForm";
+import AuthorizationForm from "./components/LoginForm/AuthorizationForm";
 import { useAppDispatch, useAppSelector } from "./models/hooks";
 import AdminPanel from "./components/AdminPanel/AdminPanel";
 import { useEffect } from "react";
@@ -11,7 +11,6 @@ import { get_user_detail, getSuccessToken } from "./redux/MainSlice";
 
 function App() {
   const authorization = useAppSelector((state) => state.authorization);
-  const Atoken = useAppSelector((state) => state.token);
   const dispatch = useAppDispatch();
 
   useEffect(() => {
@@ -21,14 +20,10 @@ function App() {
       dispatch(get_user_detail());
     }
   }, []);
-  // const list = [1, 2, 3, 4, 5];
   return (
     <BrowserRouter>
       <Header />
-      {/* <Louder /> */}
-      {authorization && <AuthorisationForm />}
-      {/* <ChangeFileForm /> */}
-      {/* <AddNewFile /> */}
+      {authorization && <AuthorizationForm />}
       <Routes>
         <Route path="/" element={<FileList />} />
         <Route path="/profile" element={<Profile />} />

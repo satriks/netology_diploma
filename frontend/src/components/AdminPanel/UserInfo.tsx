@@ -4,7 +4,7 @@ import { useAppDispatch, useAppSelector } from "../../models/hooks";
 import { sizeValidator, timeConverter } from "../../utils/utils";
 import { del_user, update_user } from "../../redux/MainSlice";
 import "./UserInfo.scss";
-import File_data, { ChangeUser } from "../../models/models";
+import { File_data, ChangeUser } from "../../models/models";
 
 export default function UserInfo() {
   const user = useAppSelector((state) => state.adminPanel.currentUser);
@@ -101,8 +101,6 @@ export default function UserInfo() {
                 id="isStaff"
                 checked={isStaff}
                 onChange={handleIsStaffChange}
-                // value={password}
-                // onChange={handlePasswordChange}
               />
             </label>
           </div>
@@ -111,9 +109,6 @@ export default function UserInfo() {
             <button className="del__user" onClick={delUser}>
               Удалить пользователя{" "}
             </button>
-            {/* <button className="cancel" onClick={handleClose}>
-        Отмена
-      </button> */}
           </div>
         </form>
       </div>
@@ -163,7 +158,6 @@ export default function UserInfo() {
     if (isStaff != user?.is_staff) {
       body["is_staff"] = isStaff;
     }
-    console.log(body);
     if (user) {
       dispatch(
         update_user({

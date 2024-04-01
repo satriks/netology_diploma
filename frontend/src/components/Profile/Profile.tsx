@@ -3,15 +3,13 @@ import avatarUnknown from "../../assets/avatar_unknown.png";
 import { useEffect, useState } from "react";
 import { useAppDispatch, useAppSelector } from "../../models/hooks";
 import { get_user_detail, update_user } from "../../redux/MainSlice";
-import { useNavigate } from "react-router-dom";
-import File_data, { ChangeUser } from "../../models/models";
+import { File_data, ChangeUser } from "../../models/models";
 import { sizeValidator, timeConverter } from "../../utils/utils";
 import Louder from "../Louder/Louder";
 import ErrorForm from "../Messages/ErrorForm";
 import ErrorMessage from "../Messages/ErrorMessage";
 import SuccessMessage from "../Messages/SuccessMessage";
 
-//TODO Изменить вывод даты регистрации, Сделать удобочитаемый размер фалов
 type Props = {};
 
 export default function Profile({}: Props) {
@@ -23,7 +21,6 @@ export default function Profile({}: Props) {
   const infoMessage = useAppSelector((state) => state.infoMessage);
 
   const dispatch = useAppDispatch();
-  const naigate = useNavigate();
   const [lastName, setLastName] = useState("");
   const [firstName, setFirstName] = useState("");
   const [email, setEmail] = useState("");
@@ -46,7 +43,6 @@ export default function Profile({}: Props) {
   } else {
     return (
       <div className="profile__wrapper">
-        {/* <Louder /> */}
         <form className="profile" onSubmit={handleSubmit}>
           {errorChange && <ErrorMessage message={errorChange.message} />}
           {errorMain && <ErrorForm data={errorMain} />}
@@ -87,9 +83,6 @@ export default function Profile({}: Props) {
           </div>
           <div className="profile__control">
             <button type="submit">Сохранить изменения </button>
-            {/* <button className="cancel" onClick={handleClose}>
-            Отмена
-          </button> */}
           </div>
           <div className="profile__file__info">
             <label>
@@ -139,7 +132,6 @@ export default function Profile({}: Props) {
     if (password.trim()) {
       body["password"] = password;
     }
-    console.log(body);
     if (user) {
       dispatch(
         update_user({

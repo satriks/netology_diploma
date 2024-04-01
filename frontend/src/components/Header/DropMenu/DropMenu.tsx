@@ -46,13 +46,11 @@ export default function DropMenu({}: Props) {
         dispatch(setDropMenuHeader("Админ панель"));
         break;
       case "Выход":
-        //Сделать выход
         dispatch(logout());
         dispatch(clearUserToken());
         dispatch(get_files());
         dispatch(setDropMenuHeader("Каталог"));
 
-        // target.value = "Каталог";
         navigate("/");
         break;
       default:

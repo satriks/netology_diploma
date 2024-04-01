@@ -22,8 +22,6 @@ export default function UserItem({ user }: Props) {
   );
 
   function setAciveUser() {
-    console.log(45);
-    console.log(currentUser);
     if (currentUser?.id == user.id) {
       dispatch(clearCurrentUser());
       return;

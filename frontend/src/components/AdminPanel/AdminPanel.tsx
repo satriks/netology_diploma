@@ -35,7 +35,6 @@ export default function AdminPanel({}: Props) {
       <div className="admin__users">
         {errorUsers && <ErrorForm data={errorUsers} />}
         <div>
-          {/* <Louder /> */}
           <h2>Пользователи: </h2>
           {adminPanel.users &&
             adminPanel.users.map((el) => <UserCard key={el.id} user={el} />)}
@@ -53,7 +52,6 @@ export default function AdminPanel({}: Props) {
         )}
         {loading.adminUserData ? null : (
           <div className="admin__files">
-            {/* {<ErrorForm data={"какой то текст "} />} */}
             {user && <h2>Список файлов:</h2>}
             {loading.adminFilesChange && <Louder />}
             {adminPanel.currentUser &&

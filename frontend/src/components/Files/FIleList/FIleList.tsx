@@ -38,7 +38,6 @@ export default function FileList({}: Props) {
       dispatch(get_files());
     }
   }, [isLogin]);
-  // if (errorMessage) return <ErrorMessage message={errorMessage.message} />;
   if (isLoading) {
     return <Louder />;
   } else {
@@ -73,21 +72,21 @@ export default function FileList({}: Props) {
         {isSendFile && <AddNewFile file={dragFile} setDragFile={setDragFIle} />}
         {isChangeFile.isActive && (
           <ChangeFileForm
-            name={isChangeFile.name}
-            desc={isChangeFile.description}
+            name={isChangeFile.name!}
+            desc={isChangeFile.description!}
           />
         )}
-        {isShareFile.isShare && <ShareFileForm uuid={isShareFile.uuid} />}
+        {isShareFile.isShare && <ShareFileForm uuid={isShareFile.uuid!} />}
       </div>
     );
   }
 
-  function handleDragEnter(e) {
+  function handleDragEnter(e: React.DragEvent<HTMLDivElement>) {
     e.preventDefault();
     setIsDragging(true);
   }
 
-  function handleDragOver(e) {
+  function handleDragOver(e: React.DragEvent<HTMLDivElement>) {
     e.preventDefault();
   }
 
@@ -95,17 +94,13 @@ export default function FileList({}: Props) {
     setIsDragging(false);
   }
 
-  function handleDrop(e) {
+  function handleDrop(e: React.DragEvent<HTMLDivElement>) {
     e.preventDefault();
     setIsDragging(false);
 
     const file = e.dataTransfer.files[0];
-    console.log(file);
 
     setDragFIle(file);
     dispatch(setIsSendFile());
-
-    // Upload files to the server
-    // onFileUpload(files);
   }
 }
