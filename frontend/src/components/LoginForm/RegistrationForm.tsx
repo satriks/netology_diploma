@@ -33,7 +33,7 @@ export default function RegistrationForm({ onLogin }: Props) {
       setPassword("");
       dispatch(getSuccessRegistration(false));
     }
-  }, [success]);
+  }, [success, dispatch, onLogin]);
 
   return (
     <form className="registration-form" onSubmit={handleSubmit}>

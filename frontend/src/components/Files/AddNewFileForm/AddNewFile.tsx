@@ -18,7 +18,7 @@ export default function AddNewFile({ file, setDragFile }: Props) {
     if (file) {
       setFileName(file.name.split(".")[0]);
     }
-  }, []);
+  }, [file]);
 
   return (
     <div className="new-form__wrapper">

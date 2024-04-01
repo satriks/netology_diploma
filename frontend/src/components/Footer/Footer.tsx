@@ -1,8 +1,6 @@
 import "./Footer.scss";
 
-type Props = {};
-
-export default function Footer({}: Props) {
+export default function Footer() {
   return (
     <div className="footer">Copyright 2024 MyCloud. All rights reserved</div>
   );

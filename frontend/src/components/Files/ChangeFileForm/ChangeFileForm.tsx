@@ -17,7 +17,7 @@ export default function ChangeFileForm({ name, desc }: Props) {
   useEffect(() => {
     setFileName(name);
     setFileDescription(desc);
-  }, []);
+  }, [name, desc]);
 
   return (
     <div className="change-form__wrapper">

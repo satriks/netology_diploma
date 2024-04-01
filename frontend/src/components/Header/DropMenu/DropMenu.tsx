@@ -7,9 +7,7 @@ import {
   setDropMenuHeader,
 } from "../../../redux/MainSlice";
 
-type Props = {};
-
-export default function DropMenu({}: Props) {
+export default function DropMenu() {
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
   const user = useAppSelector((state) => state.user);

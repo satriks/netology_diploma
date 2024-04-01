@@ -15,9 +15,7 @@ import ErrorForm from "../../Messages/ErrorForm";
 import ErrorMessage from "../../Messages/ErrorMessage";
 import SuccessMessage from "../../Messages/SuccessMessage";
 
-type Props = {};
-
-export default function FileList({}: Props) {
+export default function FileList() {
   const errorMain = useAppSelector((state) => state.errorsGet.catalog);
   const error = useAppSelector((state) => state.error);
   const isLogin = useAppSelector((state) => state.token);
@@ -37,7 +35,7 @@ export default function FileList({}: Props) {
     if (isLogin) {
       dispatch(get_files());
     }
-  }, [isLogin]);
+  }, [isLogin, dispatch]);
   if (isLoading) {
     return <Louder />;
   } else {

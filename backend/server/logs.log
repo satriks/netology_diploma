@@ -411,3 +411,5 @@ WARNING 2024-03-30 20:40:52,106 basehttp log_message "GET /api-token-auth/ HTTP/
 WARNING 2024-03-30 20:40:52,349 log log_response Not Found: /favicon.ico
 WARNING 2024-03-30 20:40:52,350 basehttp log_message "GET /favicon.ico HTTP/1.1" 404 2951
 INFO 2024-03-30 20:41:43,789 basehttp log_message "GET /download/734fb5ed-d4b3-41b2-a270-a00059248613 HTTP/1.1" 200 803944
+INFO 2024-04-01 23:48:45,499 views DownloadFileAPIView Downloading file
+INFO 2024-04-01 23:48:45,500 views LogoutView logout user

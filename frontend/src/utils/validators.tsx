@@ -3,8 +3,7 @@ export function validatePassword(password: string) {
     throw new Error("Нет большой буквы");
   }
   if (!/[0-9]+/.test(password)) throw new Error("Нет цифры");
-  if (!/[!@#\$%\^\&*\)\(+=._-]+/.test(password))
-    throw new Error("Нет спецсимвола");
+  if (!/[!@#$%^&*)(+=._-]+/.test(password)) throw new Error("Нет спецсимвола");
   if (password.length <= 6) throw new Error("Больше 6 символов");
   return true;
 }

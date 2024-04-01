@@ -11,9 +11,7 @@ import ErrorForm from "../Messages/ErrorForm";
 import ErrorMessage from "../Messages/ErrorMessage";
 import SuccessMessage from "../Messages/SuccessMessage";
 
-type Props = {};
-
-export default function AdminPanel({}: Props) {
+export default function AdminPanel() {
   const errorUserData = useAppSelector(
     (state) => state.errorsGet.adminUserData
   );
@@ -28,7 +26,7 @@ export default function AdminPanel({}: Props) {
 
   useEffect(() => {
     dispatch(get_users());
-  }, []);
+  }, [dispatch]);
 
   return (
     <div className="admin__wrapper">

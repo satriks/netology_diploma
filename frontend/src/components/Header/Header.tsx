@@ -7,9 +7,7 @@ import { useAppDispatch, useAppSelector } from "../../models/hooks";
 import { setDropMenuHeader, startAuthorization } from "../../redux/MainSlice";
 import { useNavigate } from "react-router-dom";
 
-type Props = {};
-
-export default function Header({}: Props) {
+export default function Header() {
   const isLogin = useAppSelector((state) => state.token);
   const dispatch = useAppDispatch();
   const navigate = useNavigate();

@@ -10,9 +10,7 @@ import ErrorForm from "../Messages/ErrorForm";
 import ErrorMessage from "../Messages/ErrorMessage";
 import SuccessMessage from "../Messages/SuccessMessage";
 
-type Props = {};
-
-export default function Profile({}: Props) {
+export default function Profile() {
   const errorMain = useAppSelector((state) => state.errorsGet.profile);
   const errorChange = useAppSelector((state) => state.error);
   const user = useAppSelector((state) => state.user);
@@ -28,7 +26,7 @@ export default function Profile({}: Props) {
 
   useEffect(() => {
     dispatch(get_user_detail());
-  }, []);
+  }, [dispatch]);
 
   useEffect(() => {
     if (user) {

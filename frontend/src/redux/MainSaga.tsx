@@ -343,18 +343,18 @@ function* showErrorMessage(error: AxiosError) {
       message: "Сервер не работает, попробуйте позже",
     });
   }
-  if (error && error.code !== "ERR_NETWORK") {
+  if (error.response?.data && error.code !== "ERR_NETWORK") {
     const errorData = {
       status: String(error?.response?.status),
-      message: String(Object.values(error.response?.data!)[0]),
+      message: String(Object.values(error.response?.data)[0]),
     };
-
     yield call(showError, errorData);
   }
 }
+
 function* setError(
   error: AxiosError,
-  setErrorFunc: ActionCreatorWithPayload<any, string>,
+  setErrorFunc: ActionCreatorWithPayload<object, string>,
   action: Action
 ) {
   if (error.code === "ERR_NETWORK") {
@@ -366,10 +366,10 @@ function* setError(
       })
     );
   }
-  if (error && error.code !== "ERR_NETWORK") {
+  if (error.response?.data && error.code !== "ERR_NETWORK") {
     const errorData = {
       status: error?.response?.status,
-      message: Object.values(error.response?.data!)[0],
+      message: Object.values(error.response?.data)[0],
       action: action,
     };
 

@@ -19,7 +19,7 @@ function App() {
       dispatch(getSuccessToken({ token: JSON.parse(token) }));
       dispatch(get_user_detail());
     }
-  }, []);
+  }, [dispatch]);
   return (
     <BrowserRouter>
       <Header />

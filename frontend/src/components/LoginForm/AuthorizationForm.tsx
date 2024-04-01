@@ -4,15 +4,13 @@ import RegistrationForm from "./RegistrationForm";
 import "./AuthorizationForm.scss";
 import { useNavigate } from "react-router-dom";
 
-type Props = {};
-
-export default function AuthorizationForm({}: Props) {
+export default function AuthorizationForm() {
   const [login, setLogin] = useState(false);
   const navigate = useNavigate();
 
   useEffect(() => {
     navigate("/");
-  }, []);
+  }, [navigate]);
 
   return (
     <div className="authorization__wrapper">
