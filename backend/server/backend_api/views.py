@@ -8,6 +8,8 @@ from rest_framework.views import APIView
 from rest_framework.permissions import IsAuthenticated, IsAdminUser, AllowAny
 from django.contrib.auth import logout
 from django.shortcuts import redirect
+from django.views.generic import TemplateView
+
 
 from django.contrib.auth.models import User
 from backend_api.models import Files
@@ -86,3 +88,6 @@ class LogoutView(APIView):
     def get(self, request):
         logout(request)
         return redirect('/api/users')
+    
+class MainViewSet(TemplateView):
+    template_name = '../templates/index.html'
