@@ -22,7 +22,7 @@ from django.conf import settings
 from django.contrib.staticfiles.urls import staticfiles_urlpatterns
 
 
-from backend_api.views import BackendAPIView, UserViewSet, LogoutView, DownloadFileAPIView, UserDetailView
+from backend_api.views import BackendAPIView, UserViewSet, LogoutView, DownloadFileAPIView, UserDetailView, MainViewSet
 from rest_framework.authtoken import views
 
 router = routers.SimpleRouter()
@@ -33,11 +33,13 @@ router.register(r'users', UserViewSet)
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('api/', include(router.urls)),
+    path('', MainViewSet.as_view()),
     path('download/<str:id>', DownloadFileAPIView.as_view(), name='download' ),
     path('api/users/detail', UserDetailView.as_view({'get': 'list'})),
     path('api-auth/logout/', LogoutView.as_view(), name='logout'),
     path('api-auth/', include('rest_framework.urls', namespace='rest_framework')),
     path('api-token-auth/', views.obtain_auth_token)
+    path('*', MainViewSet.as_view()),
 ]
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 urlpatterns += staticfiles_urlpatterns()

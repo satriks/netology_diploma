@@ -27,7 +27,7 @@ function App() {
       <Routes>
         <Route path="/" element={<FileList />} />
         <Route path="/profile" element={<Profile />} />
-        <Route path="/admin" element={<AdminPanel />} />y
+        <Route path="/admin-panel" element={<AdminPanel />} />y
       </Routes>
       <Footer />
     </BrowserRouter>

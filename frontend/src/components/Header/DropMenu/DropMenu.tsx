@@ -40,7 +40,7 @@ export default function DropMenu() {
         dispatch(setDropMenuHeader("Личный кабинет"));
         break;
       case "Админ панель":
-        navigate("/admin");
+        navigate("/admin-panel");
         dispatch(setDropMenuHeader("Админ панель"));
         break;
       case "Выход":

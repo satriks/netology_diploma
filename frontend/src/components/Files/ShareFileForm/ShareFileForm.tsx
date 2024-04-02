@@ -37,6 +37,10 @@ export default function ShareFileForm({ uuid }: Props) {
   }
   function handleCopy(e: React.MouseEvent<HTMLButtonElement>) {
     e.preventDefault();
-    navigator.clipboard.writeText(link);
+    try {
+      navigator.clipboard.writeText(link);
+    } catch (error) {
+      console.log("Не работает на http протоколе! ");
+    }
   }
 }
