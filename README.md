@@ -11,6 +11,12 @@
     sudo apt update
     sudo apt upgrade
 
+#### Обновить node.js
+
+    sudo apt install npm
+    sudo npm install -g n
+    sudo n latest
+
 #### Подготовить систему
 
     sudo apt install postgresql python3-venv python3-pip npm vite
@@ -36,9 +42,10 @@
 
 ### 2. Подготовка клиента
 
-#### Войти в frontend
+#### Войти в netology_diploma/frontend/
 
     npm install
+    npm install typescript
 
 #### Настроить .env
 
@@ -48,15 +55,19 @@
 
     npm run build
 
+Зайти в netology_diploma/frontend/dist/
+
 #### Перенести index в шаблоны backend/server/backend_api/templates/
 
     mv index.html ~/netology_diploma/backend/server/backend_api/templates/
 
 #### Перенести содержимое папки assets в backend/server/static/
 
-    mv assets/_ ~/netology_diploma/backend/server/static/
+    mv assets/* ~/netology_diploma/backend/server/static/
 
 ### Бэкенд
+
+Перейти в папку /netology_diploma/backend/
 
 #### Создать виртуальное окружение
 
@@ -68,18 +79,18 @@
 
 #### Установить зависимости
 
-    pip install -r requarments.txt
+    pip install -r requirements.txt
+
+Перейти в папку /netology_diploma/backend/server/
 
 #### Настроить .env (Используя .env-example)
 
-    в папке server :
+Используя .env-example внести данные БД и хоста. Сохранить как .env
 
-        nano .env-example
+#### Сделать миграции
 
-    внести изменения
-
-        ctrl + o - сохранить как .env
-        ctrl + x
+    python manage.py makemigrations
+    python manage.py migrate
 
 #### Создать супер пользователя
 
@@ -87,4 +98,4 @@
 
 #### Запустить
 
-    runserver 0.0.0.0:8000
+    python manage.py runserver 0.0.0.0:8000
